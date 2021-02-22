@@ -7,16 +7,16 @@ public class GroupTest {
     @Test
     public void compare() {
         Group first = new Group();
-        first.add("1");
-        first.add("2");
+        first.add(1);
+        first.add(2);
 
         Group second = new Group();
-        second.add("2");
-        second.add("1");
+        second.add(2);
+        second.add(1);
 
         Group third = new Group();
-        third.add("3");
-        third.add("1");
+        third.add(3);
+        third.add(1);
 
         Assertions.assertEquals(first, second);
         Assertions.assertNotEquals(first, third);
