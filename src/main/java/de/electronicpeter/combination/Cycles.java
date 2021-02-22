@@ -1,16 +1,16 @@
 package de.electronicpeter.combination;
 
+import java.util.HashSet;
 
-import java.util.ArrayList;
-
-public class Cycle extends ArrayList<Group> {
+public class Cycles extends HashSet<Cycle> {
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append("\n");
-        for (Group g : this) {
-            sb.append(g);
+        for (Cycle c : this) {
+            sb.append(c);
             sb.append("\n");
         }
         return sb.toString();
     }
+
 }

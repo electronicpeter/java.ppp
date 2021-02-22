@@ -3,13 +3,14 @@ package de.electronicpeter.combination;
 public class Memory {
     private int size;
     private Integer[][] mem;
+
     public Memory(int size) {
         this.size = size;
 
         mem = new Integer[size][size];
-        for (int i = 0; i<size; i++) {
+        for (int i = 0; i < size; i++) {
             mem[i] = new Integer[size];
-            for (int i2 = 0; i2<size; i2++) {
+            for (int i2 = 0; i2 < size; i2++) {
                 mem[i][i2] = 0;
             }
         }
@@ -19,11 +20,33 @@ public class Memory {
         return mem[first][second] > 0;
     }
 
+    public boolean check(int first, Group group) {
+        for (Integer element : group) {
+            if (mem[first][element] > 0) {
+                return Boolean.TRUE;
+            }
+        }
+        return Boolean.FALSE;
+    }
+
+    public void set(Cycle cycle) {
+        for (Group group : cycle) {
+            set(group);
+        }
+    }
+
     public void set(Group group) {
         for (Integer i1 : group) {
             for (Integer i2 : group) {
-                mem[i1][i2]+=1;
+                mem[i1][i2] += 1;
             }
+        }
+    }
+
+    public void set(Integer element, Group group) {
+        for (Integer i1 : group) {
+            mem[i1][element] += 1;
+            mem[element][i1] += 1;
         }
     }
 
@@ -31,13 +54,13 @@ public class Memory {
         StringBuilder sb = new StringBuilder();
         sb.append("\n");
         sb.append("   ");
-        for (int col = 0; col<size; col++) {
+        for (int col = 0; col < size; col++) {
             sb.append(String.format("%3d", col));
         }
         sb.append("\n");
-        for (int row = 0; row<size; row++) {
+        for (int row = 0; row < size; row++) {
             sb.append(String.format("%3d", row));
-            for (int col = 0; col<size; col++) {
+            for (int col = 0; col < size; col++) {
                 sb.append(row < col ? mem[row][col] > 0 ? String.format("%3d", mem[row][col]) : "   " : " ..");
             }
             sb.append("\n");
