@@ -29,7 +29,7 @@ public class CombinationTest {
 
     private void check(int size) {
         Cycles combinations = new Combination().createCombinations(size);
-        log.info("" + combinations.toString());
+        log.info("check {} -> {}", size, combinations.toString());
         Memory memory = new Memory(size).set(combinations);
         log.info("{}", memory.toString());
         Assertions.assertTrue(memory.everyThingOne());

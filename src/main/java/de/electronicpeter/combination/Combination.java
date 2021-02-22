@@ -73,13 +73,15 @@ public class Combination {
 
         int xDim = refCycle.get(0).size();
         int yDim = refCycle.size();
+        xDim = Math.max(xDim, yDim);
+        yDim = xDim;
 
         // vertical
         Cycle cycle = new Cycle();
         for (int x = 0; x < xDim; x++) {
             Group g = new Group();
             for (int y = 0; y < yDim; y++) {
-                if (x < refCycle.get(y).size()) {
+                if (y < refCycle.size() && x < refCycle.get(y).size()) {
                     g.add(refCycle.get(y).get(x));
                 }
             }
@@ -93,7 +95,7 @@ public class Combination {
             Group g = new Group();
             for (int y = 0; y < yDim; y++) {
                 int modX = (x + y) % xDim;
-                if (modX < refCycle.get(y).size()) {
+                if (y < refCycle.size() && modX < refCycle.get(y).size()) {
                     g.add(refCycle.get(y).get(modX));
                 }
             }
@@ -108,7 +110,7 @@ public class Combination {
                 Group g = new Group();
                 for (int y = 0; y < yDim; y++) {
                     int modX = (xDim + x - y) % xDim;
-                    if (modX < refCycle.get(y).size()) {
+                    if (y < refCycle.size() && modX < refCycle.get(y).size()) {
                         g.add(refCycle.get(y).get(modX));
                     }
                 }
