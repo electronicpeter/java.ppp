@@ -97,6 +97,11 @@ public class Combination {
                 }
             }
             if (!nextCycle.isEmpty()) {
+                if (!nextCycle.isComplete(numberOfElements)) {
+                    log.error("cycle no ok {}", nextCycle);
+                } else {
+                    log.info("cycle ok {}", nextCycle);
+                }
                 cycles.add(nextCycle);
             } else {
                 end = true;

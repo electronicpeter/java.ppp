@@ -1,5 +1,8 @@
 package de.electronicpeter.combination;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 public class Memory {
     private int size;
     private Integer[][] mem;
@@ -16,13 +19,11 @@ public class Memory {
         }
     }
 
-    public boolean check(int first, int second) {
-        return mem[first][second] > 0;
-    }
-
     public boolean check(int first, Group group) {
         for (Integer element : group) {
-            if (mem[first][element] > 0) {
+            int i1 = Math.min(first, element);
+            int i2 = Math.max(first, element);
+            if (mem[i1][i2] > 0) {
                 return Boolean.TRUE;
             }
         }
@@ -36,17 +37,26 @@ public class Memory {
     }
 
     public void set(Group group) {
-        for (Integer i1 : group) {
-            for (Integer i2 : group) {
-                mem[i1][i2] += 1;
+        for (int groupIndex = 0; groupIndex < group.size(); groupIndex++) {
+            int i1 = group.get(groupIndex);
+            for (int remainderIndex = groupIndex + 1; remainderIndex < group.size(); remainderIndex++) {
+                int i2 = group.get(remainderIndex);
+                set(i1, i2);
             }
         }
     }
 
     public void set(Integer element, Group group) {
         for (Integer i1 : group) {
-            mem[i1][element] += 1;
-            mem[element][i1] += 1;
+            set(i1, element);
+        }
+    }
+
+    public void set(Integer element1, Integer element2) {
+        int i1 = Math.min(element1, element2);
+        int i2 = Math.max(element1, element2);
+        if (i1 != i2) {
+            mem[i1][i2] += 1;
         }
     }
 
@@ -61,10 +71,22 @@ public class Memory {
         for (int row = 0; row < size; row++) {
             sb.append(String.format("%3d", row));
             for (int col = 0; col < size; col++) {
-                sb.append(row < col ? mem[row][col] > 0 ? String.format("%3d", mem[row][col]) : "   " : " ..");
+                // sb.append(row < col ? mem[row][col] > 0 ? String.format("%3d", mem[row][col]) : "   " : " ..");
+                sb.append(mem[row][col] > 0 ? String.format("%3d", mem[row][col]) : "   ");
             }
             sb.append("\n");
         }
         return sb.toString();
+    }
+
+    public Boolean everyThingOne() {
+        for (int row = 0; row < size; row++) {
+            for (int col = row + 1; col < size; col++) {
+                if (mem[row][col] != 1) {
+                    return Boolean.FALSE;
+                }
+            }
+        }
+        return Boolean.TRUE;
     }
 }

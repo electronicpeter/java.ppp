@@ -1,6 +1,6 @@
 package de.electronicpeter.combination;
 
-import java.util.HashSet;
+import java.util.ArrayList;
 
-public class Group extends HashSet<Integer> {
+public class Group extends ArrayList<Integer> {
 }
