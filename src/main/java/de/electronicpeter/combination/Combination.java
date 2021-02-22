@@ -61,53 +61,62 @@ public class Combination {
         return addRemaining(firstCycle, numberOfElements);
     }
 
-    private Cycles addRemaining(Cycle cycle, int numberOfElements) {
-
-        Memory memory = new Memory(numberOfElements);
-        memory.set(cycle);
+    private Cycles addRemaining(Cycle refCycle, int numberOfElements) {
         Cycles cycles = new Cycles();
-        cycles.add(cycle);
-        boolean end = false;
-        while (!end) {
-            List<Integer> elements = new ArrayList<>(numberOfElements);
-            for (int i = 0; i < numberOfElements; i++) {
-                elements.add(i);
-            }
-            Cycle nextCycle = new Cycle();
-            for (Group groupOfFirstCycle : cycle) {
-                Group group = new Group();
-                if (!elements.isEmpty()) {
-                    if (group.isEmpty()) {
-                        group.add(elements.get(0));
-                        elements.remove(0);
-                    }
-                    for (Integer element : elements) {
-                        if (!memory.check(element, group)) {
-                            group.add(element);
-                            elements.remove(element);
-                            memory.set(element, group);
-                            break;
-                        }
-                    }
-                }
-                if (group.size() > 1) {
-                    nextCycle.add(group);
-                } else {
-                    end = true;
+        cycles.add(refCycle);
+
+        /**
+         * [0, 3, 6]
+         * [1, 4, 7]
+         * [2, 5, 8]
+         */
+
+        int xDim = refCycle.get(0).size();
+        int yDim = refCycle.size();
+
+        // vertical
+        Cycle cycle = new Cycle();
+        for (int x = 0; x < xDim; x++) {
+            Group g = new Group();
+            for (int y = 0; y < yDim; y++) {
+                if (x < refCycle.get(y).size()) {
+                    g.add(refCycle.get(y).get(x));
                 }
             }
-            if (!nextCycle.isEmpty()) {
-                if (!nextCycle.isComplete(numberOfElements)) {
-                    log.error("cycle no ok {}", nextCycle);
-                } else {
-                    log.info("cycle ok {}", nextCycle);
-                }
-                cycles.add(nextCycle);
-            } else {
-                end = true;
-            }
+            cycle.add(g);
         }
-        log.info(memory.toString());
+        cycles.add(cycle);
+
+        // diagone right
+        cycle = new Cycle();
+        for (int x = 0; x < xDim; x++) {
+            Group g = new Group();
+            for (int y = 0; y < yDim; y++) {
+                int modX = (x + y) % xDim;
+                if (modX < refCycle.get(y).size()) {
+                    g.add(refCycle.get(y).get(modX));
+                }
+            }
+            cycle.add(g);
+        }
+        cycles.add(cycle);
+
+        // diagone left
+        if (xDim > 2) {
+            cycle = new Cycle();
+            for (int x = 0; x < xDim; x++) {
+                Group g = new Group();
+                for (int y = 0; y < yDim; y++) {
+                    int modX = (xDim + x - y) % xDim;
+                    if (modX < refCycle.get(y).size()) {
+                        g.add(refCycle.get(y).get(modX));
+                    }
+                }
+                cycle.add(g);
+            }
+            cycles.add(cycle);
+        }
+
         return cycles;
     }
 

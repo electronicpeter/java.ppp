@@ -30,13 +30,21 @@ public class Memory {
         return Boolean.FALSE;
     }
 
-    public void set(Cycle cycle) {
+    public Memory set(Cycle cycle) {
         for (Group group : cycle) {
             set(group);
         }
+        return this;
     }
 
-    public void set(Group group) {
+    public Memory set(Cycles cycles) {
+        for (Cycle cycle : cycles) {
+            set(cycle);
+        }
+        return this;
+    }
+
+    public Memory set(Group group) {
         for (int groupIndex = 0; groupIndex < group.size(); groupIndex++) {
             int i1 = group.get(groupIndex);
             for (int remainderIndex = groupIndex + 1; remainderIndex < group.size(); remainderIndex++) {
@@ -44,20 +52,23 @@ public class Memory {
                 set(i1, i2);
             }
         }
+        return this;
     }
 
-    public void set(Integer element, Group group) {
+    public Memory set(Integer element, Group group) {
         for (Integer i1 : group) {
             set(i1, element);
         }
+        return this;
     }
 
-    public void set(Integer element1, Integer element2) {
+    public Memory set(Integer element1, Integer element2) {
         int i1 = Math.min(element1, element2);
         int i2 = Math.max(element1, element2);
         if (i1 != i2) {
             mem[i1][i2] += 1;
         }
+        return this;
     }
 
     public String toString() {

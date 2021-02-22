@@ -9,13 +9,12 @@ public class CombinationTest {
     @Test
     public void a() {
         for (int i = 4; i <= 9; i++) {
-            log.info("" + new Combination().createCombinations(i));
+            check(i);
         }
-        log.info("" + new Combination().createCombinations(9, 5));
-        log.info("" + new Combination().createCombinations(14));
-        log.info("" + new Combination().createCombinations(15));
-        log.info("" + new Combination().createCombinations(16));
-        log.info("" + new Combination().createCombinations(20));
+        check(14);
+        check(15);
+        check(16);
+        check(20);
     }
 
     @Test
@@ -31,10 +30,8 @@ public class CombinationTest {
     private void check(int size) {
         Cycles combinations = new Combination().createCombinations(size);
         log.info("" + combinations.toString());
-        Memory memory = new Memory(size);
-        for (Cycle cycle : combinations) {
-            memory.set(cycle);
-        }
+        Memory memory = new Memory(size).set(combinations);
+        log.info("{}", memory.toString());
         Assertions.assertTrue(memory.everyThingOne());
     }
 
