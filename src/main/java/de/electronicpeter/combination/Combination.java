@@ -9,9 +9,7 @@ import java.util.Set;
 
 @Slf4j
 public class Combination {
-    Set<Cycle> cycles = new HashSet<>();
-
-    public void createCombinations(int numberOfElements, int groupSize) {
+    public Set<Cycle> createCombinations(int numberOfElements, int groupSize) {
         List<Integer> elements = new ArrayList<>(numberOfElements);
         for (int i = 0; i < numberOfElements; i++) {
             elements.add(i);
@@ -31,11 +29,12 @@ public class Combination {
         if (e < numberOfElements) {
             firstCycle.stream().findAny().get().addAll(elements.subList(e, numberOfElements));
         }
+        Set<Cycle> cycles = new HashSet<Cycle>();
         cycles.add(firstCycle);
-        log.info(firstCycle.toString());
+        return cycles;
     }
 
-    public void createCombinations(int numberOfElements) {
+    public Set<Cycle> createCombinations(int numberOfElements) {
         List<Integer> elements = new ArrayList<>(numberOfElements);
         for (int i = 0; i < numberOfElements; i++) {
             elements.add(i);
@@ -62,11 +61,8 @@ public class Combination {
             firstCycle.get(0).addAll(firstCycle.get(firstCycle.size()-1));
             firstCycle.remove(firstCycle.size()-1);
         }
+        Set<Cycle> cycles = new HashSet<Cycle>();
         cycles.add(firstCycle);
-        log.info(firstCycle.toString());
-    }
-
-    public Set<Cycle> getCycles() {
         return cycles;
     }
 

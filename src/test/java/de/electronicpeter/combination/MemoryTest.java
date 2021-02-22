@@ -12,8 +12,7 @@ public class MemoryTest {
         int size=9;
         Memory memory = new Memory(size);
         Combination combination = new Combination();
-        combination.createCombinations(size);
-        Set<Cycle> cycles = combination.getCycles();
+        Set<Cycle> cycles = combination.createCombinations(size);
         for(Cycle cycle : cycles) {
             for (Group group : cycle) {
                 memory.set(group);
