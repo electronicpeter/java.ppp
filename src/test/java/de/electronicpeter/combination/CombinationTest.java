@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test;
 @Slf4j
 public class CombinationTest {
     @Test
-    public void a() {
+    public void checkAll() {
         for (int i = 4; i <= 9; i++) {
             check(i);
         }
@@ -25,6 +25,11 @@ public class CombinationTest {
     @Test
     public void check9() {
         check(9);
+    }
+
+    @Test
+    public void check16() {
+        check(16);
     }
 
     private void check(int size) {

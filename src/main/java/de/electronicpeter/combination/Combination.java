@@ -3,17 +3,12 @@ package de.electronicpeter.combination;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 @Slf4j
 public class Combination {
     public Cycles createCombinations(int numberOfElements, int groupSize) {
-        List<Integer> elements = new ArrayList<>(numberOfElements);
-        for (int i = 0; i < numberOfElements; i++) {
-            elements.add(i);
-        }
+        List<Integer> elements = createElements(numberOfElements);
 
         int numberOfGroups = Double.valueOf(Math.ceil(Double.valueOf(numberOfElements) / Double.valueOf(groupSize))).intValue();
         log.info("X numberOfElements {}, groups {}, groupsize {}", numberOfElements, numberOfGroups, groupSize);
@@ -29,19 +24,15 @@ public class Combination {
         if (e < numberOfElements) {
             firstCycle.stream().findAny().get().addAll(elements.subList(e, numberOfElements));
         }
-        return addRemaining(firstCycle, numberOfElements);
+        return addRemainingCycles(firstCycle, numberOfElements);
     }
 
     public Cycles createCombinations(int numberOfElements) {
-        List<Integer> elements = new ArrayList<>(numberOfElements);
-        for (int i = 0; i < numberOfElements; i++) {
-            elements.add(i);
-        }
+        List<Integer> elements = createElements(numberOfElements);
 
         int numberOfGroups = Double.valueOf(Math.ceil(Math.sqrt(numberOfElements))).intValue();
 
         Cycle firstCycle = new Cycle();
-        int e = 0;
         for (int g = 0; g < numberOfGroups; g++) {
             firstCycle.add(new Group());
         }
@@ -58,17 +49,26 @@ public class Combination {
             firstCycle.get(0).addAll(firstCycle.get(firstCycle.size() - 1));
             firstCycle.remove(firstCycle.size() - 1);
         }
-        return addRemaining(firstCycle, numberOfElements);
+        return addRemainingCycles(firstCycle, numberOfElements);
     }
 
-    private Cycles addRemaining(Cycle refCycle, int numberOfElements) {
+    private List<Integer> createElements(int numberOfElements) {
+        List<Integer> elements = new ArrayList<>(numberOfElements);
+        for (int i = 0; i < numberOfElements; i++) {
+            elements.add(i);
+        }
+        return elements;
+    }
+
+    private Cycles addRemainingCycles(Cycle refCycle, int numberOfElements) {
         Cycles cycles = new Cycles();
         cycles.add(refCycle);
 
         /**
-         * [0, 3, 6]
-         * [1, 4, 7]
-         * [2, 5, 8]
+         * [0, 4, 8, 12]
+         * [1, 5, 9, 13]
+         * [2, 6, 10, 14]
+         * [3, 7, 11, 15]
          */
 
         int xDim = refCycle.get(0).size();
