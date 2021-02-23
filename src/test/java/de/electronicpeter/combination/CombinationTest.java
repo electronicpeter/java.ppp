@@ -8,13 +8,9 @@ import org.junit.jupiter.api.Test;
 public class CombinationTest {
     @Test
     public void checkAll() {
-        for (int i = 4; i <= 9; i++) {
+        for (int i = 4; i <= 20; i++) {
             check(i);
         }
-        check(14);
-        check(15);
-        check(16);
-        check(20);
     }
 
     @Test
@@ -30,6 +26,21 @@ public class CombinationTest {
     @Test
     public void check16() {
         check(16);
+    }
+
+    @Test
+    public void check25() {
+        check(25);
+    }
+
+    @Test
+    public void check36() {
+        check(36);
+    }
+
+    @Test
+    public void check49() {
+        check(49);
     }
 
     private void check(int size) {

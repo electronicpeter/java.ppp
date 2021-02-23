@@ -9,7 +9,6 @@ public class Cycle extends ArrayList<Group> {
         sb.append("\n");
         for (Group g : this) {
             sb.append(g);
-            sb.append("\n");
         }
         return sb.toString();
     }

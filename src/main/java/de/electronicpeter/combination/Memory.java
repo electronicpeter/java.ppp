@@ -82,8 +82,7 @@ public class Memory {
         for (int row = 0; row < size; row++) {
             sb.append(String.format("%3d", row));
             for (int col = 0; col < size; col++) {
-                // sb.append(row < col ? mem[row][col] > 0 ? String.format("%3d", mem[row][col]) : "   " : " ..");
-                sb.append(mem[row][col] > 0 ? String.format("%3d", mem[row][col]) : "   ");
+                sb.append(mem[row][col] > 0 ? mem[row][col] == 1 ? "  ." : String.format("%3d", mem[row][col]) : "   ");
             }
             sb.append("\n");
         }

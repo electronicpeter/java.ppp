@@ -8,7 +8,6 @@ public class Cycles extends ArrayList<Cycle> {
         sb.append("\n");
         for (Cycle c : this) {
             sb.append(c);
-            sb.append("\n");
         }
         return sb.toString();
     }
