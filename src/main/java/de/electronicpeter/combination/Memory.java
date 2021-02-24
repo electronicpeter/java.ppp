@@ -99,4 +99,15 @@ public class Memory {
         }
         return Boolean.TRUE;
     }
+
+    public Boolean everyThingOneOrMore() {
+        for (int row = 0; row < size; row++) {
+            for (int col = row + 1; col < size; col++) {
+                if (mem[row][col] < 1) {
+                    return Boolean.FALSE;
+                }
+            }
+        }
+        return Boolean.TRUE;
+    }
 }

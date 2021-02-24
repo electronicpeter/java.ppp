@@ -7,62 +7,27 @@ import java.util.List;
 
 @Slf4j
 public class Combination {
-    public Cycles createCombinations(int numberOfElements, int groupSize) {
-        List<Integer> elements = createElements(numberOfElements);
-
-        int numberOfGroups = Double.valueOf(Math.ceil(Double.valueOf(numberOfElements) / Double.valueOf(groupSize))).intValue();
-        log.info("X numberOfElements {}, groups {}, groupsize {}", numberOfElements, numberOfGroups, groupSize);
-
-        Cycle firstCycle = new Cycle();
-        int e = 0;
-        for (int g = 0; g < numberOfGroups; g++) {
-            Group group = new Group();
-            group.addAll(elements.subList(e, Math.min(e + groupSize, numberOfElements)));
-            firstCycle.add(group);
-            e += groupSize;
-        }
-        if (e < numberOfElements) {
-            firstCycle.stream().findAny().get().addAll(elements.subList(e, numberOfElements));
-        }
-        return addRemainingCycles(firstCycle, numberOfElements);
-    }
-
     public Cycles createCombinations(int numberOfElements) {
-        List<Integer> elements = createElements(numberOfElements);
+        Square square = new Square(numberOfElements);
+        return addRemainingCycles(square);
+    }
 
-        int numberOfGroups = Double.valueOf(Math.ceil(Math.sqrt(numberOfElements))).intValue();
-
+    private Cycles addRemainingCycles(Square square) {
         Cycle firstCycle = new Cycle();
-        for (int g = 0; g < numberOfGroups; g++) {
-            firstCycle.add(new Group());
+        for (int y = 0; y < square.getDimension(); y++) {
+            Group group = new Group();
+            for (int x = 0; x < square.getDimension(); x++) {
+                group.add(square.get(x, y));
+            }
+            if (!group.isEmpty() && group.size() < 2) {
+                firstCycle.stream().findAny().get().add(group);
+            } else {
+                firstCycle.add(group);
+            }
         }
-        // log.info("numberOfElements {}, numberOfGroups {}, groupsize {}, remainder {}, e {}", numberOfElements, numberOfGroups, groupSize, numberOfElements - e, e);
-        while (!elements.isEmpty()) {
-            firstCycle.stream().forEach(group -> {
-                if (!elements.isEmpty()) {
-                    group.add(elements.get(0));
-                    elements.remove(0);
-                }
-            });
-        }
-        if (firstCycle.get(firstCycle.size() - 1).size() == 1) {
-            firstCycle.get(0).addAll(firstCycle.get(firstCycle.size() - 1));
-            firstCycle.remove(firstCycle.size() - 1);
-        }
-        return addRemainingCycles(firstCycle, numberOfElements);
-    }
 
-    private List<Integer> createElements(int numberOfElements) {
-        List<Integer> elements = new ArrayList<>(numberOfElements);
-        for (int i = 0; i < numberOfElements; i++) {
-            elements.add(i);
-        }
-        return elements;
-    }
-
-    private Cycles addRemainingCycles(Cycle refCycle, int numberOfElements) {
         Cycles cycles = new Cycles();
-        cycles.add(refCycle);
+        cycles.add(firstCycle);
 
         /**
          * [0, 4, 8, 12]
@@ -71,20 +36,13 @@ public class Combination {
          * [3, 7, 11, 15]
          */
 
-        int xDim = refCycle.get(0).size();
-        int yDim = refCycle.size();
-        xDim = Math.max(xDim, yDim);
-        yDim = xDim;
-
-        for (int shift = 0; shift < xDim; shift++) {
+        for (int shift = 0; shift < square.getDimension(); shift++) {
             Cycle cycle = new Cycle();
-            for (int x = 0; x < xDim; x++) {
+            for (int x = 0; x < square.getDimension(); x++) {
                 Group g = new Group();
-                for (int y = 0; y < yDim; y++) {
-                    int modX = (x + y*shift) % xDim;
-                    if (y < refCycle.size() && modX < refCycle.get(y).size()) {
-                        g.add(refCycle.get(y).get(modX));
-                    }
+                for (int y = 0; y < square.getDimension(); y++) {
+                    int modX = (x + y * shift) % square.getDimension();
+                    g.add(square.get(modX, y));
                 }
                 cycle.add(g);
             }
