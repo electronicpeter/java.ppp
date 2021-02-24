@@ -18,7 +18,7 @@ public class Group extends ArrayList<Integer> {
         StringBuilder sb = new StringBuilder();
         sb.append("[");
         for (Integer element : this) {
-            sb.append(String.format("%3d", element));
+            sb.append(String.format("%4d", element));
         }
         sb.append("]\n");
         return sb.toString();

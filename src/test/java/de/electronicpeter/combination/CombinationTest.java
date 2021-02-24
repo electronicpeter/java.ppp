@@ -5,13 +5,36 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.opentest4j.AssertionFailedError;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
+
 @Slf4j
 public class CombinationTest {
     @Test
     public void checkAll() {
-        for (int i = 4; i <= 100; i++) {
-            checkLight(i);
+        Map<Integer, Integer> justOk = new HashMap<>();
+        for (int i = 4; i <= 1000; i++) {
+            checkLight(i, justOk);
         }
+        log.info("found {} which are just ok", justOk.keySet().size());
+        int keyMax = -1;
+        int valueMax = -1;
+        for (Integer key : justOk.keySet()) {
+            Integer value = justOk.get(key);
+            if (value > valueMax) {
+                valueMax = value;
+                keyMax = key;
+            }
+        }
+        log.info("worst key {} with {} doubles", keyMax, valueMax);
+        Cycles combinations = new Combination().createCombinations(keyMax);
+        Memory memory = new Memory(keyMax).set(combinations);
+        log.info("memory is {}", memory.toString());
+
+
     }
 
     @Test
@@ -40,8 +63,23 @@ public class CombinationTest {
     }
 
     @Test
+    public void check1000() {
+        check(1000);
+    }
+
+    @Test
     public void check49() {
         check(49);
+    }
+    @Test
+    public void check147() {
+        check(147);
+    }
+
+    @Test
+    public void check50() {
+        log.info(new Square(54).toString());
+        check(54);
     }
 
     @Test
@@ -51,17 +89,20 @@ public class CombinationTest {
         }
     }
 
-    private void checkLight(int size) {
+    private void checkLight(int size, Map<Integer, Integer> map) {
         Cycles combinations = new Combination().createCombinations(size);
         Memory memory = new Memory(size).set(combinations);
         if (memory.everyThingOneOrMore()) {
             if (memory.everyThingOne()) {
-                log.info("check {} PERFECT", size);
             } else {
-                log.info("check {} OK", size);
+                log.info("check {} just OK", size);
+                map.put(size, memory.countDoulbes());
             }
         } else {
             log.info("check {} NOT OK", size);
+            log.info("{}", combinations.toString());
+            log.info("{}", memory.toString());
+            throw new RuntimeException("no ok");
         }
     }
 

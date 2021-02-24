@@ -58,7 +58,7 @@ public class Square {
     }
 
     private boolean isPrime(int number) {
-        int primes[] = {2,3,5,7,9,11,13,17,19,23,29,31,37,41,43,47,53,59,61,67,71,73,79,83,89,97};
+        int primes[] = {2,3,5,7,11,13,17,19,23,29,31,37,41,43,47,53,59,61,67,71,73,79,83,89,97};
         if (number > primes[primes.length-1]) {
             throw new RuntimeException("no made for more than " + primes[primes.length-1]*primes[primes.length-1] + " elements");
         }

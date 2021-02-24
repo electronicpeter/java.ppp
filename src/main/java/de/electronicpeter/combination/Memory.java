@@ -74,15 +74,15 @@ public class Memory {
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append("\n");
-        sb.append("   ");
+        sb.append("    ");
         for (int col = 0; col < size; col++) {
-            sb.append(String.format("%3d", col));
+            sb.append(String.format("%4d", col));
         }
         sb.append("\n");
         for (int row = 0; row < size; row++) {
-            sb.append(String.format("%3d", row));
+            sb.append(String.format("%4d", row));
             for (int col = 0; col < size; col++) {
-                sb.append(mem[row][col] > 0 ? mem[row][col] == 1 ? "  ." : String.format("%3d", mem[row][col]) : "   ");
+                sb.append(mem[row][col] > 0 ? mem[row][col] == 1 ? "   ." : String.format("%4d", mem[row][col]) : "    ");
             }
             sb.append("\n");
         }
@@ -109,5 +109,17 @@ public class Memory {
             }
         }
         return Boolean.TRUE;
+    }
+
+    public Integer countDoulbes() {
+        int count = 0;
+        for (int row = 0; row < size; row++) {
+            for (int col = row + 1; col < size; col++) {
+                if (mem[row][col] > 1) {
+                    count += mem[row][col];
+                }
+            }
+        }
+        return count;
     }
 }
