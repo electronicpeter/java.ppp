@@ -1,13 +1,10 @@
 package de.electronicpeter.combination;
 
-import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 
 @Slf4j
 public class Square {
@@ -24,7 +21,6 @@ public class Square {
         while (!isPrime(dimension)) {
             dimension++;
         }
-        int total = dimension * dimension;
 
         array = new Integer[dimension][dimension];
         for (int y = 0; y < dimension; y++) {
@@ -62,20 +58,15 @@ public class Square {
     }
 
     private boolean isPrime(int number) {
-        Integer limit = 19;
-        Set<Integer> primes = new HashSet<>();
-        if (number > limit) {
-            throw new RuntimeException("no made for more than " + limit * limit + " elements");
+        int primes[] = {2,3,5,7,9,11,13,17,19,23,29,31,37,41,43,47,53,59,61,67,71,73,79,83,89,97};
+        if (number > primes[primes.length-1]) {
+            throw new RuntimeException("no made for more than " + primes[primes.length-1]*primes[primes.length-1] + " elements");
         }
-        primes.add(2);
-        primes.add(3);
-        primes.add(5);
-        primes.add(7);
-        primes.add(9);
-        primes.add(11);
-        primes.add(13);
-        primes.add(17);
-        primes.add(limit);
-        return (primes.contains(number));
+        for (int i = 0; i<primes.length; i++) {
+            if (number == primes[i]) {
+                return true;
+            }
+        }
+        return false;
     }
 }

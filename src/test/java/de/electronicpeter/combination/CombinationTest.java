@@ -9,8 +9,8 @@ import org.opentest4j.AssertionFailedError;
 public class CombinationTest {
     @Test
     public void checkAll() {
-        for (int i = 4; i <= 20; i++) {
-            check(i);
+        for (int i = 4; i <= 100; i++) {
+            checkLight(i);
         }
     }
 
@@ -48,6 +48,20 @@ public class CombinationTest {
     public void checkSquares() {
         for (int i = 3; i < 20; i++) {
             checkSquare(i);
+        }
+    }
+
+    private void checkLight(int size) {
+        Cycles combinations = new Combination().createCombinations(size);
+        Memory memory = new Memory(size).set(combinations);
+        if (memory.everyThingOneOrMore()) {
+            if (memory.everyThingOne()) {
+                log.info("check {} PERFECT", size);
+            } else {
+                log.info("check {} OK", size);
+            }
+        } else {
+            log.info("check {} NOT OK", size);
         }
     }
 
