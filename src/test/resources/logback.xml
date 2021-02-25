@@ -18,7 +18,7 @@
     </appender>
 
     <logger name="de.electronicpeter" level="info" additivity="false">
-        <appender-ref ref="FILE"/>
+        <appender-ref ref="STDOUT"/>
     </logger>
 
     <root level="warn">

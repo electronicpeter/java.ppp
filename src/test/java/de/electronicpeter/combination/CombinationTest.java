@@ -15,26 +15,26 @@ import java.util.Set;
 public class CombinationTest {
     @Test
     public void checkAll() {
-        Map<Integer, Integer> justOk = new HashMap<>();
+        Map<Integer, MemoryStatistic> justOk = new HashMap<>();
         for (int i = 4; i <= 1000; i++) {
-            checkLight(i, justOk);
+            check(i, justOk);
         }
-        log.info("found {} which are just ok", justOk.keySet().size());
+        log.info("in a 1000 groups found {} which are just ok", justOk.keySet().size());
+        justOk.keySet().stream().sorted().forEach(key -> log.info("key {} {}", key, justOk.get(key)));
         int keyMax = -1;
-        int valueMax = -1;
+        MemoryStatistic valueMax = null;
         for (Integer key : justOk.keySet()) {
-            Integer value = justOk.get(key);
-            if (value > valueMax) {
+            MemoryStatistic value = justOk.get(key);
+            if (keyMax == -1 || valueMax.getNumberOfElementsWithMoreThanOneMatch() < value.getNumberOfElementsWithMoreThanOneMatch()) {
                 valueMax = value;
                 keyMax = key;
             }
         }
-        log.info("worst key {} with {} doubles", keyMax, valueMax);
+        log.info(" -> worst key {} with {} ", keyMax, valueMax.toString());
         Cycles combinations = new Combination().createCombinations(keyMax);
+        log.info(" -> {}", combinations.getStatistics().toString());
         Memory memory = new Memory(keyMax).set(combinations);
-        log.info("memory is {}", memory.toString());
-
-
+        log.info(" -> {}", memory.getMemoryStatistic());
     }
 
     @Test
@@ -63,77 +63,45 @@ public class CombinationTest {
     }
 
     @Test
-    public void check1000() {
-        check(1000);
-    }
-
-    @Test
-    public void check49() {
-        check(49);
-    }
-    @Test
-    public void check147() {
-        check(147);
-    }
-
-    @Test
-    public void check50() {
-        log.info(new Square(54).toString());
-        check(54);
-    }
-
-    @Test
-    public void checkSquares() {
-        for (int i = 3; i < 20; i++) {
-            checkSquare(i);
-        }
-    }
-
-    private void checkLight(int size, Map<Integer, Integer> map) {
-        Cycles combinations = new Combination().createCombinations(size);
-        Memory memory = new Memory(size).set(combinations);
-        if (memory.everyThingOneOrMore()) {
-            if (memory.everyThingOne()) {
-            } else {
-                log.info("check {} just OK", size);
-                map.put(size, memory.countDoulbes());
-            }
-        } else {
-            log.info("check {} NOT OK", size);
-            log.info("{}", combinations.toString());
-            log.info("{}", memory.toString());
-            throw new RuntimeException("no ok");
-        }
+    public void check77() {
+        check(77);
     }
 
     private void check(int size) {
+        check(size, null);
+    }
+
+    private void check(int size, Map<Integer, MemoryStatistic> map) {
         Cycles combinations = new Combination().createCombinations(size);
         Memory memory = new Memory(size).set(combinations);
-        if (memory.everyThingOneOrMore()) {
-            if (memory.everyThingOne()) {
-                log.info("check {} PERFECT", size);
-            } else {
-                log.info("check {} OK", size);
+        MemoryStatistic memoryStatistic = memory.getMemoryStatistic();
+        switch (memoryStatistic.getStatus()) {
+            case PERFECT:
+                if (map == null) {
+                    log.info("check {} is PERFECT", size);
+                    log.info("{}", combinations.toString());
+                    log.info("{}", combinations.getStatistics().toString());
+                    log.info("{}", memory.getMemoryStatistic().toString());
+                    log.info("{}", memory.toString());
+
+                }
+                return;
+            case OK:
+                if (map == null) {
+                    log.info("check {} just OK", size);
+                    log.info("{}", combinations.toString());
+                    log.info("{}", combinations.getStatistics().toString());
+                    log.info("{}", memory.getMemoryStatistic().toString());
+                    log.info("{}", memory.toString());
+                } else {
+                    map.put(size, memoryStatistic);
+                }
+                return;
+            default:
+                log.info("check {} NOT OK", size);
                 log.info("{}", combinations.toString());
                 log.info("{}", memory.toString());
-            }
-        } else {
-            log.info("check {} NOT OK", size);
-            log.info("{}", combinations.toString());
-            log.info("{}", memory.toString());
-        }
-        Assertions.assertTrue(memory.everyThingOneOrMore());
-    }
-
-    private void checkSquare(int dimension) {
-        int size = dimension * dimension;
-        Cycles combinations = new Combination().createCombinations(size);
-        Memory memory = new Memory(size).set(combinations);
-        if (memory.everyThingOne()) {
-            log.info("check {} {} OK", dimension, size);
-        } else {
-            log.info("check {} {} NOT OK", dimension, size);
+                throw new RuntimeException("no ok");
         }
     }
-
 }

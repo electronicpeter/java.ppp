@@ -1,5 +1,8 @@
 package de.electronicpeter.combination;
 
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -17,17 +20,6 @@ public class Memory {
                 mem[i][i2] = 0;
             }
         }
-    }
-
-    public boolean check(int first, Group group) {
-        for (Integer element : group) {
-            int i1 = Math.min(first, element);
-            int i2 = Math.max(first, element);
-            if (mem[i1][i2] > 0) {
-                return Boolean.TRUE;
-            }
-        }
-        return Boolean.FALSE;
     }
 
     public Memory set(Cycle cycle) {
@@ -51,13 +43,6 @@ public class Memory {
                 int i2 = group.get(remainderIndex);
                 set(i1, i2);
             }
-        }
-        return this;
-    }
-
-    public Memory set(Integer element, Group group) {
-        for (Integer i1 : group) {
-            set(i1, element);
         }
         return this;
     }
@@ -111,15 +96,25 @@ public class Memory {
         return Boolean.TRUE;
     }
 
-    public Integer countDoulbes() {
+    public MemoryStatistic getMemoryStatistic() {
+        MemoryStatistic memoryStatistic = new MemoryStatistic();
+        if (everyThingOne()) {
+            memoryStatistic.setStatus(MemoryStatistic.Status.PERFECT);
+        } else if (everyThingOneOrMore()) {
+            memoryStatistic.setStatus(MemoryStatistic.Status.OK);
+        } else {
+            memoryStatistic.setStatus(MemoryStatistic.Status.FAULTY);
+        }
+
         int count = 0;
         for (int row = 0; row < size; row++) {
             for (int col = row + 1; col < size; col++) {
                 if (mem[row][col] > 1) {
-                    count += mem[row][col];
+                    memoryStatistic.setNumberOfElementsWithMoreThanOneMatch(memoryStatistic.getNumberOfElementsWithMoreThanOneMatch()+1);
+                    memoryStatistic.setMaxNumberOfMatchings(Math.max(memoryStatistic.getMaxNumberOfMatchings(), mem[row][col]));
                 }
             }
         }
-        return count;
+        return memoryStatistic;
     }
 }
