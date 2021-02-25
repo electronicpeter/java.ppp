@@ -43,13 +43,19 @@ public class CombinationTest {
     }
 
     @Test
-    public void check9() {
-        check(9);
+    public void check7() {
+        log.info(new Square(7).toString());
+        check(7);
     }
 
     @Test
     public void check16() {
         check(16);
+    }
+
+    @Test
+    public void check17() {
+        check(17);
     }
 
     @Test
@@ -83,7 +89,6 @@ public class CombinationTest {
                     log.info("{}", combinations.getStatistics().toString());
                     log.info("{}", memory.getMemoryStatistic().toString());
                     log.info("{}", memory.toString());
-
                 }
                 return;
             case OK:

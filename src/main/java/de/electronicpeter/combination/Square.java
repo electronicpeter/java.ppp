@@ -23,13 +23,32 @@ public class Square {
         }
 
         array = new Integer[dimension][dimension];
-        for (int y = 0; y < dimension; y++) {
-            for (int x = 0; x < dimension; x++) {
+        int limit = 0;
+        if (!elements.isEmpty()) {
+            array[limit][limit] = elements.get(0);
+            elements.remove(0);
+        }
+        limit++;
+
+
+        while (!elements.isEmpty()) {
+            for (int y = 0; y < limit; y++) {
                 if (!elements.isEmpty()) {
-                    array[x][y] = elements.get(0);
+                    array[limit][y] = elements.get(0);
                     elements.remove(0);
                 }
             }
+            for (int x = 0; x < limit; x++) {
+                if (!elements.isEmpty()) {
+                    array[x][limit] = elements.get(0);
+                    elements.remove(0);
+                }
+            }
+            if (!elements.isEmpty()) {
+                array[limit][limit] = elements.get(0);
+                elements.remove(0);
+            }
+            limit++;
         }
     }
 
@@ -58,11 +77,11 @@ public class Square {
     }
 
     private boolean isPrime(int number) {
-        int primes[] = {2,3,5,7,11,13,17,19,23,29,31,37,41,43,47,53,59,61,67,71,73,79,83,89,97};
-        if (number > primes[primes.length-1]) {
-            throw new RuntimeException("no made for more than " + primes[primes.length-1]*primes[primes.length-1] + " elements");
+        int primes[] = {2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61, 67, 71, 73, 79, 83, 89, 97};
+        if (number > primes[primes.length - 1]) {
+            throw new RuntimeException("no made for more than " + primes[primes.length - 1] * primes[primes.length - 1] + " elements");
         }
-        for (int i = 0; i<primes.length; i++) {
+        for (int i = 0; i < primes.length; i++) {
             if (number == primes[i]) {
                 return true;
             }
