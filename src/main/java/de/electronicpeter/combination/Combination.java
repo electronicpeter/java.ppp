@@ -8,26 +8,53 @@ import java.util.List;
 @Slf4j
 public class Combination {
     public Cycles createCombinations(int numberOfElements) {
-        Square square = new Square(numberOfElements);
+        if (numberOfElements <= 20 && numberOfElements != 13) {
+            return createCombinations(numberOfElements, Square.FillAlgorithm.SQUARE);
+        }
+        while (true) {
+            Cycles cycles = createCombinations(numberOfElements, Square.FillAlgorithm.SPACED);
+            Memory memory = new Memory(numberOfElements).set(cycles);
+            if (memory.everyThingOne()) {
+                return cycles;
+            }
+            log.info("did not find perfect cylces for {}", numberOfElements);
+        }
+    }
+
+    public Cycles createCombinations(int numberOfElements, Square.FillAlgorithm fillAlgorithm) {
+        if (fillAlgorithm == null) {
+            return createCombinations(numberOfElements);
+        }
+        Square square = new Square(numberOfElements, fillAlgorithm);
         return addRemainingCycles(square);
     }
 
     private Cycles addRemainingCycles(Square square) {
+        Cycles cycles = new Cycles();
         Cycle firstCycle = new Cycle();
-        for (int y = 0; y < square.getDimension(); y++) {
-            Group group = new Group();
-            for (int x = 0; x < square.getDimension(); x++) {
-                group.add(square.get(x, y));
+        cycles.add(firstCycle);
+        {
+            Group singletonGroup = null;
+            for (int y = 0; y < square.getDimension(); y++) {
+                Group group = new Group();
+                for (int x = 0; x < square.getDimension(); x++) {
+                    group.add(square.get(x, y));
+                }
+                if (!group.isEmpty() && group.size() < 2) {
+                    if (firstCycle.isEmpty()) {
+                        // this can happen, if square algorithm is spaced
+                        singletonGroup = group;
+                    } else {
+                        firstCycle.stream().findAny().get().add(group);
+                    }
+                } else {
+                    firstCycle.add(group);
+                }
             }
-            if (!group.isEmpty() && group.size() < 2) {
-                firstCycle.stream().findAny().get().add(group);
-            } else {
-                firstCycle.add(group);
+            if (singletonGroup != null) {
+                firstCycle.stream().findAny().get().add(singletonGroup);
             }
         }
-
-        Cycles cycles = new Cycles();
-        cycles.add(firstCycle);
 
         /**
          * [   0   1   4   9  16]

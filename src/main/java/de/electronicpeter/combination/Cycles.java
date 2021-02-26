@@ -1,9 +1,11 @@
 package de.electronicpeter.combination;
 
-import lombok.NoArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 import java.util.ArrayList;
+import java.util.List;
 
+@Slf4j
 public class Cycles extends ArrayList<Cycle> {
     public CyclesStatistic getStatistics() {
         final CyclesStatistic cyclesStatistic = new CyclesStatistic();
@@ -19,10 +21,9 @@ public class Cycles extends ArrayList<Cycle> {
         return cyclesStatistic;
     }
 
-
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append("\n");
+        sb.append("cylces: " + this.size() + "\n");
         for (Cycle c : this) {
             sb.append(c);
         }

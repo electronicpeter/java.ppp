@@ -2,9 +2,11 @@ package de.electronicpeter.combination;
 
 import lombok.extern.slf4j.Slf4j;
 
+import java.nio.ReadOnlyBufferException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.Random;
 
 @Slf4j
 public class Square {
@@ -12,6 +14,13 @@ public class Square {
     private Integer dimension;
 
     public Square(Integer numberOfElements) {
+        this(numberOfElements, null);
+    }
+
+    public Square(Integer numberOfElements, FillAlgorithm fillAlgorithm) {
+        if (fillAlgorithm == null) {
+            fillAlgorithm = FillAlgorithm.SQUARE;
+        }
         List<Integer> elements = new ArrayList<>();
         for (int i = 0; i < numberOfElements; i++) {
             elements.add(i);
@@ -21,7 +30,47 @@ public class Square {
         while (!isPrime(dimension)) {
             dimension++;
         }
+        switch (fillAlgorithm) {
+            case SQUARE:
+                intiWithSquare(numberOfElements, elements);
+                return;
+            case ROW:
+                initWithRow(numberOfElements, elements);
+                return;
+            case SPACED:
+                initWithSpace(numberOfElements, elements);
+                return;
+            default:
+                throw new RuntimeException("missing case for " + fillAlgorithm);
+        }
+    }
 
+    private void initWithSpace(Integer numberOfElements, List<Integer> elements) {
+        array = new Integer[dimension][dimension];
+        Random random = new Random();
+        while (!elements.isEmpty()) {
+            int x = random.nextInt(dimension);
+            int y = random.nextInt(dimension);
+            if (array[x][y] == null) {
+                array[x][y] = elements.get(0);
+                elements.remove(0);
+            }
+        }
+    }
+
+    private void initWithRow(Integer numberOfElements, List<Integer> elements) {
+        array = new Integer[dimension][dimension];
+        for (int y = 0; y < dimension; y++) {
+            for (int x = 0; x < dimension; x++) {
+                if (!elements.isEmpty()) {
+                    array[x][y] = elements.get(0);
+                    elements.remove(0);
+                }
+            }
+        }
+    }
+
+    private void intiWithSquare(Integer numberOfElements, List<Integer> elements) {
         array = new Integer[dimension][dimension];
         int limit = 0;
         if (!elements.isEmpty()) {
@@ -29,7 +78,6 @@ public class Square {
             elements.remove(0);
         }
         limit++;
-
 
         while (!elements.isEmpty()) {
             for (int y = 0; y < limit; y++) {
@@ -87,5 +135,11 @@ public class Square {
             }
         }
         return false;
+    }
+
+    public static enum FillAlgorithm {
+        SQUARE,
+        ROW,
+        SPACED
     }
 }

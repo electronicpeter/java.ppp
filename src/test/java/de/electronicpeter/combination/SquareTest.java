@@ -7,7 +7,8 @@ import org.junit.jupiter.api.Test;
 public class SquareTest {
     @Test
     public void a() {
-        log.info(new Square(7).toString());
-        log.info(new Square(17).toString());
+        log.info(new Square(17, Square.FillAlgorithm.SQUARE).toString());
+        log.info(new Square(17, Square.FillAlgorithm.ROW).toString());
+        log.info(new Square(17, Square.FillAlgorithm.SPACED).toString());
     }
 }

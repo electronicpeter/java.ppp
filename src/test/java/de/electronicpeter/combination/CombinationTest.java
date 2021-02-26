@@ -10,17 +10,44 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Slf4j
 public class CombinationTest {
     @Test
     public void checkAll() {
+        for (Square.FillAlgorithm algorithm : Square.FillAlgorithm.values()) {
+            Map<Integer, MemoryStatistic> justOk = new HashMap<>();
+            for (int i = 4; i <= 1000; i++) {
+                check(i, justOk, algorithm);
+            }
+            log.info("in a 1000 groups made with {} found {} which are just ok", algorithm, justOk.keySet().size());
+            log.info("{}", justOk.keySet().stream().sorted().map(Object::toString).collect(Collectors.joining(", ")));
+            int keyMax = -1;
+            MemoryStatistic valueMax = null;
+            for (Integer key : justOk.keySet()) {
+                MemoryStatistic value = justOk.get(key);
+                if (keyMax == -1 || valueMax.getNumberOfElementsWithMoreThanOneMatch() < value.getNumberOfElementsWithMoreThanOneMatch()) {
+                    valueMax = value;
+                    keyMax = key;
+                }
+            }
+            log.info(" -> worst key {} with {} ", keyMax, valueMax.toString());
+            Cycles combinations = new Combination().createCombinations(keyMax);
+            log.info(" -> {}", combinations.getStatistics().toString());
+            Memory memory = new Memory(keyMax).set(combinations);
+            log.info(" -> {}", memory.getMemoryStatistic());
+        }
+    }
+
+    @Test
+    public void checkPerfect() {
         Map<Integer, MemoryStatistic> justOk = new HashMap<>();
         for (int i = 4; i <= 1000; i++) {
-            check(i, justOk);
+            check(i, justOk, null);
         }
         log.info("in a 1000 groups found {} which are just ok", justOk.keySet().size());
-        justOk.keySet().stream().sorted().forEach(key -> log.info("key {} {}", key, justOk.get(key)));
+        log.info("{}", justOk.keySet().stream().sorted().map(Object::toString).collect(Collectors.joining(", ")));
         int keyMax = -1;
         MemoryStatistic valueMax = null;
         for (Integer key : justOk.keySet()) {
@@ -35,11 +62,17 @@ public class CombinationTest {
         log.info(" -> {}", combinations.getStatistics().toString());
         Memory memory = new Memory(keyMax).set(combinations);
         log.info(" -> {}", memory.getMemoryStatistic());
+        Assertions.assertEquals(1, justOk.keySet().size());
     }
 
     @Test
     public void check4() {
         check(4);
+    }
+
+    @Test
+    public void check5() {
+        check(5);
     }
 
     @Test
@@ -54,13 +87,8 @@ public class CombinationTest {
     }
 
     @Test
-    public void check17() {
-        check(17);
-    }
-
-    @Test
-    public void check25() {
-        check(25);
+    public void check20() {
+        check(21);
     }
 
     @Test
@@ -77,8 +105,12 @@ public class CombinationTest {
         check(size, null);
     }
 
-    private void check(int size, Map<Integer, MemoryStatistic> map) {
-        Cycles combinations = new Combination().createCombinations(size);
+    private void check(int size, Square.FillAlgorithm fillAlgorithm) {
+        check(size, null, fillAlgorithm);
+    }
+
+    private void check(int size, Map<Integer, MemoryStatistic> map, Square.FillAlgorithm fillAlgorithm) {
+        Cycles combinations = new Combination().createCombinations(size, fillAlgorithm);
         Memory memory = new Memory(size).set(combinations);
         MemoryStatistic memoryStatistic = memory.getMemoryStatistic();
         switch (memoryStatistic.getStatus()) {
