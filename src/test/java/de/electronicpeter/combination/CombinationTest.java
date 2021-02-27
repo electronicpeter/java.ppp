@@ -5,11 +5,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.opentest4j.AssertionFailedError;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -43,62 +39,23 @@ public class CombinationTest {
     @Test
     public void checkPerfect() {
         Map<Integer, MemoryStatistic> justOk = new HashMap<>();
+        log.info("check from 4 till 1000");
         for (int i = 4; i <= 1000; i++) {
             check(i, justOk, null);
         }
-        log.info("in a 1000 groups found {} which are just ok", justOk.keySet().size());
-        log.info("{}", justOk.keySet().stream().sorted().map(Object::toString).collect(Collectors.joining(", ")));
-        int keyMax = -1;
-        MemoryStatistic valueMax = null;
-        for (Integer key : justOk.keySet()) {
-            MemoryStatistic value = justOk.get(key);
-            if (keyMax == -1 || valueMax.getNumberOfElementsWithMoreThanOneMatch() < value.getNumberOfElementsWithMoreThanOneMatch()) {
-                valueMax = value;
-                keyMax = key;
-            }
+        for (int largeRandoms = 0; largeRandoms<10; largeRandoms++) {
+            Random random = new Random();
+            int largeNumber = random.nextInt(10000);
+            log.info("check for {}", largeNumber);
+            check(largeNumber, justOk, null);
         }
-        log.info(" -> worst key {} with {} ", keyMax, valueMax.toString());
-        Cycles combinations = new Combination().createCombinations(keyMax);
-        log.info(" -> {}", combinations.getStatistics().toString());
-        Memory memory = new Memory(keyMax).set(combinations);
-        log.info(" -> {}", memory.getMemoryStatistic());
         Assertions.assertEquals(1, justOk.keySet().size());
+        log.info("did find perfect groups for all tested numbers");
     }
 
-    @Test
-    public void check4() {
-        check(4);
-    }
-
-    @Test
-    public void check5() {
-        check(5);
-    }
-
-    @Test
-    public void check7() {
-        log.info(new Square(7).toString());
-        check(7);
-    }
-
-    @Test
-    public void check16() {
-        check(16);
-    }
-
-    @Test
-    public void check20() {
-        check(21);
-    }
-
-    @Test
-    public void check36() {
-        check(36);
-    }
-
-    @Test
-    public void check77() {
-        check(77);
+    // @Test
+    public void checkAny() {
+        check(1973);
     }
 
     private void check(int size) {

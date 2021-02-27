@@ -2,6 +2,7 @@ package de.electronicpeter.combination;
 
 import java.util.ArrayList;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 public class Group extends ArrayList<Integer> {
     public void add(Group other) {
@@ -16,11 +17,9 @@ public class Group extends ArrayList<Integer> {
 
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append("[");
-        for (Integer element : this) {
-            sb.append(String.format("%4d", element));
-        }
-        sb.append("]\n");
+        sb.append("[<");
+        sb.append(this.stream().map(Object::toString).collect(Collectors.joining(", ")));
+        sb.append(">]\n");
         return sb.toString();
     }
 }

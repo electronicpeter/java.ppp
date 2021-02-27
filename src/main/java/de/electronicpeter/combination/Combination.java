@@ -17,7 +17,7 @@ public class Combination {
             if (memory.everyThingOne()) {
                 return cycles;
             }
-            log.info("did not find perfect cylces for {}", numberOfElements);
+            log.info("repeat search for perfect cylces for {}", numberOfElements);
         }
     }
 

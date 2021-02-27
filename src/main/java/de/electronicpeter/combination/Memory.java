@@ -1,22 +1,19 @@
 package de.electronicpeter.combination;
 
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 public class Memory {
-    private int size;
+    private int dimension;
     private Integer[][] mem;
 
-    public Memory(int size) {
-        this.size = size;
+    public Memory(int dimension) {
+        this.dimension = dimension;
 
-        mem = new Integer[size][size];
-        for (int i = 0; i < size; i++) {
-            mem[i] = new Integer[size];
-            for (int i2 = 0; i2 < size; i2++) {
+        mem = new Integer[dimension][dimension];
+        for (int i = 0; i < dimension; i++) {
+            mem[i] = new Integer[dimension];
+            for (int i2 = 0; i2 < dimension; i2++) {
                 mem[i][i2] = 0;
             }
         }
@@ -57,17 +54,19 @@ public class Memory {
     }
 
     public String toString() {
+        int l = ("" + (dimension - 1)).length() + 1;
+
         StringBuilder sb = new StringBuilder();
         sb.append("\n");
-        sb.append("    ");
-        for (int col = 0; col < size; col++) {
-            sb.append(String.format("%4d", col));
+        sb.append(String.format("%" + l +"s", " "));
+        for (int col = 0; col < dimension; col++) {
+            sb.append(String.format("%" + l + "s", col));
         }
         sb.append("\n");
-        for (int row = 0; row < size; row++) {
-            sb.append(String.format("%4d", row));
-            for (int col = 0; col < size; col++) {
-                sb.append(mem[row][col] > 0 ? mem[row][col] == 1 ? "   ." : String.format("%4d", mem[row][col]) : "    ");
+        for (int row = 0; row < dimension; row++) {
+            sb.append(String.format("%" + l + "s", row));
+            for (int col = 0; col < dimension; col++) {
+                sb.append(String.format("%" + l + "s", mem[row][col] > 0 ? mem[row][col] == 1 ? "." : mem[row][col] : " "));
             }
             sb.append("\n");
         }
@@ -75,8 +74,8 @@ public class Memory {
     }
 
     public Boolean everyThingOne() {
-        for (int row = 0; row < size; row++) {
-            for (int col = row + 1; col < size; col++) {
+        for (int row = 0; row < dimension; row++) {
+            for (int col = row + 1; col < dimension; col++) {
                 if (mem[row][col] != 1) {
                     return Boolean.FALSE;
                 }
@@ -86,8 +85,8 @@ public class Memory {
     }
 
     public Boolean everyThingOneOrMore() {
-        for (int row = 0; row < size; row++) {
-            for (int col = row + 1; col < size; col++) {
+        for (int row = 0; row < dimension; row++) {
+            for (int col = row + 1; col < dimension; col++) {
                 if (mem[row][col] < 1) {
                     return Boolean.FALSE;
                 }
@@ -107,8 +106,8 @@ public class Memory {
         }
 
         int count = 0;
-        for (int row = 0; row < size; row++) {
-            for (int col = row + 1; col < size; col++) {
+        for (int row = 0; row < dimension; row++) {
+            for (int col = row + 1; col < dimension; col++) {
                 if (mem[row][col] > 1) {
                     memoryStatistic.setNumberOfElementsWithMoreThanOneMatch(memoryStatistic.getNumberOfElementsWithMoreThanOneMatch()+1);
                     memoryStatistic.setMaxNumberOfMatchings(Math.max(memoryStatistic.getMaxNumberOfMatchings(), mem[row][col]));
