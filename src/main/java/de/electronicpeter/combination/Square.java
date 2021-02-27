@@ -35,9 +35,6 @@ public class Square {
             case SQUARE:
                 intiWithSquare(numberOfElements, elements);
                 return;
-            case ROW:
-                initWithRow(numberOfElements, elements);
-                return;
             case SPACED:
                 initWithSpace(numberOfElements, elements);
                 return;
@@ -54,17 +51,6 @@ public class Square {
             if (array[x][y] == null) {
                 array[x][y] = elements.get(0);
                 elements.remove(0);
-            }
-        }
-    }
-
-    private void initWithRow(Integer numberOfElements, List<Integer> elements) {
-        for (int y = 0; y < dimension; y++) {
-            for (int x = 0; x < dimension; x++) {
-                if (!elements.isEmpty()) {
-                    array[x][y] = elements.get(0);
-                    elements.remove(0);
-                }
             }
         }
     }
@@ -138,7 +124,6 @@ public class Square {
 
     public static enum FillAlgorithm {
         SQUARE,
-        ROW,
         SPACED
     }
 }
