@@ -14,8 +14,10 @@ public class Cycle extends ArrayList<Group> {
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append("\n");
+        int i = 0;
         for (Group g : this) {
-            sb.append(g);
+            sb.append("group " + i + " " + g);
+            i++;
         }
         return sb.toString();
     }

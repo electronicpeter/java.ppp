@@ -24,8 +24,10 @@ public class Cycles extends ArrayList<Cycle> {
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append("cylces: " + this.size() + "\n");
+        int i = 0;
         for (Cycle c : this) {
-            sb.append(c);
+            sb.append("\ncycle " + i + " " + c);
+            i++;
         }
         return sb.toString();
     }
