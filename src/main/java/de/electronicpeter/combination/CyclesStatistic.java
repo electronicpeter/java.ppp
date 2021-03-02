@@ -2,10 +2,11 @@ package de.electronicpeter.combination;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
-@NoArgsConstructor
+@RequiredArgsConstructor
 @Getter
 @Setter
 @ToString
@@ -15,4 +16,5 @@ public class CyclesStatistic {
     private int minNumberOfGroups = Integer.MAX_VALUE;
     private int maxElementsInLargestGroup = Integer.MIN_VALUE;
     private int minElementInSmallestGroup = Integer.MAX_VALUE;
+    private final Square.FillAlgorithm fillAlgorithm;
 }

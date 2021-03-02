@@ -1,14 +1,17 @@
 package de.electronicpeter.combination;
 
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.ArrayList;
-import java.util.List;
 
 @Slf4j
+@RequiredArgsConstructor
 public class Cycles extends ArrayList<Cycle> {
+    private final Square.FillAlgorithm fillAlgorithm;
+
     public CyclesStatistic getStatistics() {
-        final CyclesStatistic cyclesStatistic = new CyclesStatistic();
+        final CyclesStatistic cyclesStatistic = new CyclesStatistic(fillAlgorithm);
         cyclesStatistic.setNumberOfCycles(this.size());
         this.stream().forEach(cycle -> {
             cyclesStatistic.setMaxNumberOfGroups(Math.max(cyclesStatistic.getMaxNumberOfGroups(), cycle.size()));

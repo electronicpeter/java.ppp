@@ -75,7 +75,43 @@ public class CombinationTest {
 
     @Test
     public void checkAny() {
-        check(5);
+        check(11, Square.FillAlgorithm.SQUARE);
+        check(11, Square.FillAlgorithm.SQUARE2);
+        check(11, Square.FillAlgorithm.ROW);
+        check(11, Square.FillAlgorithm.CIRCLE);
+        check(11, Square.FillAlgorithm.SPACED);
+    }
+
+    @Test
+    public void checkBestDeterministic() {
+        int limit = 100;
+        Map<Square.FillAlgorithm, List<Integer>> exceptions = new HashMap<>();
+        for (Square.FillAlgorithm algorithm : Square.FillAlgorithm.values()) {
+
+            Map<Integer, MemoryStatistic> justOk = new HashMap<>();
+            for (int i = 4; i <= limit; i++) {
+                check(i, justOk, algorithm);
+            }
+            exceptions.put(algorithm, justOk.keySet().stream().sorted().collect(Collectors.toList()));
+        }
+        // preferred algorithm is square, so find other where square is not good enough
+        List<Integer> squareExceptions = exceptions.get(Square.FillAlgorithm.SQUARE);
+        final List<Integer> doneBySquare2 = new ArrayList<>();
+        final List<Integer> doneByRow = new ArrayList<>();
+
+        squareExceptions.forEach(el -> {
+            if (!exceptions.get(Square.FillAlgorithm.SQUARE2).contains(el)) {
+                doneBySquare2.add(el);
+            } else if (!exceptions.get(Square.FillAlgorithm.ROW).contains(el)) {
+                doneByRow.add(el);
+            }
+        });
+        log.info("done by row        {}", doneByRow.stream().map(Object::toString).collect(Collectors.joining(", ")));
+        log.info("done by square2    {}", doneBySquare2.stream().map(Object::toString).collect(Collectors.joining(", ")));
+        log.info("not done by square {}", squareExceptions.stream().map(Object::toString).collect(Collectors.joining(", ")));
+        squareExceptions.removeAll(doneByRow);
+        squareExceptions.removeAll(doneBySquare2);
+        log.info("not best algorithm {}", squareExceptions.stream().map(Object::toString).collect(Collectors.joining(", ")));
     }
 
     private void check(int size) {

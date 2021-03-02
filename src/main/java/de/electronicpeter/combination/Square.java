@@ -13,6 +13,7 @@ public class Square {
     private Integer[][] array;
     private Integer dimension;
     private Integer numberOfElements;
+    private FillAlgorithm fillAlgorithm;
 
     public Square(Integer numberOfElements) {
         this(numberOfElements, null);
@@ -22,6 +23,7 @@ public class Square {
         if (fillAlgorithm == null) {
             fillAlgorithm = FillAlgorithm.SQUARE;
         }
+        this.fillAlgorithm = fillAlgorithm;
         this.numberOfElements = numberOfElements;
         List<Integer> elements = new ArrayList<>();
         for (int i = 0; i < numberOfElements; i++) {
@@ -61,6 +63,8 @@ public class Square {
     public Integer getNumberOfElements() {
         return numberOfElements;
     }
+
+    public FillAlgorithm getFillAlgorithm() { return fillAlgorithm; }
 
     public Optional<Integer> get(int x, int y) {
         if (array[x][y] == null) {

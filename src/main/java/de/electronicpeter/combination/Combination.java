@@ -3,28 +3,24 @@ package de.electronicpeter.combination;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Slf4j
 public class Combination {
+    static int forRow[] = {10, 13, 17, 26, 37, 50, 65, 82};
+    static int forSquare2[] = {21, 31, 43, 57, 73, 91};
+
     public Cycles createCombinations(int numberOfElements) {
-        switch (numberOfElements) {
-            case 16:
-            case 51:
-            case 30:
-            case 52:
-            case 53:
-            case 32:
-            case 29: return createCombinations(numberOfElements, Square.FillAlgorithm.SQUARE);
-            case 26:
-            case 28:
-            case 50:
-            case 27: return createCombinations(numberOfElements, Square.FillAlgorithm.ROW);
-            case 31: return createCombinations(numberOfElements, Square.FillAlgorithm.SQUARE2);
-            default:
-                if (numberOfElements <= 20) {
+        if (numberOfElements <= 100) {
+            if (Arrays.stream(forRow).anyMatch(el -> el==numberOfElements)) {
                     return createCombinations(numberOfElements, Square.FillAlgorithm.ROW);
-                }
+            }
+            if (Arrays.stream(forSquare2).anyMatch(el -> el==numberOfElements)) {
+                return createCombinations(numberOfElements, Square.FillAlgorithm.SQUARE2);
+            }
+            return createCombinations(numberOfElements, Square.FillAlgorithm.SQUARE);
         }
         while (true) {
             Cycles cycles = createCombinations(numberOfElements, Square.FillAlgorithm.SPACED);
@@ -45,7 +41,7 @@ public class Combination {
     }
 
     private Cycles addRemainingCycles(Square square) {
-        Cycles cycles = new Cycles();
+        Cycles cycles = new Cycles(square.getFillAlgorithm());
         {
             Cycle firstCycle = new Cycle();
             List<Group> singletonGroups = new ArrayList<>();
