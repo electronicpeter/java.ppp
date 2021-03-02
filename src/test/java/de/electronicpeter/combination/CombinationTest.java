@@ -49,13 +49,14 @@ public class CombinationTest {
             log.info("check for {}", largeNumber);
             check(largeNumber, justOk, null);
         }
+        log.info("{}", justOk.keySet().stream().sorted().map(Object::toString).collect(Collectors.joining(", ")));
         Assertions.assertEquals(1, justOk.keySet().size());
         log.info("did find perfect groups for all tested numbers");
     }
 
     @Test
     public void checkAny() {
-        check(11*11);
+        check(5, Square.FillAlgorithm.SPACED);
     }
 
     private void check(int size) {

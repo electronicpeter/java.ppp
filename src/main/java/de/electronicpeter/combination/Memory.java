@@ -34,6 +34,9 @@ public class Memory {
     }
 
     public Memory set(Group group) {
+        if (group.size() == 1) {
+            throw new MemoryException("group just contains one element");
+        }
         for (int groupIndex = 0; groupIndex < group.size(); groupIndex++) {
             int i1 = group.get(groupIndex);
             for (int remainderIndex = groupIndex + 1; remainderIndex < group.size(); remainderIndex++) {
@@ -58,7 +61,7 @@ public class Memory {
 
         StringBuilder sb = new StringBuilder();
         sb.append("\n");
-        sb.append(String.format("%" + l +"s", " "));
+        sb.append(String.format("%" + l + "s", " "));
         for (int col = 0; col < dimension; col++) {
             sb.append(String.format("%" + l + "s", col));
         }
@@ -109,11 +112,17 @@ public class Memory {
         for (int row = 0; row < dimension; row++) {
             for (int col = row + 1; col < dimension; col++) {
                 if (mem[row][col] > 1) {
-                    memoryStatistic.setNumberOfElementsWithMoreThanOneMatch(memoryStatistic.getNumberOfElementsWithMoreThanOneMatch()+1);
+                    memoryStatistic.setNumberOfElementsWithMoreThanOneMatch(memoryStatistic.getNumberOfElementsWithMoreThanOneMatch() + 1);
                     memoryStatistic.setMaxNumberOfMatchings(Math.max(memoryStatistic.getMaxNumberOfMatchings(), mem[row][col]));
                 }
             }
         }
         return memoryStatistic;
+    }
+
+    public static class MemoryException extends RuntimeException {
+        public MemoryException(String message) {
+            super(message);
+        }
     }
 }

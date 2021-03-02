@@ -7,6 +7,9 @@ public class Cycle extends ArrayList<Group> {
     @Override
     public boolean add(Group group) {
         if (!group.isEmpty()) {
+            if (group.size() == 1) {
+                throw new CycleException("Groups with one Element are not allowed");
+            }
             return super.add(group);
         }
         return false;
@@ -20,5 +23,11 @@ public class Cycle extends ArrayList<Group> {
             i++;
         }
         return sb.toString();
+    }
+
+    public static class CycleException extends RuntimeException {
+        public CycleException(String message) {
+            super(message);
+        }
     }
 }

@@ -34,16 +34,16 @@ public class Combination {
         Cycle firstCycle = new Cycle();
         cycles.add(firstCycle);
         {
-            Group singletonGroup = null;
+            List<Group> singletonGroups = new ArrayList<>();
             for (int y = 0; y < square.getDimension(); y++) {
                 Group group = new Group();
                 for (int x = 0; x < square.getDimension(); x++) {
                     group.add(square.get(x, y));
                 }
-                if (!group.isEmpty() && group.size() < 2) {
+                if (group.size() == 1) {
                     if (firstCycle.isEmpty()) {
                         // this can happen, if square algorithm is spaced
-                        singletonGroup = group;
+                        singletonGroups.add(group);
                     } else {
                         firstCycle.stream().findAny().get().add(group);
                     }
@@ -51,8 +51,16 @@ public class Combination {
                     firstCycle.add(group);
                 }
             }
-            if (singletonGroup != null) {
-                firstCycle.stream().findAny().get().add(singletonGroup);
+            if (!singletonGroups.isEmpty()) {
+                if (singletonGroups.size() > 1) {
+                    Group newGroup = new Group();
+                    singletonGroups.stream().forEach(el -> newGroup.addAll(el));
+                    log.info("found more than one singleton group, created new group {}", newGroup.toString());
+                    firstCycle.add(newGroup);
+                } else {
+                    log.info("peter is bloed");
+                    firstCycle.stream().findAny().get().add(singletonGroups.get(0));
+                }
             }
         }
 
@@ -66,14 +74,36 @@ public class Combination {
 
         for (int shift = 0; shift < square.getDimension(); shift++) {
             Cycle cycle = new Cycle();
+            List<Group> singletonGroups = new ArrayList<>();
             for (int x = 0; x < square.getDimension(); x++) {
                 Group g = new Group();
                 for (int y = 0; y < square.getDimension(); y++) {
                     int modX = (x + y * shift) % square.getDimension();
                     g.add(square.get(modX, y));
                 }
-                cycle.add(g);
+                if (g.size() == 1) {
+                    if (cycle.isEmpty()) {
+                        // this can happen, if square algorithm is spaced
+                        singletonGroups.add(g);
+                    } else {
+                        cycle.stream().findAny().get().add(g);
+                    }
+                } else {
+                    cycle.add(g);
+                }
             }
+            if (!singletonGroups.isEmpty()) {
+                if (singletonGroups.size() > 1) {
+                    Group newGroup = new Group();
+                    singletonGroups.stream().forEach(el -> newGroup.addAll(el));
+                    log.info("2found more than one singleton group, created new group {}", newGroup.toString());
+                    cycle.add(newGroup);
+                } else {
+                    log.info("peter is extream bloed");
+                    cycle.stream().findAny().get().add(singletonGroups.get(0));
+                }
+            }
+
             cycles.add(cycle);
         }
 
