@@ -8,8 +8,23 @@ import java.util.List;
 @Slf4j
 public class Combination {
     public Cycles createCombinations(int numberOfElements) {
-        if (numberOfElements <= 20 && numberOfElements != 13) {
-            return createCombinations(numberOfElements, Square.FillAlgorithm.SQUARE);
+        switch (numberOfElements) {
+            case 16:
+            case 51:
+            case 30:
+            case 52:
+            case 53:
+            case 32:
+            case 29: return createCombinations(numberOfElements, Square.FillAlgorithm.SQUARE);
+            case 26:
+            case 28:
+            case 50:
+            case 27: return createCombinations(numberOfElements, Square.FillAlgorithm.ROW);
+            case 31: return createCombinations(numberOfElements, Square.FillAlgorithm.SQUARE2);
+            default:
+                if (numberOfElements <= 20) {
+                    return createCombinations(numberOfElements, Square.FillAlgorithm.ROW);
+                }
         }
         while (true) {
             Cycles cycles = createCombinations(numberOfElements, Square.FillAlgorithm.SPACED);
@@ -31,9 +46,8 @@ public class Combination {
 
     private Cycles addRemainingCycles(Square square) {
         Cycles cycles = new Cycles();
-        Cycle firstCycle = new Cycle();
-        cycles.add(firstCycle);
         {
+            Cycle firstCycle = new Cycle();
             List<Group> singletonGroups = new ArrayList<>();
             for (int y = 0; y < square.getDimension(); y++) {
                 Group group = new Group();
@@ -41,27 +55,13 @@ public class Combination {
                     group.add(square.get(x, y));
                 }
                 if (group.size() == 1) {
-                    if (firstCycle.isEmpty()) {
-                        // this can happen, if square algorithm is spaced
-                        singletonGroups.add(group);
-                    } else {
-                        firstCycle.stream().findAny().get().add(group);
-                    }
+                    singletonGroups.add(group);
                 } else {
                     firstCycle.add(group);
                 }
             }
-            if (!singletonGroups.isEmpty()) {
-                if (singletonGroups.size() > 1) {
-                    Group newGroup = new Group();
-                    singletonGroups.stream().forEach(el -> newGroup.addAll(el));
-                    log.info("found more than one singleton group, created new group {}", newGroup.toString());
-                    firstCycle.add(newGroup);
-                } else {
-                    log.info("peter is bloed");
-                    firstCycle.stream().findAny().get().add(singletonGroups.get(0));
-                }
-            }
+            handleSingletonGroups(square, cycles, firstCycle, singletonGroups);
+            cycles.add(firstCycle);
         }
 
         /**
@@ -76,38 +76,36 @@ public class Combination {
             Cycle cycle = new Cycle();
             List<Group> singletonGroups = new ArrayList<>();
             for (int x = 0; x < square.getDimension(); x++) {
-                Group g = new Group();
+                Group group = new Group();
                 for (int y = 0; y < square.getDimension(); y++) {
                     int modX = (x + y * shift) % square.getDimension();
-                    g.add(square.get(modX, y));
+                    group.add(square.get(modX, y));
                 }
-                if (g.size() == 1) {
-                    if (cycle.isEmpty()) {
-                        // this can happen, if square algorithm is spaced
-                        singletonGroups.add(g);
-                    } else {
-                        cycle.stream().findAny().get().add(g);
-                    }
+                if (group.size() == 1) {
+                    singletonGroups.add(group);
                 } else {
-                    cycle.add(g);
+                    cycle.add(group);
                 }
             }
-            if (!singletonGroups.isEmpty()) {
-                if (singletonGroups.size() > 1) {
-                    Group newGroup = new Group();
-                    singletonGroups.stream().forEach(el -> newGroup.addAll(el));
-                    log.info("2found more than one singleton group, created new group {}", newGroup.toString());
-                    cycle.add(newGroup);
-                } else {
-                    log.info("peter is extream bloed");
-                    cycle.stream().findAny().get().add(singletonGroups.get(0));
-                }
-            }
-
+            handleSingletonGroups(square, cycles, cycle, singletonGroups);
             cycles.add(cycle);
         }
 
         return cycles;
+    }
+
+    private void handleSingletonGroups(Square square, Cycles cycles, Cycle cycle, List<Group> singletonGroups) {
+        if (!singletonGroups.isEmpty()) {
+            if (singletonGroups.size() > 1) {
+                Group newGroup = new Group();
+                singletonGroups.stream().forEach(el -> newGroup.addAll(el));
+                log.debug("for {} elements found more than one singleton group in for cycle {}. Added new group {}", square.getNumberOfElements(), cycles.size() + 1, newGroup.toString());
+                cycle.add(newGroup);
+            } else {
+                log.debug("add singleton group to firstCycle");
+                cycle.stream().findAny().get().add(singletonGroups.get(0));
+            }
+        }
     }
 
 

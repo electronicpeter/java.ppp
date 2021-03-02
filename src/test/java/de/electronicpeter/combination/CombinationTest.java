@@ -37,26 +37,45 @@ public class CombinationTest {
     }
 
     @Test
+    public void checkCritical() {
+        int critical = 200;
+        for (Square.FillAlgorithm algorithm : Square.FillAlgorithm.values()) {
+            Map<Integer, MemoryStatistic> justOk = new HashMap<>();
+            for (int i = 4; i <= critical; i++) {
+                check(i, justOk, algorithm);
+            }
+            log.info("in a {} groups made with {} found {} which are just ok {}", critical, algorithm, justOk.keySet().size(),
+                    justOk.keySet().stream().sorted().map(Object::toString).collect(Collectors.joining(", ")));
+        }
+        Map<Integer, MemoryStatistic> justOk = new HashMap<>();
+        for (int i = 4; i <= critical; i++) {
+            check(i, justOk, null);
+        }
+        log.info("in a {} groups made with best algorithm found {} which are just ok {}", critical, justOk.keySet().size(),
+                justOk.keySet().stream().sorted().map(Object::toString).collect(Collectors.joining(", ")));
+    }
+
+    @Test
     public void checkPerfect() {
         Map<Integer, MemoryStatistic> justOk = new HashMap<>();
         log.info("check from 4 till 1000");
         for (int i = 4; i <= 1000; i++) {
             check(i, justOk, null);
         }
-        for (int largeRandoms = 0; largeRandoms<10; largeRandoms++) {
+        for (int largeRandoms = 0; largeRandoms < 10; largeRandoms++) {
             Random random = new Random();
             int largeNumber = random.nextInt(10000);
             log.info("check for {}", largeNumber);
             check(largeNumber, justOk, null);
         }
         log.info("{}", justOk.keySet().stream().sorted().map(Object::toString).collect(Collectors.joining(", ")));
-        Assertions.assertEquals(1, justOk.keySet().size());
+        Assertions.assertEquals(3, justOk.keySet().size());
         log.info("did find perfect groups for all tested numbers");
     }
 
     @Test
     public void checkAny() {
-        check(5, Square.FillAlgorithm.SPACED);
+        check(5);
     }
 
     private void check(int size) {

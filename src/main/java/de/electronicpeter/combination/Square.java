@@ -12,6 +12,7 @@ import java.util.Random;
 public class Square {
     private Integer[][] array;
     private Integer dimension;
+    private Integer numberOfElements;
 
     public Square(Integer numberOfElements) {
         this(numberOfElements, null);
@@ -21,6 +22,7 @@ public class Square {
         if (fillAlgorithm == null) {
             fillAlgorithm = FillAlgorithm.SQUARE;
         }
+        this.numberOfElements = numberOfElements;
         List<Integer> elements = new ArrayList<>();
         for (int i = 0; i < numberOfElements; i++) {
             elements.add(i);
@@ -35,12 +37,50 @@ public class Square {
             case SQUARE:
                 intiWithSquare(numberOfElements, elements);
                 return;
+            case SQUARE2:
+                intiWithSquare2(numberOfElements, elements);
+                return;
+            case ROW:
+                initWithRow(numberOfElements, elements);
+                return;
             case SPACED:
                 initWithSpace(numberOfElements, elements);
+                return;
+            case CIRCLE:
+                initWithCircle(numberOfElements, elements);
                 return;
             default:
                 throw new RuntimeException("missing case for " + fillAlgorithm);
         }
+    }
+
+    public Integer getDimension() {
+        return dimension;
+    }
+
+    public Integer getNumberOfElements() {
+        return numberOfElements;
+    }
+
+    public Optional<Integer> get(int x, int y) {
+        if (array[x][y] == null) {
+            return Optional.empty();
+        }
+        return Optional.of(array[x][y]);
+    }
+
+    public String toString() {
+        int l = ("" + (dimension*dimension - 1)).length() + 1;
+        StringBuilder sb = new StringBuilder();
+        sb.append("\n");
+        for (int y = 0; y < dimension; y++) {
+            for (int x = 0; x < dimension; x++) {
+                sb.append(String.format("%" + l +"s", array[x][y] != null ? array[x][y] : "."));
+            }
+            sb.append("\n");
+        }
+        sb.append("\n");
+        return sb.toString();
     }
 
     private void initWithSpace(Integer numberOfElements, List<Integer> elements) {
@@ -51,6 +91,17 @@ public class Square {
             if (array[x][y] == null) {
                 array[x][y] = elements.get(0);
                 elements.remove(0);
+            }
+        }
+    }
+
+    private void initWithRow(Integer numberOfElements, List<Integer> elements) {
+        for (int y = 0; y < dimension; y++) {
+            for (int x = 0; x < dimension; x++) {
+                if (!elements.isEmpty()) {
+                    array[x][y] = elements.get(0);
+                    elements.remove(0);
+                }
             }
         }
     }
@@ -84,24 +135,89 @@ public class Square {
         }
     }
 
-    public Integer getDimension() {
-        return dimension;
-    }
-
-    public Optional<Integer> get(int x, int y) {
-        if (array[x][y] == null) {
-            return Optional.empty();
+    private void intiWithSquare2(Integer numberOfElements, List<Integer> elements) {
+        int limit = 0;
+        if (!elements.isEmpty()) {
+            array[limit][limit] = elements.get(0);
+            elements.remove(0);
         }
-        return Optional.of(array[x][y]);
+        limit++;
+
+        while (!elements.isEmpty()) {
+            for (int y = 0; y < limit; y++) {
+                if (!elements.isEmpty()) {
+                    array[limit][y] = elements.get(0);
+                    elements.remove(0);
+                }
+                if (!elements.isEmpty()) {
+                    array[y][limit] = elements.get(0);
+                    elements.remove(0);
+                }
+            }
+            if (!elements.isEmpty()) {
+                array[limit][limit] = elements.get(0);
+                elements.remove(0);
+            }
+            limit++;
+        }
+    }
+    private void initWithCircle(Integer numberOfElements, List<Integer> elements) {
+        int x = dimension / 2;
+        int y = dimension / 2;
+        if (dimension == 2) {
+            x = y = 0;
+        }
+        if (!elements.isEmpty()) {
+            array[x][y] = elements.get(0);
+            elements.remove(0);
+        }
+        int limit = 1;
+        while (!elements.isEmpty()) {
+            // right
+            for (int i = 0; i<limit; i++) {
+                if (!elements.isEmpty()) {
+                    x++;
+                    array[x][y] = elements.get(0);
+                    elements.remove(0);
+                }
+            }
+            // down
+            for (int i = 0; i<limit; i++) {
+                if (!elements.isEmpty()) {
+                    y++;
+                    array[x][y] = elements.get(0);
+                    elements.remove(0);
+                }
+            }
+            limit++;
+            // left
+            for (int i = 0; i<limit; i++) {
+                if (!elements.isEmpty()) {
+                    x--;
+                    array[x][y] = elements.get(0);
+                    elements.remove(0);
+                }
+            }
+            // up
+            for (int i = 0; i<limit; i++) {
+                if (!elements.isEmpty()) {
+                    y--;
+                    array[x][y] = elements.get(0);
+                    elements.remove(0);
+                }
+            }
+            limit++;
+        }
     }
 
-    public String toString() {
+
+    public String toPrimeString() {
         int l = ("" + (dimension*dimension - 1)).length() + 1;
         StringBuilder sb = new StringBuilder();
         sb.append("\n");
         for (int y = 0; y < dimension; y++) {
             for (int x = 0; x < dimension; x++) {
-                sb.append(String.format("%" + l +"s", array[x][y] != null ? array[x][y] : "."));
+                sb.append(String.format("%" + l +"s", array[x][y] != null && isPrime(array[x][y]) ? array[x][y] : "."));
             }
             sb.append("\n");
         }
@@ -124,6 +240,9 @@ public class Square {
 
     public static enum FillAlgorithm {
         SQUARE,
+        SQUARE2,
+        CIRCLE,
+        ROW,
         SPACED
     }
 }
