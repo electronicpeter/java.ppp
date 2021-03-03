@@ -8,7 +8,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 @Slf4j
-public class CombinationTest {
+public class PermutationTest {
     @Test
     public void checkAll() {
         for (Square.FillAlgorithm algorithm : Square.FillAlgorithm.values()) {
@@ -28,10 +28,9 @@ public class CombinationTest {
                 }
             }
             log.info(" -> worst key {} with {} ", keyMax, valueMax.toString());
-            Cycles combinations = new Combination().createCombinations(keyMax);
+            Cycles combinations = new Permutation().findPerfectPermutation(keyMax);
             log.info(" -> {}", combinations.getStatistics().toString());
-            Memory memory = new Memory(keyMax).set(combinations);
-            log.info(" -> {}", memory.getMemoryStatistic());
+            log.info(" -> {}", new Memory(combinations).getMemoryStatistic());
         }
     }
 
@@ -122,8 +121,8 @@ public class CombinationTest {
     }
 
     private void check(int size, Map<Integer, MemoryStatistic> map, Square.FillAlgorithm fillAlgorithm) {
-        Cycles combinations = new Combination().createCombinations(size, fillAlgorithm);
-        Memory memory = new Memory(size).set(combinations);
+        Cycles combinations = new Permutation().findPerfectPermutation(size, fillAlgorithm);
+        Memory memory = new Memory(combinations);
         MemoryStatistic memoryStatistic = memory.getMemoryStatistic();
         switch (memoryStatistic.getStatus()) {
             case PERFECT:

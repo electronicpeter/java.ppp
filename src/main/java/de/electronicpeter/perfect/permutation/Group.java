@@ -19,7 +19,7 @@ public class Group extends ArrayList<Integer> {
         StringBuilder sb = new StringBuilder();
         sb.append("[");
         sb.append(this.stream().map(Object::toString).collect(Collectors.joining(", ")));
-        sb.append("]\n");
+        sb.append("]");
         return sb.toString();
     }
 }

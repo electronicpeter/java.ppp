@@ -6,10 +6,23 @@ import lombok.extern.slf4j.Slf4j;
 import java.util.ArrayList;
 
 @Slf4j
-@RequiredArgsConstructor
 public class Cycles extends ArrayList<Cycle> {
-    private final Square.FillAlgorithm fillAlgorithm;
+    private Integer dimension;
+    private Square.FillAlgorithm fillAlgorithm;
+    private Integer numberOfElements;
 
+    public Cycles(Square square) {
+        dimension = square.getDimension();
+        fillAlgorithm = square.getFillAlgorithm();
+        numberOfElements = square.getNumberOfElements();
+    }
+
+    public Integer getNumberOfElements() {
+        return numberOfElements;
+    }
+    public Square.FillAlgorithm getFillAlgorithm() {
+        return fillAlgorithm;
+    }
     public CyclesStatistic getStatistics() {
         final CyclesStatistic cyclesStatistic = new CyclesStatistic(fillAlgorithm);
         cyclesStatistic.setNumberOfCycles(this.size());

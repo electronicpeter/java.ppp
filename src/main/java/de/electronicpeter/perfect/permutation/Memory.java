@@ -7,8 +7,9 @@ public class Memory {
     private int dimension;
     private Integer[][] mem;
 
-    public Memory(int dimension) {
-        this.dimension = dimension;
+
+    public Memory (Cycles cycles) {
+        this.dimension = cycles.getNumberOfElements();
 
         mem = new Integer[dimension][dimension];
         for (int i = 0; i < dimension; i++) {
@@ -17,43 +18,10 @@ public class Memory {
                 mem[i][i2] = 0;
             }
         }
-    }
 
-    public Memory set(Cycle cycle) {
-        for (Group group : cycle) {
-            set(group);
-        }
-        return this;
-    }
-
-    public Memory set(Cycles cycles) {
         for (Cycle cycle : cycles) {
             set(cycle);
         }
-        return this;
-    }
-
-    public Memory set(Group group) {
-        if (group.size() == 1) {
-            throw new MemoryException("group just contains one element");
-        }
-        for (int groupIndex = 0; groupIndex < group.size(); groupIndex++) {
-            int i1 = group.get(groupIndex);
-            for (int remainderIndex = groupIndex + 1; remainderIndex < group.size(); remainderIndex++) {
-                int i2 = group.get(remainderIndex);
-                set(i1, i2);
-            }
-        }
-        return this;
-    }
-
-    public Memory set(Integer element1, Integer element2) {
-        int i1 = Math.min(element1, element2);
-        int i2 = Math.max(element1, element2);
-        if (i1 != i2) {
-            mem[i1][i2] += 1;
-        }
-        return this;
     }
 
     public String toString() {
@@ -87,7 +55,37 @@ public class Memory {
         return Boolean.TRUE;
     }
 
-    public Boolean everyThingOneOrMore() {
+    private Memory set(Cycle cycle) {
+        for (Group group : cycle) {
+            set(group);
+        }
+        return this;
+    }
+
+    private Memory set(Group group) {
+        if (group.size() == 1) {
+            throw new MemoryException("group just contains one element");
+        }
+        for (int groupIndex = 0; groupIndex < group.size(); groupIndex++) {
+            int i1 = group.get(groupIndex);
+            for (int remainderIndex = groupIndex + 1; remainderIndex < group.size(); remainderIndex++) {
+                int i2 = group.get(remainderIndex);
+                set(i1, i2);
+            }
+        }
+        return this;
+    }
+
+    private Memory set(Integer element1, Integer element2) {
+        int i1 = Math.min(element1, element2);
+        int i2 = Math.max(element1, element2);
+        if (i1 != i2) {
+            mem[i1][i2] += 1;
+        }
+        return this;
+    }
+
+    private Boolean everyThingOneOrMore() {
         for (int row = 0; row < dimension; row++) {
             for (int col = row + 1; col < dimension; col++) {
                 if (mem[row][col] < 1) {

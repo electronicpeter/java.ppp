@@ -7,40 +7,38 @@ import java.util.Arrays;
 import java.util.List;
 
 @Slf4j
-public class Combination {
+public class Permutation {
     static int forRow[] = {10, 13, 17, 26, 37, 50, 65, 82};
     static int forSquare2[] = {21, 31, 43, 57, 73, 91};
 
-    public Cycles createCombinations(int numberOfElements) {
+    public Cycles findPerfectPermutation(int numberOfElements) {
         if (numberOfElements <= 100) {
-            if (Arrays.stream(forRow).anyMatch(el -> el==numberOfElements)) {
-                    return createCombinations(numberOfElements, Square.FillAlgorithm.ROW);
+            if (Arrays.stream(forRow).anyMatch(el -> el == numberOfElements)) {
+                return findPerfectPermutation(numberOfElements, Square.FillAlgorithm.ROW);
             }
-            if (Arrays.stream(forSquare2).anyMatch(el -> el==numberOfElements)) {
-                return createCombinations(numberOfElements, Square.FillAlgorithm.SQUARE2);
+            if (Arrays.stream(forSquare2).anyMatch(el -> el == numberOfElements)) {
+                return findPerfectPermutation(numberOfElements, Square.FillAlgorithm.SQUARE2);
             }
-            return createCombinations(numberOfElements, Square.FillAlgorithm.SQUARE);
+            return findPerfectPermutation(numberOfElements, Square.FillAlgorithm.SQUARE);
         }
         while (true) {
-            Cycles cycles = createCombinations(numberOfElements, Square.FillAlgorithm.SPACED);
-            Memory memory = new Memory(numberOfElements).set(cycles);
-            if (memory.everyThingOne()) {
+            Cycles cycles = findPerfectPermutation(numberOfElements, Square.FillAlgorithm.SPACED);
+            if (new Memory(cycles).everyThingOne()) {
                 return cycles;
             }
             log.info("repeat search for perfect cylces for {}", numberOfElements);
         }
     }
 
-    public Cycles createCombinations(int numberOfElements, Square.FillAlgorithm fillAlgorithm) {
+    public Cycles findPerfectPermutation(int numberOfElements, Square.FillAlgorithm fillAlgorithm) {
         if (fillAlgorithm == null) {
-            return createCombinations(numberOfElements);
+            return findPerfectPermutation(numberOfElements);
         }
-        Square square = new Square(numberOfElements, fillAlgorithm);
-        return addRemainingCycles(square);
+        return addRemainingCycles(new Square(numberOfElements, fillAlgorithm));
     }
 
     private Cycles addRemainingCycles(Square square) {
-        Cycles cycles = new Cycles(square.getFillAlgorithm());
+        Cycles cycles = new Cycles(square);
         {
             Cycle firstCycle = new Cycle();
             List<Group> singletonGroups = new ArrayList<>();
@@ -94,10 +92,10 @@ public class Combination {
             if (singletonGroups.size() > 1) {
                 Group newGroup = new Group();
                 singletonGroups.stream().forEach(el -> newGroup.addAll(el));
-                log.debug("for {} elements found more than one singleton group in for cycle {}. Added new group {}", square.getNumberOfElements(), cycles.size() + 1, newGroup.toString());
+                log.info("{} {} add new group {} to cycle {} made of singletons", cycles.getFillAlgorithm(), cycles.getNumberOfElements(), newGroup, cycles.size());
                 cycle.add(newGroup);
             } else {
-                log.debug("add singleton group to firstCycle");
+                log.info("{} {} add singleton group {} to random group in cycle {}",cycles.getFillAlgorithm(), cycles.getNumberOfElements(),  singletonGroups.get(0), cycles.size());
                 cycle.stream().findAny().get().add(singletonGroups.get(0));
             }
         }

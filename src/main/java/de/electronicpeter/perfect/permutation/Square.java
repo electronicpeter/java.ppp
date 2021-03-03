@@ -1,28 +1,22 @@
 package de.electronicpeter.perfect.permutation;
 
+import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 
-import java.nio.ReadOnlyBufferException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.Random;
 
 @Slf4j
+@Getter
 public class Square {
     private Integer[][] array;
     private Integer dimension;
     private Integer numberOfElements;
     private FillAlgorithm fillAlgorithm;
 
-    public Square(Integer numberOfElements) {
-        this(numberOfElements, null);
-    }
-
     public Square(Integer numberOfElements, FillAlgorithm fillAlgorithm) {
-        if (fillAlgorithm == null) {
-            fillAlgorithm = FillAlgorithm.SQUARE;
-        }
         this.fillAlgorithm = fillAlgorithm;
         this.numberOfElements = numberOfElements;
         List<Integer> elements = new ArrayList<>();

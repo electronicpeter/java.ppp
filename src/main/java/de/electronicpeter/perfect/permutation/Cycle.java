@@ -19,7 +19,7 @@ public class Cycle extends ArrayList<Group> {
         sb.append("\n");
         int i = 0;
         for (Group g : this) {
-            sb.append("group " + i + " " + g);
+            sb.append("group " + i + " " + g + "\n");
             i++;
         }
         return sb.toString();

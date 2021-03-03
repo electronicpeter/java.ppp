@@ -10,10 +10,11 @@ import lombok.ToString;
 @Setter
 @ToString
 public class CyclesStatistic {
+    private final Square.FillAlgorithm fillAlgorithm;
+    private final int numberOfElements = 0;
     private int numberOfCycles = Integer.MIN_VALUE;
     private int maxNumberOfGroups = Integer.MIN_VALUE;
     private int minNumberOfGroups = Integer.MAX_VALUE;
     private int maxElementsInLargestGroup = Integer.MIN_VALUE;
     private int minElementInSmallestGroup = Integer.MAX_VALUE;
-    private final Square.FillAlgorithm fillAlgorithm;
 }
