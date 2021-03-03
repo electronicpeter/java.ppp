@@ -129,8 +129,8 @@ public class PermutationTest {
                 if (map == null) {
                     log.info("check {} is PERFECT", size);
                     log.info("{}", combinations.toString());
-                    log.info("{}", combinations.getStatistics().toString());
-                    log.info("{}", memory.getMemoryStatistic().toString());
+                    log.info("\n{}", combinations.getStatistics().toString());
+                    log.info("\n{}", memory.getMemoryStatistic().toString());
                     log.info("{}", memory.toString());
                 }
                 return;
@@ -138,8 +138,8 @@ public class PermutationTest {
                 if (map == null) {
                     log.info("check {} just OK", size);
                     log.info("{}", combinations.toString());
-                    log.info("{}", combinations.getStatistics().toString());
-                    log.info("{}", memory.getMemoryStatistic().toString());
+                    log.info("\n{}", combinations.getStatistics().toString());
+                    log.info("\n{}", memory.getMemoryStatistic().toString());
                     log.info("{}", memory.toString());
                 } else {
                     map.put(size, memoryStatistic);
