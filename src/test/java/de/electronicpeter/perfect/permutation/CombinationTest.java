@@ -1,9 +1,8 @@
-package de.electronicpeter.combination;
+package de.electronicpeter.perfect.permutation;
 
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.opentest4j.AssertionFailedError;
 
 import java.util.*;
 import java.util.stream.Collectors;

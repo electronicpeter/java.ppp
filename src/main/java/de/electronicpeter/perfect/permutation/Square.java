@@ -1,4 +1,4 @@
-package de.electronicpeter.combination;
+package de.electronicpeter.perfect.permutation;
 
 import lombok.extern.slf4j.Slf4j;
 

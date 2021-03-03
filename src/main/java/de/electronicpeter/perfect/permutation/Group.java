@@ -1,4 +1,4 @@
-package de.electronicpeter.combination;
+package de.electronicpeter.perfect.permutation;
 
 import java.util.ArrayList;
 import java.util.Optional;

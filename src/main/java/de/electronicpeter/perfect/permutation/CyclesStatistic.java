@@ -1,7 +1,6 @@
-package de.electronicpeter.combination;
+package de.electronicpeter.perfect.permutation;
 
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
