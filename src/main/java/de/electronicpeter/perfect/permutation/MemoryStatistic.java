@@ -6,7 +6,6 @@ import lombok.ToString;
 
 @Setter
 @Getter
-@ToString
 public class MemoryStatistic {
 
     private Status status = Status.FAULTY;
@@ -17,5 +16,13 @@ public class MemoryStatistic {
         PERFECT,
         OK,
         FAULTY
+    }
+
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("                                     status " + status + "\n");
+        sb.append("number of elements with more than one match " + numberOfElementsWithMoreThanOneMatch + "\n");
+        sb.append("                      max number of matches " + maxNumberOfMatchings + "\n");
+        return sb.toString();
     }
 }

@@ -92,10 +92,10 @@ public class Permutation {
             if (singletonGroups.size() > 1) {
                 Group newGroup = new Group();
                 singletonGroups.stream().forEach(el -> newGroup.addAll(el));
-                log.info("{} {} add new group {} to cycle {} made of singletons", cycles.getFillAlgorithm(), cycles.getNumberOfElements(), newGroup, cycles.size());
+                log.debug("{} {} add new group {} to cycle {} made of singletons", cycles.getFillAlgorithm(), cycles.getNumberOfElements(), newGroup, cycles.size());
                 cycle.add(newGroup);
             } else {
-                log.info("{} {} add singleton group {} to random group in cycle {}",cycles.getFillAlgorithm(), cycles.getNumberOfElements(),  singletonGroups.get(0), cycles.size());
+                log.debug("{} {} add singleton group {} to random group in cycle {}",cycles.getFillAlgorithm(), cycles.getNumberOfElements(),  singletonGroups.get(0), cycles.size());
                 cycle.stream().findAny().get().add(singletonGroups.get(0));
             }
         }

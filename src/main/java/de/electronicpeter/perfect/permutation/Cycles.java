@@ -24,7 +24,7 @@ public class Cycles extends ArrayList<Cycle> {
         return fillAlgorithm;
     }
     public CyclesStatistic getStatistics() {
-        final CyclesStatistic cyclesStatistic = new CyclesStatistic(fillAlgorithm);
+        final CyclesStatistic cyclesStatistic = new CyclesStatistic(fillAlgorithm, numberOfElements);
         cyclesStatistic.setNumberOfCycles(this.size());
         this.stream().forEach(cycle -> {
             cyclesStatistic.setMaxNumberOfGroups(Math.max(cyclesStatistic.getMaxNumberOfGroups(), cycle.size()));

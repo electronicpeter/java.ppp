@@ -106,7 +106,6 @@ public class Memory {
             memoryStatistic.setStatus(MemoryStatistic.Status.FAULTY);
         }
 
-        int count = 0;
         for (int row = 0; row < dimension; row++) {
             for (int col = row + 1; col < dimension; col++) {
                 if (mem[row][col] > 1) {
