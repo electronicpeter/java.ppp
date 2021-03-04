@@ -6,10 +6,12 @@ import lombok.extern.slf4j.Slf4j;
 public class Memory {
     private int dimension;
     private Integer[][] mem;
+    private Cycles cycles;
 
 
-    public Memory (Cycles cycles) {
-        this.dimension = cycles.getNumberOfElements();
+    public Memory(Cycles cycles) {
+        this.cycles = cycles;
+        this.dimension = cycles.getSquare().getNumberOfElements();
 
         mem = new Integer[dimension][dimension];
         for (int i = 0; i < dimension; i++) {
@@ -98,6 +100,7 @@ public class Memory {
 
     public MemoryStatistic getMemoryStatistic() {
         MemoryStatistic memoryStatistic = new MemoryStatistic();
+
         if (everyThingOne()) {
             memoryStatistic.setStatus(MemoryStatistic.Status.PERFECT);
         } else if (everyThingOneOrMore()) {
@@ -114,6 +117,19 @@ public class Memory {
                 }
             }
         }
+
+        memoryStatistic.setFillAlgorithm(cycles.getSquare().getFillAlgorithm());
+        memoryStatistic.setNumberOfElements(cycles.getSquare().getNumberOfElements());
+        memoryStatistic.setNumberOfCycles(cycles.size());
+        cycles.stream().forEach(cycle -> {
+            memoryStatistic.setMaxNumberOfGroups(Math.max(memoryStatistic.getMaxNumberOfGroups(), cycle.size()));
+            memoryStatistic.setMinNumberOfGroups(Math.min(memoryStatistic.getMinNumberOfGroups(), cycle.size()));
+            cycle.stream().forEach(group -> {
+                memoryStatistic.setMaxElementsInLargestGroup(Math.max(memoryStatistic.getMaxElementsInLargestGroup(), group.size()));
+                memoryStatistic.setMinElementInSmallestGroup(Math.min(memoryStatistic.getMinElementInSmallestGroup(), group.size()));
+            });
+        });
+
         return memoryStatistic;
     }
 

@@ -29,7 +29,6 @@ public class PermutationTest {
             }
             log.info(" -> worst key {} with {} ", keyMax, valueMax.toString());
             Cycles combinations = new Permutation().findPerfectPermutation(keyMax);
-            log.info(" -> {}", combinations.getStatistics().toString());
             log.info(" -> {}", new Memory(combinations).getMemoryStatistic());
         }
     }
@@ -129,7 +128,6 @@ public class PermutationTest {
                 if (map == null) {
                     log.info("check {} is PERFECT", size);
                     log.info("{}", combinations.toString());
-                    log.info("\n{}", combinations.getStatistics().toString());
                     log.info("\n{}", memory.getMemoryStatistic().toString());
                     log.info("{}", memory.toString());
                 }
@@ -138,7 +136,6 @@ public class PermutationTest {
                 if (map == null) {
                     log.info("check {} just OK", size);
                     log.info("{}", combinations.toString());
-                    log.info("\n{}", combinations.getStatistics().toString());
                     log.info("\n{}", memory.getMemoryStatistic().toString());
                     log.info("{}", memory.toString());
                 } else {
