@@ -9,8 +9,9 @@ import java.util.stream.Collectors;
 
 @Slf4j
 public class PermutationTest {
+    private static Set<Integer> unsolvableSet = new HashSet<>(Arrays.asList(5,7,11));
     @Test
-    public void checkAll() {
+    public void checkAllAlgorithms() {
         for (Square.FillAlgorithm algorithm : Square.FillAlgorithm.values()) {
             Map<Integer, MemoryStatistic> justOk = new HashMap<>();
             for (int i = 4; i <= 1000; i++) {
@@ -27,9 +28,15 @@ public class PermutationTest {
                     keyMax = key;
                 }
             }
-            log.info(" -> worst key {} with {} ", keyMax, valueMax.toString());
-            Cycles combinations = new Permutation().findPerfectPermutation(keyMax);
-            log.info(" -> {}", new Memory(combinations).getMemoryStatistic());
+            log.info("{} -> worst key {} with {} ", algorithm, keyMax, valueMax.toString());
+            Assertions.assertEquals(MemoryStatistic.Status.OK, valueMax.getStatus());
+
+            if (! unsolvableSet.contains(keyMax)) {
+                Cycles combinations = new Permutation().findPerfectPermutation(keyMax);
+                MemoryStatistic memoryStatistic = new Memory(combinations).getMemoryStatistic();
+                log.info("perfect -> key {} with {}", keyMax, memoryStatistic);
+                Assertions.assertEquals(MemoryStatistic.Status.PERFECT, memoryStatistic.getStatus());
+            }
         }
     }
 
@@ -50,6 +57,7 @@ public class PermutationTest {
         }
         log.info("in a {} groups made with best algorithm found {} which are just ok {}", critical, justOk.keySet().size(),
                 justOk.keySet().stream().sorted().map(Object::toString).collect(Collectors.joining(", ")));
+        Assertions.assertEquals(unsolvableSet, justOk.keySet());
     }
 
     @Test
@@ -66,17 +74,13 @@ public class PermutationTest {
             check(largeNumber, justOk, null);
         }
         log.info("{}", justOk.keySet().stream().sorted().map(Object::toString).collect(Collectors.joining(", ")));
-        Assertions.assertEquals(3, justOk.keySet().size());
+        Assertions.assertEquals(unsolvableSet, justOk.keySet());
         log.info("did find perfect groups for all tested numbers");
     }
 
     @Test
     public void checkAny() {
         check(11, Square.FillAlgorithm.SQUARE);
-        check(11, Square.FillAlgorithm.SQUARE2);
-        check(11, Square.FillAlgorithm.ROW);
-        check(11, Square.FillAlgorithm.CIRCLE);
-        check(11, Square.FillAlgorithm.SPACED);
     }
 
     @Test
@@ -84,7 +88,6 @@ public class PermutationTest {
         int limit = 100;
         Map<Square.FillAlgorithm, List<Integer>> exceptions = new HashMap<>();
         for (Square.FillAlgorithm algorithm : Square.FillAlgorithm.values()) {
-
             Map<Integer, MemoryStatistic> justOk = new HashMap<>();
             for (int i = 4; i <= limit; i++) {
                 check(i, justOk, algorithm);
@@ -109,6 +112,7 @@ public class PermutationTest {
         squareExceptions.removeAll(doneByRow);
         squareExceptions.removeAll(doneBySquare2);
         log.info("not best algorithm {}", squareExceptions.stream().map(Object::toString).collect(Collectors.joining(", ")));
+        Assertions.assertEquals(unsolvableSet, new HashSet<>(squareExceptions));
     }
 
     private void check(int size) {
