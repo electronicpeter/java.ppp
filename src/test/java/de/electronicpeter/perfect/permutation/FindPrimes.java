@@ -11,9 +11,11 @@ public class FindPrimes {
 
     // @Test
     public void findPrimes() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("\n");
         List<Integer> primes = new ArrayList<>();
-        for (int i = 3; i<10000; i+=2) {
-            int halfI = i / 2 +1;
+        for (int i = 3; i < 10000; i += 2) {
+            int halfI = i / 2 + 1;
             int found = -1;
             for (int p = 2; p < halfI; p++) {
                 if (i % p == 0) {
@@ -23,8 +25,15 @@ public class FindPrimes {
             }
             if (found == -1) {
                 primes.add(i);
+                if (primes.size() == 10) {
+                    sb.append(primes.stream().map(Object::toString).collect(Collectors.joining(", ")));
+                    sb.append(",\n");
+                    primes.clear();
+                }
             }
         }
-        log.info(primes.stream().map(Object::toString).collect(Collectors.joining(", ")));
+        sb.append(primes.stream().map(Object::toString).collect(Collectors.joining(", ")));
+        sb.append("\n");
+        log.info(sb.toString());
     }
 }
