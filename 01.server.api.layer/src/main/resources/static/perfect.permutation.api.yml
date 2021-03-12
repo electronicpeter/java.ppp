@@ -1,0 +1,108 @@
+openapi: 3.0.1
+
+info:
+  title: PERFECT.PERMUTATION.API.YML
+  version: 1.0.0
+
+paths:
+  /version:
+    get:
+      tags:
+        - PerfectPermutation
+      operationId: version
+      summary: returns the software version
+      responses:
+        '200':
+          $ref: "#/components/responses/VersionResponse"
+
+  /find/{numberOfElements}:
+    get:
+      tags:
+        - PerfectPermutation
+      operationId: calculatePerfectPermutation
+      summary: calculates the perfect permutation for that number of elements
+      parameters:
+        - in: path
+          required: true
+          name: numberOfElements
+          schema:
+            type: number
+      responses:
+        '200': # status code
+          $ref: "#/components/responses/PerfectPermutationResponse"
+
+components:
+
+  schemas:
+
+    PerfectPermutationResponseContent:
+      description: PerfectPermutationResponseContent
+      properties:
+        metainfo:
+          $ref: "#/components/schemas/PerfectPermutationMetaInfo"
+        cycles:
+          type: array
+          items:
+            $ref: "#/components/schemas/PerfectPermutationCycle"
+
+    PerfectPermutationMetaInfo:
+      description: PerfectPermutationMetaInfo
+      properties:
+        numberOfElements:
+          type: number
+        status:
+          type: string
+        elementsWithMoreThanOneMatch:
+          type: number
+        maxNumberOfMatches:
+          type: number
+        fillAlgorithm:
+          type: string
+        numberOfCycles:
+          type: number
+        maxNumberOfGroups:
+          type: number
+        minNumberOfGroups:
+          type: number
+        maxElementsInLargestGroup:
+          type: number
+        minElementsInSmallestGroup:
+          type: number
+
+    PerfectPermutationCycle:
+      description: PerfectPermutationMetaCycle
+      type: array
+      items:
+        $ref: "#/components/schemas/PerfectPermutationGroup"
+
+    PerfectPermutationGroup:
+      description: PerfectPermutationMetaGroup
+      type: array
+      items:
+        $ref: "#/components/schemas/PerfectPermutationElement"
+
+    PerfectPermutationElement:
+      description: PerfectPermutationMetaElement
+      type: number
+
+    VersionResponseContent:
+      description: VersionResponseContent
+      properties:
+        version:
+          type: string
+
+  responses:
+    PerfectPermutationResponse:
+      description: PerfectPermutationResponse
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/PerfectPermutationResponseContent"
+
+    VersionResponse:
+      description: VersionResponse
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/VersionResponseContent"
+
