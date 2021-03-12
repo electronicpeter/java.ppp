@@ -59,18 +59,6 @@
             <scope>compile</scope>
         </dependency>
 
-        <dependency>
-            <groupId>de.adorsys.datev</groupId>
-            <artifactId>payment-core-mq-model</artifactId>
-            <version>${project.version}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>de.adorsys.datev</groupId>
-            <artifactId>dummy-zasta-message-forwarder-api</artifactId>
-            <version>${project.version}</version>
-        </dependency>
-
 
         <!-- swagger -->
         <dependency>
