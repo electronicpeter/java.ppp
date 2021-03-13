@@ -1,1 +1,22 @@
-<p>input works!</p>
+<form [formGroup]="inputForm">
+    <table>
+        <tr>
+            <td>
+                <mat-form-field>
+                    <mat-label>Number of Elements</mat-label>
+                    <input matInput formControlName="numberOfElements"/>
+                </mat-form-field>
+            </td>
+            <td>
+                <button mat-raised-button (click)="getPermutation()">submit</button>
+            </td>
+        </tr>
+        <tr *ngIf="response != null">
+            <table *ngFor="let cycle of response.cycles">
+                <tr *ngFor="let group of cycle" >
+                    <td *ngFor="let element of group">{{element}}</td>
+                </tr><br>
+            </table>
+        </tr>
+    </table>
+</form>
