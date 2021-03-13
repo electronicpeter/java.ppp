@@ -17,8 +17,8 @@
 export interface PerfectPermutationMetaInfo { 
     numberOfElements?: number;
     status?: string;
-    elementsWithMoreThanOneMatch?: number;
-    maxNumberOfMatches?: number;
+    numberOfElementsWithMoreThanOneMatch?: number;
+    maxNumberOfMatchings?: number;
     fillAlgorithm?: string;
     numberOfCycles?: number;
     maxNumberOfGroups?: number;

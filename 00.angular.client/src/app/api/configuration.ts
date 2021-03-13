@@ -51,13 +51,13 @@ export class Configuration {
         this.basePath = configurationParameters.basePath;
         this.withCredentials = configurationParameters.withCredentials;
         this.encoder = configurationParameters.encoder;
-        this.basePath = "http://localhost:8888";
         if (configurationParameters.credentials) {
             this.credentials = configurationParameters.credentials;
         }
         else {
             this.credentials = {};
         }
+        this.basePath = "https://electronicpeter/perfect";
     }
 
     /**

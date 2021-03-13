@@ -13,18 +13,68 @@
         </tr>
         <tr *ngIf="response != null">
             <table>
+                <tr>
+                    <td>status</td>
+                    <td>{{response.metainfo.status}}</td>
+                </tr>
+                <tr>
+                    <td>number of elements</td>
+                    <td>{{response.metainfo.numberOfElements}}</td>
+                </tr>
+                <tr *ngIf="response.metainfo.status != 'PERFECT'">
+                    <td>elements with more than one match</td>
+                    <td>{{response.metainfo.numberOfElementsWithMoreThanOneMatch}}</td>
+                </tr>
+                <tr *ngIf="response.metainfo.status != 'PERFECT'">
+                    <td>max number of matches</td>
+                    <td>{{response.metainfo.maxNumberOfMatchings}}</td>
+                </tr>
+                <tr>
+                    <td>fill algorithm</td>
+                    <td>{{response.metainfo.fillAlgorithm}}</td>
+                </tr>
+                <tr>
+                    <td>number of cycles</td>
+                    <td>{{response.metainfo.numberOfCycles}}</td>
+                </tr>
+                <tr>
+                    <td>max number of groups</td>
+                    <td>{{response.metainfo.maxNumberOfGroups}}</td>
+                </tr>
+                <tr>
+                    <td>min number of groups</td>
+                    <td>{{response.metainfo.minNumberOfGroups}}</td>
+                </tr>
+                <tr>
+                    <td>max elements in largest group</td>
+                    <td>{{response.metainfo.maxElementsInLargestGroup}}</td>
+                </tr>
+                <tr>
+                    <td>min elements in smallest group</td>
+                    <td>{{response.metainfo.minElementsInSmallestGroup}}</td>
+                </tr>
+            </table>
+        </tr>
+        <tr *ngIf="response != null">
+            <table>
                 <tr *ngFor="let dummyy of [].constructor(response.square.dimension); let y = index">
                     <td *ngFor="let dummyx of [].constructor(response.square.dimension); let x = index">
-                        {{response.square.array[x][y]}}
+                        {{response.square.array[x][y] == undefined ? "  ." : response.square.array[x][y]}}
                     </td>
                 </tr>
             </table>
-            <table *ngFor="let cycle of response.cycles">
-                <tr *ngFor="let group of cycle">
-                    <td *ngFor="let element of group">{{element}}</td>
-                </tr>
-                <br>
-            </table>
+            <br>
         </tr>
     </table>
+    <br>
+    <span *ngIf="response != null">
+        <span *ngFor="let cycle of response.cycles">
+            <table>
+                <tr *ngFor="let group of cycle">
+                    <td *ngFor="let element of group">{{element == undefined ? " . " : element}}</td>
+                </tr>
+            </table>
+            <br>
+        </span>
+    </span>
 </form>

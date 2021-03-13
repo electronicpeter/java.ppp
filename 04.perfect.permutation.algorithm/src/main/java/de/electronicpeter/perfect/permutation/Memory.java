@@ -69,10 +69,14 @@ public class Memory {
             throw new MemoryException("group just contains one element");
         }
         for (int groupIndex = 0; groupIndex < group.size(); groupIndex++) {
-            int i1 = group.get(groupIndex);
-            for (int remainderIndex = groupIndex + 1; remainderIndex < group.size(); remainderIndex++) {
-                int i2 = group.get(remainderIndex);
-                set(i1, i2);
+            if (group.get(groupIndex) != null) {
+                int i1 = group.get(groupIndex);
+                for (int remainderIndex = groupIndex + 1; remainderIndex < group.size(); remainderIndex++) {
+                    if (group.get(remainderIndex) != null) {
+                        int i2 = group.get(remainderIndex);
+                        set(i1, i2);
+                    }
+                }
             }
         }
         return this;

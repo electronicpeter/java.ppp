@@ -9,8 +9,7 @@
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "openapi-gen": "openapi-generator-cli generate -g typescript-angular -o src/app/api -i ../01.server.api.layer/src/main/resources/static/perfect.permutation.api.yml",
-    "openapi-gen1": "openapi-generator-cli generate -h"
+    "openapi-gen": "openapi-generator-cli generate -g typescript-angular -o src/app/api -i ../01.server.api.layer/src/main/resources/static/perfect.permutation.api.yml"
   },
   "private": true,
   "dependencies": {

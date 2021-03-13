@@ -80,7 +80,7 @@ public class PermutationTest {
 
     @Test
     public void checkAny() {
-        check(160);
+        check(16);
     }
 
     @Test
@@ -125,6 +125,7 @@ public class PermutationTest {
 
     private void check(int size, Map<Integer, MemoryStatistic> map, Square.FillAlgorithm fillAlgorithm) {
         Cycles combinations = new Permutation().findPerfectPermutation(size, fillAlgorithm);
+        // log.info("square is {}", combinations.getSquare().toString());
         Memory memory = new Memory(combinations);
         MemoryStatistic memoryStatistic = memory.getMemoryStatistic();
         switch (memoryStatistic.getStatus()) {

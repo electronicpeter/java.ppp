@@ -62,11 +62,9 @@ public class Square {
         return fillAlgorithm;
     }
 
-    public Optional<Integer> get(int x, int y) {
-        if (array[x][y] == null) {
-            return Optional.empty();
-        }
-        return Optional.of(array[x][y]);
+    /* can be null too! */
+    public Integer get(int x, int y) {
+        return array[x][y];
     }
 
     public String toString() {

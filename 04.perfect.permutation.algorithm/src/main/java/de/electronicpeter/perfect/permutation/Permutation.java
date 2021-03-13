@@ -43,11 +43,11 @@ public class Permutation {
             Cycle firstCycle = new Cycle();
             List<Group> singletonGroups = new ArrayList<>();
             for (int y = 0; y < square.getDimension(); y++) {
-                Group group = new Group();
+                Group group = new Group(square.getDimension());
                 for (int x = 0; x < square.getDimension(); x++) {
                     group.add(square.get(x, y));
                 }
-                if (group.size() == 1) {
+                if (group.numberOfNonNullElements() == 1) {
                     singletonGroups.add(group);
                 } else {
                     firstCycle.add(group);
@@ -69,12 +69,12 @@ public class Permutation {
             Cycle cycle = new Cycle();
             List<Group> singletonGroups = new ArrayList<>();
             for (int x = 0; x < square.getDimension(); x++) {
-                Group group = new Group();
+                Group group = new Group(square.getDimension());
                 for (int y = 0; y < square.getDimension(); y++) {
                     int modX = (x + y * shift) % square.getDimension();
                     group.add(square.get(modX, y));
                 }
-                if (group.size() == 1) {
+                if (group.numberOfNonNullElements() == 1) {
                     singletonGroups.add(group);
                 } else {
                     cycle.add(group);
@@ -90,7 +90,7 @@ public class Permutation {
     private void handleSingletonGroups(Square square, Cycles cycles, Cycle cycle, List<Group> singletonGroups) {
         if (!singletonGroups.isEmpty()) {
             if (singletonGroups.size() > 1) {
-                Group newGroup = new Group();
+                Group newGroup = new Group(square.getDimension());
                 singletonGroups.stream().forEach(el -> newGroup.addAll(el));
                 log.debug("{} {} add new group {} to cycle {} made of singletons", cycles.getSquare().getFillAlgorithm(), cycles.getSquare().getNumberOfElements(), newGroup, cycles.size());
                 cycle.add(newGroup);
