@@ -12,10 +12,18 @@
             </td>
         </tr>
         <tr *ngIf="response != null">
+            <table>
+                <tr *ngFor="let dummyy of [].constructor(response.square.dimension); let y = index">
+                    <td *ngFor="let dummyx of [].constructor(response.square.dimension); let x = index">
+                        {{response.square.array[x][y]}}
+                    </td>
+                </tr>
+            </table>
             <table *ngFor="let cycle of response.cycles">
-                <tr *ngFor="let group of cycle" >
+                <tr *ngFor="let group of cycle">
                     <td *ngFor="let element of group">{{element}}</td>
-                </tr><br>
+                </tr>
+                <br>
             </table>
         </tr>
     </table>

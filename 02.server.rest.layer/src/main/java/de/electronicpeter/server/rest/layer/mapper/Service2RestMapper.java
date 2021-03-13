@@ -18,7 +18,6 @@ public interface Service2RestMapper {
     PerfectPermutationMetaInfo mapMetaInfo(MemoryStatistic statistic);
     List<PerfectPermutationCycle> mapCycles(Cycles cycles);
     PerfectPermutationCycle mapCycle(Cycle cycles);
-    List<PerfectPermutationGroup> mapGroups(List<Group> groups);
     PerfectPermutationGroup mapGroup(Group group);
     PerfectPermutationSquare mapSquare(Square square);
     List<List<Integer>> map(Integer[][] value);

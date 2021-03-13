@@ -2,3 +2,7 @@ mat-form-field {
     margin-right: 12px;
     margin-left: 12px;
 }
+
+table td {
+    text-align: right;
+}

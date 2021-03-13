@@ -85,12 +85,31 @@ public class Square {
 
     private void initWithSpace(Integer numberOfElements, List<Integer> elements) {
         Random random = new Random();
-        while (!elements.isEmpty()) {
+        // find fields that should stay free
+        int free = dimension * dimension - elements.size();
+        while (free > 0) {
             int x = random.nextInt(dimension);
             int y = random.nextInt(dimension);
             if (array[x][y] == null) {
-                array[x][y] = elements.get(0);
-                elements.remove(0);
+                array[x][y] = Integer.valueOf(-1);
+                free--;
+            }
+        }
+        for (int y = 0; y < dimension; y++) {
+            for (int x = 0; x < dimension; x++) {
+                if (!elements.isEmpty()) {
+                    if (array[x][y] == null) {
+                        array[x][y] = elements.get(0);
+                        elements.remove(0);
+                    }
+                }
+            }
+        }
+        for (int y = 0; y < dimension; y++) {
+            for (int x = 0; x < dimension; x++) {
+                if (array[x][y] == -1) {
+                    array[x][y] = null;
+                }
             }
         }
     }

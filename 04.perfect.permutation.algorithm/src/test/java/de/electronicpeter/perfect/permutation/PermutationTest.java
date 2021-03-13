@@ -80,7 +80,7 @@ public class PermutationTest {
 
     @Test
     public void checkAny() {
-        check(26);
+        check(160);
     }
 
     @Test
