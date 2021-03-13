@@ -37,11 +37,12 @@ public class PerfectPermutationController implements PerfectPermutationApi {
     }
 
     @Override
-    public ResponseEntity<PerfectPermutationResponseContent> calculatePerfectPermutation(BigDecimal numberOfElements) {
-        PerfectPermutationResult perfectPermutation = perfectPermutationService.getPerfectPermutation(numberOfElements.intValue());
+    public ResponseEntity<PerfectPermutationResponseContent> calculatePerfectPermutation(Integer numberOfElements) {
+        PerfectPermutationResult perfectPermutation = perfectPermutationService.getPerfectPermutation(numberOfElements);
         PerfectPermutationResponseContent perfectPermutationResponseContent = new PerfectPermutationResponseContent();
         perfectPermutationResponseContent.setMetainfo(Mappers.getMapper(Service2RestMapper.class).mapMetaInfo(perfectPermutation.getStatistic()));
         perfectPermutationResponseContent.setCycles(Mappers.getMapper(Service2RestMapper.class).mapCycles(perfectPermutation.getCycles()));
+        perfectPermutationResponseContent.setSquare(Mappers.getMapper(Service2RestMapper.class).mapSquare(perfectPermutation.getCycles().getSquare()));
         return new ResponseEntity<>(perfectPermutationResponseContent, HttpStatus.OK);
     }
 

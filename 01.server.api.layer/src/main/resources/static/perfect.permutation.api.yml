@@ -26,7 +26,7 @@ paths:
           required: true
           name: numberOfElements
           schema:
-            type: number
+            type: integer
       responses:
         '200': # status code
           $ref: "#/components/responses/PerfectPermutationResponse"
@@ -40,6 +40,8 @@ components:
       properties:
         metainfo:
           $ref: "#/components/schemas/PerfectPermutationMetaInfo"
+        square:
+          $ref: "#/components/schemas/PerfectPermutationSquare"
         cycles:
           type: array
           items:
@@ -49,25 +51,25 @@ components:
       description: PerfectPermutationMetaInfo
       properties:
         numberOfElements:
-          type: number
+          type: integer
         status:
           type: string
         elementsWithMoreThanOneMatch:
-          type: number
+          type: integer
         maxNumberOfMatches:
-          type: number
+          type: integer
         fillAlgorithm:
           type: string
         numberOfCycles:
-          type: number
+          type: integer
         maxNumberOfGroups:
-          type: number
+          type: integer
         minNumberOfGroups:
-          type: number
+          type: integer
         maxElementsInLargestGroup:
-          type: number
+          type: integer
         minElementsInSmallestGroup:
-          type: number
+          type: integer
 
     PerfectPermutationCycle:
       description: PerfectPermutationMetaCycle
@@ -83,12 +85,28 @@ components:
 
     PerfectPermutationElement:
       description: PerfectPermutationMetaElement
-      type: number
+      type: integer
 
     VersionResponseContent:
       description: VersionResponseContent
       properties:
         version:
+          type: string
+
+    PerfectPermutationSquare:
+      description: PerfectPermutationSquare
+      properties:
+        array:
+          type: array
+          items:
+            type: array
+            items:
+              type: integer
+        dimension:
+          type: integer
+        numberOfElements:
+          type: integer
+        fillAlgorithm:
           type: string
 
   responses:
