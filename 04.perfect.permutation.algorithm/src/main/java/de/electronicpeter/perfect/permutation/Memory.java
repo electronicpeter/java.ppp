@@ -5,7 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class Memory {
     private int dimension;
-    private Integer[][] mem;
+    private Byte[][] mem;
     private Cycles cycles;
 
 
@@ -13,9 +13,9 @@ public class Memory {
         this.cycles = cycles;
         this.dimension = cycles.getSquare().getNumberOfElements();
 
-        mem = new Integer[dimension][dimension];
+        mem = new Byte[dimension][dimension];
         for (int i = 0; i < dimension; i++) {
-            mem[i] = new Integer[dimension];
+            mem[i] = new Byte[dimension];
             for (int i2 = 0; i2 < dimension; i2++) {
                 mem[i][i2] = 0;
             }
@@ -82,7 +82,7 @@ public class Memory {
         int i1 = Math.min(element1, element2);
         int i2 = Math.max(element1, element2);
         if (i1 != i2) {
-            mem[i1][i2] += 1;
+            mem[i1][i2] = Integer.valueOf(mem[i1][i2] + 1).byteValue();
         }
         return this;
     }
