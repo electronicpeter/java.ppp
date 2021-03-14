@@ -7,6 +7,23 @@
                     <input matInput formControlName="numberOfElements"/>
                 </mat-form-field>
             </td>
+        </tr>
+        <tr>
+            <td>
+                <mat-form-field appearance="fill">
+                    <mat-label>Square fill algorithm</mat-label>
+                    <select matNativeControl required formControlName="fillAlgorithm">
+                        <option value="BEST">BEST</option>
+                        <option value="SQUARE">SQUARE</option>
+                        <option value="SQUARE2">SQUARE2</option>
+                        <option value="ROW">ROW</option>
+                        <option value="CIRCLE">CIRCLE</option>
+                        <option value="SPACED">SPACED</option>
+                    </select>
+                </mat-form-field>
+            </td>
+        </tr>
+        <tr>
             <td>
                 <button mat-raised-button (click)="getPermutation()">submit</button>
             </td>

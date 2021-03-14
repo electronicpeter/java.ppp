@@ -19,18 +19,23 @@ export class InputComponent implements OnInit {
     ngOnInit() {
         this.inputForm = this.formBuilder.group(
             {
-                numberOfElements: ['16', [Validators.required]]
+                numberOfElements: ['16', [Validators.required]],
+                fillAlgorithm: ['BEST']
             }
         );
     }
 
     getPermutation() {
         let numberOfElements = this.inputForm.getRawValue().numberOfElements;
-        console.log("check it for ",numberOfElements," elements");
-        this.perfectPermutationService.calculatePerfectPermutation(numberOfElements).subscribe(
-            response => {
-                this.response = response;
-            }
-        )
+        let fillAlgorithm = this.inputForm.getRawValue().fillAlgorithm;
+        console.log("check it for ",numberOfElements," elements for algorithm ",fillAlgorithm );
+        if (fillAlgorithm === "BEST") {
+            this.perfectPermutationService.calculatePerfectPermutation(numberOfElements)
+            .subscribe(response => {this.response = response;});
+        } else {
+            this.perfectPermutationService.calculatePermutation(numberOfElements, fillAlgorithm)
+                .subscribe(response => {this.response = response;});
+        }
+
     }
 }

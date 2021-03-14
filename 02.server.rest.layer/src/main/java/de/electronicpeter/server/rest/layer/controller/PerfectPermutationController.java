@@ -1,6 +1,7 @@
 package de.electronicpeter.server.rest.layer.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import de.electronicpeter.perfect.permutation.Square;
 import de.electronicpeter.server.rest.layer.generated.PerfectPermutationApi;
 import de.electronicpeter.server.rest.layer.generated.PerfectPermutationResponseContent;
 import de.electronicpeter.server.rest.layer.generated.VersionResponseContent;
@@ -40,7 +41,13 @@ public class PerfectPermutationController implements PerfectPermutationApi {
 
     @Override
     public ResponseEntity<PerfectPermutationResponseContent> calculatePerfectPermutation(Integer numberOfElements) {
-        PerfectPermutationResult perfectPermutation = perfectPermutationService.getPerfectPermutation(numberOfElements);
+        return calculatePermutation(numberOfElements, null);
+    }
+
+    @Override
+    public ResponseEntity<PerfectPermutationResponseContent> calculatePermutation(Integer numberOfElements, String algorithm) {
+        PerfectPermutationResult perfectPermutation = perfectPermutationService.getPerfectPermutation(numberOfElements,
+                algorithm != null ? Square.FillAlgorithm.valueOf(algorithm) : null);
         PerfectPermutationResponseContent perfectPermutationResponseContent = new PerfectPermutationResponseContent();
         perfectPermutationResponseContent.setMetainfo(Mappers.getMapper(Service2RestMapper.class).mapMetaInfo(perfectPermutation.getStatistic()));
         perfectPermutationResponseContent.setCycles(Mappers.getMapper(Service2RestMapper.class).mapCycles(perfectPermutation.getCycles()));

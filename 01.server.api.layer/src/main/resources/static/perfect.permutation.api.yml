@@ -15,6 +15,33 @@ paths:
         '200':
           $ref: "#/components/responses/VersionResponse"
 
+  /find/{numberOfElements}/{algorithm}:
+    get:
+      tags:
+        - PerfectPermutation
+      operationId: calculatePermutation
+      summary: calculates the perfect permutation for that number of elements
+      parameters:
+        - in: path
+          required: true
+          name: numberOfElements
+          schema:
+            type: integer
+        - in: path
+          required: true
+          name: algorithm
+          schema:
+            type: string
+            enum:
+              - SQUARE
+              - SQUARE2
+              - CIRCLE
+              - ROW
+              - SPACED
+      responses:
+        '200': # status code
+          $ref: "#/components/responses/PerfectPermutationResponse"
+
   /find/{numberOfElements}:
     get:
       tags:
@@ -30,6 +57,7 @@ paths:
       responses:
         '200': # status code
           $ref: "#/components/responses/PerfectPermutationResponse"
+
 
 components:
 
