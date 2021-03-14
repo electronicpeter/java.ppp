@@ -129,8 +129,8 @@ public class Memory {
             memoryStatistic.setMaxNumberOfGroups(Math.max(memoryStatistic.getMaxNumberOfGroups(), cycle.size()));
             memoryStatistic.setMinNumberOfGroups(Math.min(memoryStatistic.getMinNumberOfGroups(), cycle.size()));
             cycle.stream().forEach(group -> {
-                memoryStatistic.setMaxElementsInLargestGroup(Math.max(memoryStatistic.getMaxElementsInLargestGroup(), group.size()));
-                memoryStatistic.setMinElementsInSmallestGroup(Math.min(memoryStatistic.getMinElementsInSmallestGroup(), group.size()));
+                memoryStatistic.setMaxElementsInLargestGroup(Math.max(memoryStatistic.getMaxElementsInLargestGroup(), group.numberOfNonNullElements()));
+                memoryStatistic.setMinElementsInSmallestGroup(Math.min(memoryStatistic.getMinElementsInSmallestGroup(), group.numberOfNonNullElements()));
             });
         });
 
