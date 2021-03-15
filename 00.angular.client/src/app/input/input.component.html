@@ -51,29 +51,29 @@
                     <td>{{response.metainfo.fillAlgorithm}}</td>
                 </tr>
                 <tr>
-                    <td>number of cycles</td>
+                    <td>number of supersets</td>
                     <td>{{response.metainfo.numberOfCycles}}</td>
                 </tr>
                 <tr>
-                    <td>max number of groups</td>
+                    <td>max number of sets per superset</td>
                     <td>{{response.metainfo.maxNumberOfGroups}}</td>
                 </tr>
                 <tr>
-                    <td>min number of groups</td>
+                    <td>min number of sets per superset</td>
                     <td>{{response.metainfo.minNumberOfGroups}}</td>
                 </tr>
                 <tr>
-                    <td>max elements in largest group</td>
+                    <td>max elements in largest set</td>
                     <td>{{response.metainfo.maxElementsInLargestGroup}}</td>
                 </tr>
                 <tr>
-                    <td>min elements in smallest group</td>
+                    <td>min elements in smallest set</td>
                     <td>{{response.metainfo.minElementsInSmallestGroup}}</td>
                 </tr>
             </table>
         </tr>
         <tr *ngIf="response != null">
-            SQUARE of ELEMENTS<br>
+            MATRIX of ELEMENTS<br>
             <table>
                 <tr *ngFor="let dummyy of [].constructor(response.square.dimension); let y = index">
                     <td *ngFor="let dummyx of [].constructor(response.square.dimension); let x = index">
@@ -86,11 +86,12 @@
     </table>
     <br>
     <span *ngIf="response != null">
-        <span *ngFor="let cycle of response.cycles">
-            CYCLE
+        <span *ngFor="let cycle of response.cycles; let i = index">
+            SUPERSET {{i}}
             <table>
-                <tr *ngFor="let group of cycle">
-                    <td>group</td>
+                <tr *ngFor="let group of cycle; let j = index">
+                    <td class="tiny">(set </td>
+                    <td class="tiny">{{i*response.square.dimension+j}})</td>
                     <td *ngFor="let element of group">{{element == undefined ? " . " : element}}</td>
                 </tr>
             </table>
