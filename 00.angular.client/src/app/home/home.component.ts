@@ -17,4 +17,7 @@ export class HomeComponent implements OnInit {
   gotToInput() {
     this.router.navigate([RoutingPath.INPUT]);
   }
+  gotToText() {
+    this.router.navigate([RoutingPath.TEXT]);
+  }
 }

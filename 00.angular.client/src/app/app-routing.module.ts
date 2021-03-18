@@ -3,6 +3,7 @@ import {RouterModule, Routes} from '@angular/router';
 import {HomeComponent} from "./home/home.component";
 import {InputComponent} from "./input/input.component";
 import {RoutingPath} from "./common/routing-path";
+import {TextComponent} from "./text/text.component";
 
 const routes: Routes = [
   {
@@ -19,8 +20,12 @@ const routes: Routes = [
     component: InputComponent
   },
   {
+    path: RoutingPath.TEXT,
+    component: TextComponent
+  },
+  {
     path: '**',
-    redirectTo: ''
+    redirectTo: RoutingPath.HOME
   }
 
 ];

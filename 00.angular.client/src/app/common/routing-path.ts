@@ -1,5 +1,6 @@
 export enum RoutingPath {
     ROOT = '/',
     HOME = 'home',
-    INPUT = 'input'
+    INPUT = 'input',
+    TEXT = 'text'
 }

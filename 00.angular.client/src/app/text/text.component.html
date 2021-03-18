@@ -1,0 +1,72 @@
+<form [formGroup]="inputForm">
+    <table>
+        <tr valign="top">
+            <td>
+                <mat-form-field>
+                    <mat-label>members</mat-label>
+                    <textarea rows="30" matInput formControlName="membersField"></textarea>
+                </mat-form-field>
+                <br>
+                <button mat-raised-button (click)="getPermutation()">get permutations</button>
+            </td>
+            <td *ngIf="response != null">
+                <table>
+                    <tr>
+                        <td>status</td>
+                        <td>{{response.metainfo.status}}</td>
+                    </tr>
+                    <tr>
+                        <td>number of elements</td>
+                        <td>{{response.metainfo.numberOfElements}}</td>
+                    </tr>
+                    <tr *ngIf="response.metainfo.status != 'PERFECT'">
+                        <td>elements with more than one match</td>
+                        <td>{{response.metainfo.numberOfElementsWithMoreThanOneMatch}}</td>
+                    </tr>
+                    <tr *ngIf="response.metainfo.status != 'PERFECT'">
+                        <td>max number of matches</td>
+                        <td>{{response.metainfo.maxNumberOfMatchings}}</td>
+                    </tr>
+                    <tr>
+                        <td>fill algorithm</td>
+                        <td>{{response.metainfo.fillAlgorithm}}</td>
+                    </tr>
+                    <tr>
+                        <td>number of supersets</td>
+                        <td>{{response.metainfo.numberOfCycles}}</td>
+                    </tr>
+                    <tr>
+                        <td>max number of sets per superset</td>
+                        <td>{{response.metainfo.maxNumberOfGroups}}</td>
+                    </tr>
+                    <tr>
+                        <td>min number of sets per superset</td>
+                        <td>{{response.metainfo.minNumberOfGroups}}</td>
+                    </tr>
+                    <tr>
+                        <td>max elements in largest set</td>
+                        <td>{{response.metainfo.maxElementsInLargestGroup}}</td>
+                    </tr>
+                    <tr>
+                        <td>min elements in smallest set</td>
+                        <td>{{response.metainfo.minElementsInSmallestGroup}}</td>
+                    </tr>
+                </table>
+            </td>
+
+            <td *ngIf="response != null">
+                <span *ngFor="let cycle of response.cycles; let i = index">
+                SUPERSET {{i}}
+                    <table>
+                    <tr *ngFor="let group of cycle; let j = index">
+                        <td class="tiny">(set </td>
+                        <td class="tiny">{{i * response.square.dimension + j}})</td>
+                        <td *ngFor="let element of group">{{element == undefined ? " . " : memberArray[element]}}</td>
+                    </tr>
+                </table>
+                <br>
+                </span>
+            </td>
+        </tr>
+    </table>
+</form>

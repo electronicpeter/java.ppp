@@ -18,12 +18,14 @@ import {MatSortModule} from "@angular/material/sort";
 import {MatTableModule} from "@angular/material/table";
 import {HttpClientModule} from "@angular/common/http";
 import {ApiModule} from "./api";
+import { TextComponent } from './text/text.component';
 
 @NgModule({
     declarations: [
         AppComponent,
         HomeComponent,
-        InputComponent
+        InputComponent,
+        TextComponent
     ],
     imports: [
         BrowserModule,

@@ -36,6 +36,5 @@ export class InputComponent implements OnInit {
             this.perfectPermutationService.calculatePermutation(numberOfElements, fillAlgorithm)
                 .subscribe(response => {this.response = response;});
         }
-
     }
 }
