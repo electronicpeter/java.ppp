@@ -11,14 +11,10 @@ import {MatButtonModule} from "@angular/material/button";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {MatInputModule} from "@angular/material/input";
 import {platformBrowserDynamic} from "@angular/platform-browser-dynamic";
-import {MatTooltipModule} from "@angular/material/tooltip";
-import {MatProgressBarModule} from "@angular/material/progress-bar";
-import {DragDropModule} from "@angular/cdk/drag-drop";
-import {MatSortModule} from "@angular/material/sort";
-import {MatTableModule} from "@angular/material/table";
 import {HttpClientModule} from "@angular/common/http";
 import {ApiModule} from "./api";
 import { TextComponent } from './text/text.component';
+import {MatCheckboxModule} from "@angular/material/checkbox";
 
 @NgModule({
     declarations: [
@@ -37,7 +33,8 @@ import { TextComponent } from './text/text.component';
         MatFormFieldModule,
         MatInputModule,
         ApiModule,
-        HttpClientModule
+        HttpClientModule,
+        MatCheckboxModule
     ],
     providers: [{provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: {appearance: 'fill'}}],
     bootstrap: [AppComponent]

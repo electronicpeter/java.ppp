@@ -11,6 +11,7 @@ export class InputComponent implements OnInit {
 
     inputForm: FormGroup;
     response: PerfectPermutationResponseContent;
+    filterNulls = false;
 
     constructor(private formBuilder: FormBuilder,
                 private perfectPermutationService: PerfectPermutationService) {
@@ -28,13 +29,18 @@ export class InputComponent implements OnInit {
     getPermutation() {
         let numberOfElements = this.inputForm.getRawValue().numberOfElements;
         let fillAlgorithm = this.inputForm.getRawValue().fillAlgorithm;
-        console.log("check it for ",numberOfElements," elements for algorithm ",fillAlgorithm );
+        console.log("check it for ",numberOfElements," elements for algorithm ",fillAlgorithm , " filterNulls ", this.filterNulls);
         if (fillAlgorithm === "BEST") {
-            this.perfectPermutationService.calculatePerfectPermutation(numberOfElements)
+            this.perfectPermutationService.calculatePerfectPermutation(numberOfElements, this.filterNulls)
             .subscribe(response => {this.response = response;});
         } else {
-            this.perfectPermutationService.calculatePermutation(numberOfElements, fillAlgorithm)
+            this.perfectPermutationService.calculatePermutation(numberOfElements, fillAlgorithm, this.filterNulls)
                 .subscribe(response => {this.response = response;});
         }
+    }
+
+    updateFilter() {
+        this.filterNulls = ! this.filterNulls;
+        console.log("filter nulls: ", this.filterNulls);
     }
 }

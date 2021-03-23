@@ -88,15 +88,22 @@ export class PerfectPermutationService {
     /**
      * calculates the perfect permutation for that number of elements
      * @param numberOfElements 
+     * @param filterNull 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public calculatePerfectPermutation(numberOfElements: number, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<PerfectPermutationResponseContent>;
-    public calculatePerfectPermutation(numberOfElements: number, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpResponse<PerfectPermutationResponseContent>>;
-    public calculatePerfectPermutation(numberOfElements: number, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpEvent<PerfectPermutationResponseContent>>;
-    public calculatePerfectPermutation(numberOfElements: number, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json'}): Observable<any> {
+    public calculatePerfectPermutation(numberOfElements: number, filterNull?: boolean, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<PerfectPermutationResponseContent>;
+    public calculatePerfectPermutation(numberOfElements: number, filterNull?: boolean, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpResponse<PerfectPermutationResponseContent>>;
+    public calculatePerfectPermutation(numberOfElements: number, filterNull?: boolean, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpEvent<PerfectPermutationResponseContent>>;
+    public calculatePerfectPermutation(numberOfElements: number, filterNull?: boolean, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json'}): Observable<any> {
         if (numberOfElements === null || numberOfElements === undefined) {
             throw new Error('Required parameter numberOfElements was null or undefined when calling calculatePerfectPermutation.');
+        }
+
+        let queryParameters = new HttpParams({encoder: this.encoder});
+        if (filterNull !== undefined && filterNull !== null) {
+          queryParameters = this.addToHttpParams(queryParameters,
+            <any>filterNull, 'filterNull');
         }
 
         let headers = this.defaultHeaders;
@@ -121,6 +128,7 @@ export class PerfectPermutationService {
 
         return this.httpClient.get<PerfectPermutationResponseContent>(`${this.configuration.basePath}/find/${encodeURIComponent(String(numberOfElements))}`,
             {
+                params: queryParameters,
                 responseType: <any>responseType,
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
@@ -134,18 +142,25 @@ export class PerfectPermutationService {
      * calculates the perfect permutation for that number of elements
      * @param numberOfElements 
      * @param algorithm 
+     * @param filterNull 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public calculatePermutation(numberOfElements: number, algorithm: 'SQUARE' | 'SQUARE2' | 'CIRCLE' | 'ROW' | 'SPACED', observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<PerfectPermutationResponseContent>;
-    public calculatePermutation(numberOfElements: number, algorithm: 'SQUARE' | 'SQUARE2' | 'CIRCLE' | 'ROW' | 'SPACED', observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpResponse<PerfectPermutationResponseContent>>;
-    public calculatePermutation(numberOfElements: number, algorithm: 'SQUARE' | 'SQUARE2' | 'CIRCLE' | 'ROW' | 'SPACED', observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpEvent<PerfectPermutationResponseContent>>;
-    public calculatePermutation(numberOfElements: number, algorithm: 'SQUARE' | 'SQUARE2' | 'CIRCLE' | 'ROW' | 'SPACED', observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json'}): Observable<any> {
+    public calculatePermutation(numberOfElements: number, algorithm: 'SQUARE' | 'SQUARE2' | 'CIRCLE' | 'ROW' | 'SPACED', filterNull?: boolean, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<PerfectPermutationResponseContent>;
+    public calculatePermutation(numberOfElements: number, algorithm: 'SQUARE' | 'SQUARE2' | 'CIRCLE' | 'ROW' | 'SPACED', filterNull?: boolean, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpResponse<PerfectPermutationResponseContent>>;
+    public calculatePermutation(numberOfElements: number, algorithm: 'SQUARE' | 'SQUARE2' | 'CIRCLE' | 'ROW' | 'SPACED', filterNull?: boolean, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpEvent<PerfectPermutationResponseContent>>;
+    public calculatePermutation(numberOfElements: number, algorithm: 'SQUARE' | 'SQUARE2' | 'CIRCLE' | 'ROW' | 'SPACED', filterNull?: boolean, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json'}): Observable<any> {
         if (numberOfElements === null || numberOfElements === undefined) {
             throw new Error('Required parameter numberOfElements was null or undefined when calling calculatePermutation.');
         }
         if (algorithm === null || algorithm === undefined) {
             throw new Error('Required parameter algorithm was null or undefined when calling calculatePermutation.');
+        }
+
+        let queryParameters = new HttpParams({encoder: this.encoder});
+        if (filterNull !== undefined && filterNull !== null) {
+          queryParameters = this.addToHttpParams(queryParameters,
+            <any>filterNull, 'filterNull');
         }
 
         let headers = this.defaultHeaders;
@@ -170,6 +185,7 @@ export class PerfectPermutationService {
 
         return this.httpClient.get<PerfectPermutationResponseContent>(`${this.configuration.basePath}/find/${encodeURIComponent(String(numberOfElements))}/${encodeURIComponent(String(algorithm))}`,
             {
+                params: queryParameters,
                 responseType: <any>responseType,
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,

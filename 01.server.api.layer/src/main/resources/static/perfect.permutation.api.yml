@@ -38,6 +38,11 @@ paths:
               - CIRCLE
               - ROW
               - SPACED
+        - in: query
+          required: false
+          name: filterNull
+          schema:
+            type: boolean
       responses:
         '200': # status code
           $ref: "#/components/responses/PerfectPermutationResponse"
@@ -54,6 +59,11 @@ paths:
           name: numberOfElements
           schema:
             type: integer
+        - in: query
+          required: false
+          name: filterNull
+          schema:
+            type: boolean
       responses:
         '200': # status code
           $ref: "#/components/responses/PerfectPermutationResponse"
