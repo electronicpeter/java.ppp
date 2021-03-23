@@ -30,7 +30,7 @@ export class TextComponent implements OnInit {
         console.log("member", members);
         this.memberArray = members.split(/\r?\n/);
         let numberOfElements = this.memberArray.length;
-        this.perfectPermutationService.calculatePerfectPermutation(numberOfElements)
+        this.perfectPermutationService.calculatePermutation(numberOfElements, "BEST", true)
             .subscribe(response => {
                 this.response = response;
             });

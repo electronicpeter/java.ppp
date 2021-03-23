@@ -33,6 +33,7 @@ paths:
           schema:
             type: string
             enum:
+              - BEST
               - SQUARE
               - SQUARE2
               - CIRCLE
@@ -47,32 +48,8 @@ paths:
         '200': # status code
           $ref: "#/components/responses/PerfectPermutationResponse"
 
-  /find/{numberOfElements}:
-    get:
-      tags:
-        - PerfectPermutation
-      operationId: calculatePerfectPermutation
-      summary: calculates the perfect permutation for that number of elements
-      parameters:
-        - in: path
-          required: true
-          name: numberOfElements
-          schema:
-            type: integer
-        - in: query
-          required: false
-          name: filterNull
-          schema:
-            type: boolean
-      responses:
-        '200': # status code
-          $ref: "#/components/responses/PerfectPermutationResponse"
-
-
 components:
-
   schemas:
-
     PerfectPermutationResponseContent:
       description: PerfectPermutationResponseContent
       properties:

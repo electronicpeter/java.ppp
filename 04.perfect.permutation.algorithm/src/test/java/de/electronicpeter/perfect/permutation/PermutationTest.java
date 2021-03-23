@@ -32,7 +32,7 @@ public class PermutationTest {
             Assertions.assertEquals(MemoryStatistic.Status.OK, valueMax.getStatus());
 
             if (! unsolvableSet.contains(keyMax)) {
-                Cycles combinations = new Permutation().findPerfectPermutation(keyMax);
+                Cycles combinations = new Permutation().findPerfectPermutation(keyMax, Square.FillAlgorithm.BEST);
                 MemoryStatistic memoryStatistic = new Memory(combinations).getMemoryStatistic();
                 log.info("perfect -> key {} with {}", keyMax, memoryStatistic);
                 Assertions.assertEquals(MemoryStatistic.Status.PERFECT, memoryStatistic.getStatus());
@@ -53,7 +53,7 @@ public class PermutationTest {
         }
         Map<Integer, MemoryStatistic> justOk = new HashMap<>();
         for (int i = 4; i <= critical; i++) {
-            check(i, justOk, null);
+            check(i, justOk, Square.FillAlgorithm.BEST);
         }
         log.info("in a {} groups made with best algorithm found {} which are just ok {}", critical, justOk.keySet().size(),
                 justOk.keySet().stream().sorted().map(Object::toString).collect(Collectors.joining(", ")));
@@ -65,13 +65,13 @@ public class PermutationTest {
         Map<Integer, MemoryStatistic> justOk = new HashMap<>();
         log.info("check from 4 till 1000");
         for (int i = 4; i <= 1000; i++) {
-            check(i, justOk, null);
+            check(i, justOk, Square.FillAlgorithm.BEST);
         }
         for (int largeRandoms = 0; largeRandoms < 10; largeRandoms++) {
             Random random = new Random();
             int largeNumber = random.nextInt(10000);
             log.info("check for {}", largeNumber);
-            check(largeNumber, justOk, null);
+            check(largeNumber, justOk, Square.FillAlgorithm.BEST);
         }
         log.info("{}", justOk.keySet().stream().sorted().map(Object::toString).collect(Collectors.joining(", ")));
         Assertions.assertEquals(unsolvableSet, justOk.keySet());
@@ -116,7 +116,7 @@ public class PermutationTest {
     }
 
     private void check(int size) {
-        check(size, null);
+        check(size, Square.FillAlgorithm.BEST);
     }
 
     private void check(int size, Square.FillAlgorithm fillAlgorithm) {

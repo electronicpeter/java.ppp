@@ -381,6 +381,7 @@ public class Square {
     }
 
     public static enum FillAlgorithm {
+        BEST,
         SQUARE,
         SQUARE2,
         CIRCLE,

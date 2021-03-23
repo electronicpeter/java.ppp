@@ -11,28 +11,25 @@ public class Permutation {
     static int forRow[] = {10, 13, 17, 26, 37, 50, 65, 82};
     static int forSquare2[] = {21, 31, 43, 57, 73, 91};
 
-    public Cycles findPerfectPermutation(int numberOfElements) {
-        if (numberOfElements <= 100) {
-            if (Arrays.stream(forRow).anyMatch(el -> el == numberOfElements)) {
-                return findPerfectPermutation(numberOfElements, Square.FillAlgorithm.ROW);
-            }
-            if (Arrays.stream(forSquare2).anyMatch(el -> el == numberOfElements)) {
-                return findPerfectPermutation(numberOfElements, Square.FillAlgorithm.SQUARE2);
-            }
-            return findPerfectPermutation(numberOfElements, Square.FillAlgorithm.SQUARE);
-        }
-        while (true) {
-            Cycles cycles = findPerfectPermutation(numberOfElements, Square.FillAlgorithm.SPACED);
-            if (new Memory(cycles).everyThingOne()) {
-                return cycles;
-            }
-            log.info("repeat search for perfect cylces for {}", numberOfElements);
-        }
-    }
 
     public Cycles findPerfectPermutation(int numberOfElements, Square.FillAlgorithm fillAlgorithm) {
-        if (fillAlgorithm == null) {
-            return findPerfectPermutation(numberOfElements);
+        if (fillAlgorithm.equals(Square.FillAlgorithm.BEST)) {
+            if (numberOfElements <= 100) {
+                if (Arrays.stream(forRow).anyMatch(el -> el == numberOfElements)) {
+                    return findPerfectPermutation(numberOfElements, Square.FillAlgorithm.ROW);
+                }
+                if (Arrays.stream(forSquare2).anyMatch(el -> el == numberOfElements)) {
+                    return findPerfectPermutation(numberOfElements, Square.FillAlgorithm.SQUARE2);
+                }
+                return findPerfectPermutation(numberOfElements, Square.FillAlgorithm.SQUARE);
+            }
+            while (true) {
+                Cycles cycles = findPerfectPermutation(numberOfElements, Square.FillAlgorithm.SPACED);
+                if (new Memory(cycles).everyThingOne()) {
+                    return cycles;
+                }
+                log.info("repeat search for perfect cylces for {}", numberOfElements);
+            }
         }
         return addRemainingCycles(new Square(numberOfElements, fillAlgorithm));
     }

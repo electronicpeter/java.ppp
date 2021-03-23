@@ -29,18 +29,15 @@ export class InputComponent implements OnInit {
     getPermutation() {
         let numberOfElements = this.inputForm.getRawValue().numberOfElements;
         let fillAlgorithm = this.inputForm.getRawValue().fillAlgorithm;
-        console.log("check it for ",numberOfElements," elements for algorithm ",fillAlgorithm , " filterNulls ", this.filterNulls);
-        if (fillAlgorithm === "BEST") {
-            this.perfectPermutationService.calculatePerfectPermutation(numberOfElements, this.filterNulls)
-            .subscribe(response => {this.response = response;});
-        } else {
-            this.perfectPermutationService.calculatePermutation(numberOfElements, fillAlgorithm, this.filterNulls)
-                .subscribe(response => {this.response = response;});
-        }
+        console.log("check it for ", numberOfElements, " elements for algorithm ", fillAlgorithm, " filterNulls ", this.filterNulls);
+        this.perfectPermutationService.calculatePermutation(numberOfElements, fillAlgorithm, this.filterNulls)
+            .subscribe(response => {
+                this.response = response;
+            });
     }
 
     updateFilter() {
-        this.filterNulls = ! this.filterNulls;
+        this.filterNulls = !this.filterNulls;
         console.log("filter nulls: ", this.filterNulls);
     }
 }

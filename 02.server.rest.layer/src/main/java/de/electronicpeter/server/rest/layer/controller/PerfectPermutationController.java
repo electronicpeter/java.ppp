@@ -41,11 +41,6 @@ public class PerfectPermutationController implements PerfectPermutationApi {
     }
 
     @Override
-    public ResponseEntity<PerfectPermutationResponseContent> calculatePerfectPermutation(Integer numberOfElements, Boolean filterNulls) {
-        return calculatePermutation(numberOfElements, null, filterNulls);
-    }
-
-    @Override
     public ResponseEntity<PerfectPermutationResponseContent> calculatePermutation(Integer numberOfElements, String algorithm, @Valid Boolean filterNull) {
         if (filterNull == null) {
             filterNull = false;
