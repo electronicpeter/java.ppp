@@ -1,0 +1,42 @@
+mat-form-field {
+    width:100%;
+}
+
+.tiny {
+    font-size:0.8em;
+    white-space: nowrap;
+
+}
+
+.card-list {
+    display: flex;
+    flex-wrap: wrap;
+    align-content: center;
+    justify-content: center;
+    padding-top: 15px;
+}
+
+.result-status-card {
+    width: 400px;
+}
+.input-card {
+    width: 400px;
+}
+
+
+mat-card {
+    text-align: center;
+    text-decoration: none;
+    display: flex;
+    margin: 15px;
+}
+
+.set-card {
+    width: 90%;
+    background: whitesmoke;
+}
+
+.superset-card {
+    width: 300px;
+    background: lightgrey;
+}
