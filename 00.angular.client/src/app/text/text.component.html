@@ -10,7 +10,7 @@
                 <button mat-raised-button (click)="getPermutation()">get permutations</button>
             </mat-card-content>
         </mat-card>
-        <mat-card *ngIf="response != null" class="result-status-card">
+        <mat-card *ngIf="response != null" class="result-status-card {{response.metainfo.status != 'PERFECT' ? 'alarm': ''}}">
             <mat-card-content>
             <table>
                 <tr>
@@ -70,8 +70,10 @@
                                 (group {{i * response.square.dimension + j + 1}} / round {{i + 1}})
                             </mat-card-title>
                             <mat-chip-list>
-                                <mat-chip
-                                        *ngFor="let element of group">{{element == undefined ? " . " : memberArray[element]}}</mat-chip>
+                                <mat-chip *ngFor="let element of group"
+                                        (click)="select(element)"
+                                        class="{{isSelected(element)}}">{{memberArray[element]}}
+                                </mat-chip>
                             </mat-chip-list>
                         </mat-card-content>
                     </mat-card>

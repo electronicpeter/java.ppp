@@ -13,6 +13,7 @@ export class TextComponent implements OnInit {
                 private perfectPermutationService: PerfectPermutationService) {
     }
 
+    selectedElement = -1;
     inputForm: FormGroup;
     response: PerfectPermutationResponseContent;
     memberArray : string[] = [];
@@ -36,4 +37,16 @@ export class TextComponent implements OnInit {
             });
     }
 
+    isSelected(element: number) : string {
+        if (element === this.selectedElement) {
+            return "mark";
+        }
+        return "";
+
+    }
+
+    select(element: number) {
+        this.selectedElement= element;
+
+    }
 }

@@ -1,7 +1,3 @@
-mat-form-field {
-    width:100%;
-}
-
 .tiny {
     font-size:0.8em;
     white-space: nowrap;
@@ -17,10 +13,8 @@ mat-form-field {
 }
 
 .result-status-card {
-    width: 400px;
 }
 .input-card {
-    width: 400px;
 }
 
 
@@ -39,4 +33,13 @@ mat-card {
 .superset-card {
     width: 300px;
     background: lightgrey;
+}
+
+.mark {
+    background: green;
+    color: white;
+}
+
+.alarm {
+    background: yellow;
 }
