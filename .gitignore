@@ -2,3 +2,5 @@ target
 *.idea
 *.iml
 */node_modules
+**/ppp.tar
+**/openapitools.json

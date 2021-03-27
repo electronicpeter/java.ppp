@@ -1,2 +1,18 @@
-<button mat-raised-button (click)="gotToInput()">matematical view</button>
-<button mat-raised-button (click)="gotToText()">text view</button>
+<div class="card-list">
+    <mat-card (click)="gotToInput()">
+        <mat-card-title>matematical view
+            <mat-card-content class="math-view"></mat-card-content>
+        </mat-card-title>
+    </mat-card>
+    <mat-card (click)="gotToText()">
+        <mat-card-title>text view
+            <mat-card-content class="text-view"></mat-card-content>
+        </mat-card-title>
+    </mat-card>
+    <mat-card (click)="gotToPdf()">
+            <mat-card-title>explanation
+                <mat-card-content class="pdf-view"></mat-card-content>
+            </mat-card-title>
+    </mat-card>
+
+</div>

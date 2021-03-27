@@ -1,0 +1,48 @@
+.card-list {
+    display: flex;
+    flex-wrap: wrap;
+    align-content: center;
+    justify-content: center;
+    padding-top: 15px;
+}
+mat-card {
+    text-align: center;
+    width: 210px;
+    height: 210px;
+
+    text-decoration: none;
+    display: flex;
+    margin: 15px;
+}
+
+mat-card:hover {
+    background: rgba(0, 0, 0, .04);
+}
+
+.math-view {
+    background-image: url("/assets/math-view.png");
+    border-radius: 50%;
+    height: 150px;
+    width: 150px;
+    margin: 30px;
+    background-size:contain;
+}
+.text-view {
+    background-image: url("/assets/text-view.png");
+    border-radius: 50%;
+    height: 150px;
+    width: 150px;
+    margin: 30px;
+    background-size:contain;
+}
+
+.pdf-view {
+    background-image: url("/assets/pdf-view.png");
+    border-radius: 50%;
+    width: 150px;
+    height: 150px;
+    margin: 30px;
+    background-size:contain;
+}
+
+

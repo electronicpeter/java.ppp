@@ -20,4 +20,7 @@ export class HomeComponent implements OnInit {
   gotToText() {
     this.router.navigate([RoutingPath.TEXT]);
   }
+  gotToPdf() {
+    window.location.href="https://electronicpeter.de/ppp.pdf";
+  }
 }

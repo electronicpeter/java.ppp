@@ -15,6 +15,7 @@ import {HttpClientModule} from "@angular/common/http";
 import {ApiModule} from "./api";
 import { TextComponent } from './text/text.component';
 import {MatCheckboxModule} from "@angular/material/checkbox";
+import {MatCardModule} from "@angular/material/card";
 
 @NgModule({
     declarations: [
@@ -34,7 +35,8 @@ import {MatCheckboxModule} from "@angular/material/checkbox";
         MatInputModule,
         ApiModule,
         HttpClientModule,
-        MatCheckboxModule
+        MatCheckboxModule,
+        MatCardModule
     ],
     providers: [{provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: {appearance: 'fill'}}],
     bootstrap: [AppComponent]
