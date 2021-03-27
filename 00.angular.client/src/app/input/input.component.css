@@ -10,3 +10,45 @@ table td {
 .tiny {
     font-size:0.8em
 }
+
+.mark {
+    background: green;
+    color: white;
+    border-radius: 50%;
+}
+
+mat-card {
+    text-align: center;
+    text-decoration: none;
+    display: flex;
+    margin: 15px;
+}
+
+.card-list {
+    display: flex;
+    flex-wrap: wrap;
+    align-content: center;
+    justify-content: center;
+    padding-top: 15px;
+}
+
+.superset-card {
+    background: lightgrey;
+}
+
+.alarm {
+    background: yellow;
+}
+
+ul {
+    width: 100%;
+    display: table;
+    table-layout: fixed; /* optional, for equal spacing */
+    border-collapse: collapse;
+}
+li {
+    display: table-cell;
+    text-align: center;
+    border: 1px solid pink;
+    vertical-align: middle;
+}

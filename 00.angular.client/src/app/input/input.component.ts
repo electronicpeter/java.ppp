@@ -9,6 +9,7 @@ import {PerfectPermutationResponseContent, PerfectPermutationService} from "../a
 })
 export class InputComponent implements OnInit {
 
+    selectedElement = -1;
     inputForm: FormGroup;
     response: PerfectPermutationResponseContent;
     filterNulls = false;
@@ -39,5 +40,18 @@ export class InputComponent implements OnInit {
     updateFilter() {
         this.filterNulls = !this.filterNulls;
         console.log("filter nulls: ", this.filterNulls);
+    }
+
+    isSelected(element: number) : string {
+        if (element === this.selectedElement) {
+            return "mark";
+        }
+        return "";
+
+    }
+
+    select(element: number) {
+        this.selectedElement= element;
+
     }
 }

@@ -1,111 +1,128 @@
 <form [formGroup]="inputForm">
-    <table>
-        <tr>
-            <td>
-                <mat-form-field>
-                    <mat-label>Number of Elements</mat-label>
-                    <input matInput formControlName="numberOfElements"/>
-                </mat-form-field>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <mat-form-field appearance="fill">
-                    <mat-label>Square fill algorithm</mat-label>
-                    <select matNativeControl required formControlName="fillAlgorithm">
-                        <option value="BEST">BEST</option>
-                        <option value="SQUARE">SQUARE</option>
-                        <option value="SQUARE2">SQUARE2</option>
-                        <option value="ROW">ROW</option>
-                        <option value="CIRCLE">CIRCLE</option>
-                        <option value="SPACED">SPACED</option>
-                    </select>
-                </mat-form-field>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                filter Nulls
-                <mat-checkbox
-                              color="primary"
-                              (click)="updateFilter()">
-                </mat-checkbox>
-            </td>
-        </tr>
+    <div class="card-list">
+        <mat-card>
+            <mat-card-content>
+                <table>
+                    <tr>
+                        <td>
+                            <mat-form-field>
+                                <mat-label>Number of Elements</mat-label>
+                                <input matInput formControlName="numberOfElements"/>
+                            </mat-form-field>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <mat-form-field appearance="fill">
+                                <mat-label>Square fill algorithm</mat-label>
+                                <select matNativeControl required formControlName="fillAlgorithm">
+                                    <option value="BEST">BEST</option>
+                                    <option value="SQUARE">SQUARE</option>
+                                    <option value="SQUARE2">SQUARE2</option>
+                                    <option value="ROW">ROW</option>
+                                    <option value="CIRCLE">CIRCLE</option>
+                                    <option value="SPACED">SPACED</option>
+                                </select>
+                            </mat-form-field>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            filter Nulls
+                            <mat-checkbox
+                                    color="primary"
+                                    (click)="updateFilter()">
+                            </mat-checkbox>
+                        </td>
+                    </tr>
 
-        <tr>
-            <td>
-                <button mat-raised-button (click)="getPermutation()">submit</button>
-            </td>
-        </tr>
-        <tr *ngIf="response != null">
-            <table>
-                <tr>
-                    <td>status</td>
-                    <td>{{response.metainfo.status}}</td>
-                </tr>
-                <tr>
-                    <td>number of elements</td>
-                    <td>{{response.metainfo.numberOfElements}}</td>
-                </tr>
-                <tr *ngIf="response.metainfo.status != 'PERFECT'">
-                    <td>elements with more than one match</td>
-                    <td>{{response.metainfo.numberOfElementsWithMoreThanOneMatch}}</td>
-                </tr>
-                <tr *ngIf="response.metainfo.status != 'PERFECT'">
-                    <td>max number of matches</td>
-                    <td>{{response.metainfo.maxNumberOfMatchings}}</td>
-                </tr>
-                <tr>
-                    <td>fill algorithm</td>
-                    <td>{{response.metainfo.fillAlgorithm}}</td>
-                </tr>
-                <tr>
-                    <td>number of supersets</td>
-                    <td>{{response.metainfo.numberOfCycles}}</td>
-                </tr>
-                <tr>
-                    <td>max number of sets per superset</td>
-                    <td>{{response.metainfo.maxNumberOfGroups}}</td>
-                </tr>
-                <tr>
-                    <td>min number of sets per superset</td>
-                    <td>{{response.metainfo.minNumberOfGroups}}</td>
-                </tr>
-                <tr>
-                    <td>max elements in largest set</td>
-                    <td>{{response.metainfo.maxElementsInLargestGroup}}</td>
-                </tr>
-                <tr>
-                    <td>min elements in smallest set</td>
-                    <td>{{response.metainfo.minElementsInSmallestGroup}}</td>
-                </tr>
-            </table>
-        </tr>
-        <tr *ngIf="response != null">
-            MATRIX of ELEMENTS<br>
-            <table>
-                <tr *ngFor="let dummyy of [].constructor(response.square.dimension); let y = index">
-                    <td *ngFor="let dummyx of [].constructor(response.square.dimension); let x = index">
-                        {{response.square.array[x][y] == undefined ? "  ." : response.square.array[x][y]}}
-                    </td>
-                </tr>
-            </table>
-            <br>
-        </tr>
-    </table>
-    <br>
-    <span *ngIf="response != null">
-        <span *ngFor="let cycle of response.cycles; let i = index">
-            SUPERSET {{i}}
-            <table>
-                <tr *ngFor="let group of cycle; let j = index">
-                    <td class="tiny">(set </td>
-                    <td class="tiny">{{i*response.square.dimension+j}})</td>
-                    <td *ngFor="let element of group">{{element == undefined ? " . " : element}}</td>
-                </tr>
-            </table>
-            <br>
-        </span>
-    </span>
+                    <tr>
+                        <td>
+                            <button mat-raised-button (click)="getPermutation()">submit</button>
+                        </td>
+                    </tr>
+                </table>
+            </mat-card-content>
+        </mat-card>
+
+        <mat-card *ngIf="response != null"
+                  class="result-status-card {{response.metainfo.status != 'PERFECT' ? 'alarm': ''}}">
+            <mat-card-content>
+                <table>
+                    <tr>
+                        <td>status</td>
+                        <td>{{response.metainfo.status}}</td>
+                    </tr>
+                    <tr>
+                        <td>number of elements</td>
+                        <td>{{response.metainfo.numberOfElements}}</td>
+                    </tr>
+                    <tr *ngIf="response.metainfo.status != 'PERFECT'">
+                        <td>elements with more than one match</td>
+                        <td>{{response.metainfo.numberOfElementsWithMoreThanOneMatch}}</td>
+                    </tr>
+                    <tr *ngIf="response.metainfo.status != 'PERFECT'">
+                        <td>max number of matches</td>
+                        <td>{{response.metainfo.maxNumberOfMatchings}}</td>
+                    </tr>
+                    <tr>
+                        <td>fill algorithm</td>
+                        <td>{{response.metainfo.fillAlgorithm}}</td>
+                    </tr>
+                    <tr>
+                        <td>number of supersets</td>
+                        <td>{{response.metainfo.numberOfCycles}}</td>
+                    </tr>
+                    <tr>
+                        <td>max number of sets per superset</td>
+                        <td>{{response.metainfo.maxNumberOfGroups}}</td>
+                    </tr>
+                    <tr>
+                        <td>min number of sets per superset</td>
+                        <td>{{response.metainfo.minNumberOfGroups}}</td>
+                    </tr>
+                    <tr>
+                        <td>max elements in largest set</td>
+                        <td>{{response.metainfo.maxElementsInLargestGroup}}</td>
+                    </tr>
+                    <tr>
+                        <td>min elements in smallest set</td>
+                        <td>{{response.metainfo.minElementsInSmallestGroup}}</td>
+                    </tr>
+                </table>
+            </mat-card-content>
+        </mat-card>
+
+        <mat-card class="superset-card" *ngIf="response != null">
+            <mat-card-content>
+                MATRIX of ELEMENTS<br>
+                <table>
+                    <tr *ngFor="let dummyy of [].constructor(response.square.dimension); let y = index">
+                        <td *ngFor="let dummyx of [].constructor(response.square.dimension); let x = index">
+                            {{response.square.array[x][y] == undefined ? "  ." : response.square.array[x][y]}}
+                        </td>
+                    </tr>
+                </table>
+            </mat-card-content>
+        </mat-card>
+    </div>
+
+    <div *ngIf="response != null" class="card-list">
+        <mat-card *ngFor="let cycle of response.cycles; let i = index" class="superset-card">
+            <mat-card-content>
+                SUPERSET {{i}}
+                <table>
+                    <tr *ngFor="let group of cycle; let j = index">
+                        <td class="tiny">(set</td>
+                        <td class="tiny">{{i * response.square.dimension + j}})</td>
+                        <td *ngFor="let element of group"
+                            (click)="select(element)"
+                            class="{{isSelected(element)}}">{{element == undefined ? " . " : element}}
+                        </td>
+                    </tr>
+                </table>
+                <br>
+            </mat-card-content>
+        </mat-card>
+    </div>
 </form>

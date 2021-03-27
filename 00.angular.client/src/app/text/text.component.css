@@ -4,16 +4,9 @@
 
 }
 
-.card-list {
-    display: flex;
-    flex-wrap: wrap;
-    align-content: center;
-    justify-content: center;
-    padding-top: 15px;
-}
-
 .result-status-card {
 }
+
 .input-card {
 }
 
@@ -23,6 +16,14 @@ mat-card {
     text-decoration: none;
     display: flex;
     margin: 15px;
+}
+
+.card-list {
+    display: flex;
+    flex-wrap: wrap;
+    align-content: center;
+    justify-content: center;
+    padding-top: 15px;
 }
 
 .set-card {
