@@ -71,12 +71,12 @@
 
 
     <div *ngIf="response != null" class="card-list">
-        <mat-card *ngFor="let cycle of response.cycles; let i = index" class="superset-card">
+        <mat-card *ngFor="let cycle of response.cycles; let i = index" class="superset-card" class="{{matchSuperSetClass(i)}}">
             <mat-card-content>
                 <mat-card-title>round {{i + 1}}
                 </mat-card-title>
                 <div class="card-list">
-                    <mat-card *ngFor="let group of cycle; let j = index" class="set-card">
+                    <mat-card *ngFor="let group of cycle; let j = index" class="set-card" class="{{matchSetClass(i * response.square.dimension + j)}}">
                         <mat-card-content>
                             <mat-card-title class="tiny">
                                 (group {{i * response.square.dimension + j + 1}} / round {{i + 1}})

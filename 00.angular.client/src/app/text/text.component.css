@@ -50,3 +50,11 @@ mat-card {
 .alarm {
     background: yellow;
 }
+
+.markSet {
+    background: lightgreen;
+}
+.markSuperSet {
+    background: green;
+}
+
