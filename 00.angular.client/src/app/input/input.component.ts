@@ -11,6 +11,8 @@ export class InputComponent implements OnInit {
 
     firstSelectedElement = -1;
     secondSelectedElement = -1;
+    matchSuperSet = -1;
+    matchSet = -1;
     inputForm: FormGroup;
     response: PerfectPermutationResponseContent;
     filterNulls = false;
@@ -54,21 +56,69 @@ export class InputComponent implements OnInit {
     }
 
     select(element: number) {
+        if (element === undefined) {
+            return;
+        }
         if (this.firstSelectedElement === element) {
             this.firstSelectedElement = -1;
+            this.matchSet = -1;
+            this.matchSuperSet = -1;
             return;
         }
         if (this.secondSelectedElement === element) {
             this.secondSelectedElement = -1;
+            this.matchSet = -1;
+            this.matchSuperSet = -1;
             return;
         }
         if (this.firstSelectedElement === -1) {
             this.firstSelectedElement = element;
+            this.checkMatch();
             return;
         }
         if (this.secondSelectedElement === -1) {
             this.secondSelectedElement = element;
+            this.checkMatch();
             return;
         }
     }
+
+    checkMatch() {
+        if (this.firstSelectedElement != -1 && this.secondSelectedElement != -1) {
+            let superSetCounter = 0;
+            for (let ss of this.response.cycles!) {
+                let setCounter = 0;
+                for (let s of ss) {
+                    let foundFirst = false;
+                    let foundSecond = false;
+                    for (let e of s) {
+                        if (e == this.firstSelectedElement) {foundFirst = true;}
+                        if (e == this.secondSelectedElement) {foundSecond = true;}
+                    }
+                    if (foundFirst && foundSecond) {
+                        this.matchSuperSet = superSetCounter;
+                        this.matchSet = superSetCounter * this.response.square!.dimension! + setCounter;
+                        return;
+                    }
+                    setCounter++;
+                }
+                superSetCounter++;
+            }
+        }
+    }
+
+    matchSuperSetClass(ss: number) {
+        if (ss === this.matchSuperSet) {
+            return "markSuperSet";
+        }
+        return "";
+    }
+
+    matchSetClass(s: number) {
+        if (s === this.matchSet) {
+            return "markSet";
+        }
+        return "";
+    }
+
 }

@@ -110,16 +110,16 @@
     </div>
 
     <div *ngIf="response != null" class="card-list">
-        <mat-card *ngFor="let cycle of response.cycles; let i = index" class="superset-card">
+        <mat-card *ngFor="let cycle of response.cycles; let i = index" class="superset-card" class="{{matchSuperSetClass(i)}}">
             <mat-card-content>
                 SUPERSET {{i}}
                 <table>
-                    <tr *ngFor="let group of cycle; let j = index">
+                    <tr *ngFor="let group of cycle; let j = index" class="{{matchSetClass(i * response.square.dimension + j)}}">
                         <td class="tiny">(set</td>
                         <td class="tiny">{{i * response.square.dimension + j}})</td>
                         <td *ngFor="let element of group"
                             (click)="select(element)"
-                            class="{{isSelected(element)}}">{{element == undefined ? " . " : element}}
+                            class="{{isSelected(element)}}">{{element === undefined ? " . " : element}}
                         </td>
                     </tr>
                 </table>
