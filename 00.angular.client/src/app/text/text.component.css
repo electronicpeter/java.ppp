@@ -36,9 +36,15 @@ mat-card {
     background: lightgrey;
 }
 
-.mark {
+.markFirst {
     background: green;
     color: white;
+    border-radius: 50%;
+}
+.markSecond {
+    background: cadetblue;
+    color: white;
+    border-radius: 50%;
 }
 
 .alarm {

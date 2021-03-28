@@ -56,7 +56,19 @@
             </table>
             </mat-card-content>
         </mat-card>
+        <mat-card class="superset-card" *ngIf="response != null">
+            <mat-card-content>
+                MATRIX of ELEMENTS<br>
+                <mat-chip-list>
+                        <mat-chip *ngFor="let member of memberArray; let i = index"
+                                  (click)="select(i)"
+                                  class="{{isSelected(i)}}">{{member}}
+                        </mat-chip>
+                </mat-chip-list>
+            </mat-card-content>
+        </mat-card>
     </div>
+
 
     <div *ngIf="response != null" class="card-list">
         <mat-card *ngFor="let cycle of response.cycles; let i = index" class="superset-card">

@@ -98,7 +98,9 @@
                 MATRIX of ELEMENTS<br>
                 <table>
                     <tr *ngFor="let dummyy of [].constructor(response.square.dimension); let y = index">
-                        <td *ngFor="let dummyx of [].constructor(response.square.dimension); let x = index">
+                        <td *ngFor="let dummyx of [].constructor(response.square.dimension); let x = index"
+                            class="{{isSelected(response.square.array[x][y])}}"
+                            (click)="select(response.square.array[x][y])">
                             {{response.square.array[x][y] == undefined ? "  ." : response.square.array[x][y]}}
                         </td>
                     </tr>

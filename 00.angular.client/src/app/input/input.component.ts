@@ -9,7 +9,8 @@ import {PerfectPermutationResponseContent, PerfectPermutationService} from "../a
 })
 export class InputComponent implements OnInit {
 
-    selectedElement = -1;
+    firstSelectedElement = -1;
+    secondSelectedElement = -1;
     inputForm: FormGroup;
     response: PerfectPermutationResponseContent;
     filterNulls = false;
@@ -42,16 +43,32 @@ export class InputComponent implements OnInit {
         console.log("filter nulls: ", this.filterNulls);
     }
 
-    isSelected(element: number) : string {
-        if (element === this.selectedElement) {
-            return "mark";
+    isSelected(element: number): string {
+        if (element === this.firstSelectedElement) {
+            return "markFirst";
+        }
+        if (element === this.secondSelectedElement) {
+            return "markSecond";
         }
         return "";
-
     }
 
     select(element: number) {
-        this.selectedElement= element;
-
+        if (this.firstSelectedElement === element) {
+            this.firstSelectedElement = -1;
+            return;
+        }
+        if (this.secondSelectedElement === element) {
+            this.secondSelectedElement = -1;
+            return;
+        }
+        if (this.firstSelectedElement === -1) {
+            this.firstSelectedElement = element;
+            return;
+        }
+        if (this.secondSelectedElement === -1) {
+            this.secondSelectedElement = element;
+            return;
+        }
     }
 }

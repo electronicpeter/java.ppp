@@ -11,8 +11,13 @@ table td {
     font-size:0.8em
 }
 
-.mark {
+.markFirst {
     background: green;
+    color: white;
+    border-radius: 50%;
+}
+.markSecond {
+    background: cadetblue;
     color: white;
     border-radius: 50%;
 }
