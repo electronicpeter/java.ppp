@@ -96,7 +96,7 @@
         <mat-card class="superset-card" *ngIf="response != null">
             <mat-card-content>
                 MATRIX of ELEMENTS<br>
-                <table>
+                <table cellpadding="4" cellspacing="0">
                     <tr *ngFor="let dummyy of [].constructor(response.square.dimension); let y = index">
                         <td *ngFor="let dummyx of [].constructor(response.square.dimension); let x = index"
                             class="{{isSelected(response.square.array[x][y])}}"
@@ -113,7 +113,7 @@
         <mat-card *ngFor="let cycle of response.cycles; let i = index" class="superset-card" class="{{matchSuperSetClass(i)}}">
             <mat-card-content>
                 SUPERSET {{i}}
-                <table>
+                <table cellpadding="4" cellspacing="0">
                     <tr *ngFor="let group of cycle; let j = index" class="{{matchSetClass(i * response.square.dimension + j)}}">
                         <td class="tiny">(set</td>
                         <td class="tiny">{{i * response.square.dimension + j}})</td>

@@ -31,6 +31,11 @@ export class InputComponent implements OnInit {
     }
 
     getPermutation() {
+        this.firstSelectedElement = -1;
+        this.secondSelectedElement = -1;
+        this.matchSuperSet = -1;
+        this.matchSet = -1;
+
         let numberOfElements = this.inputForm.getRawValue().numberOfElements;
         let fillAlgorithm = this.inputForm.getRawValue().fillAlgorithm;
         console.log("check it for ", numberOfElements, " elements for algorithm ", fillAlgorithm, " filterNulls ", this.filterNulls);

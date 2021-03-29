@@ -30,6 +30,11 @@ export class TextComponent implements OnInit {
     }
 
     getPermutation() {
+        this.firstSelectedElement = -1;
+        this.secondSelectedElement = -1;
+        this.matchSuperSet = -1;
+        this.matchSet = -1;
+
         let members = this.inputForm.getRawValue().membersField;
         console.log("member", members);
         this.memberArray = members.split(/\r?\n/);
