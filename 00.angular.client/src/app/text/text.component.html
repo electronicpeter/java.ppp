@@ -59,12 +59,12 @@
         <mat-card class="superset-card" *ngIf="response != null">
             <mat-card-content>
                 MATRIX of ELEMENTS<br>
-                <mat-chip-list>
+                <mat-chip-listbox>
                         <mat-chip *ngFor="let member of memberArray; let i = index"
                                   (click)="select(i)"
                                   class="{{isSelected(i)}}">{{member}}
                         </mat-chip>
-                </mat-chip-list>
+                </mat-chip-listbox>
             </mat-card-content>
         </mat-card>
     </div>
@@ -81,12 +81,12 @@
                             <mat-card-title class="tiny">
                                 (group {{i * response.square.dimension + j + 1}} / round {{i + 1}})
                             </mat-card-title>
-                            <mat-chip-list>
+                            <mat-chip-listbox>
                                 <mat-chip *ngFor="let element of group"
                                         (click)="select(element)"
                                         class="{{isSelected(element)}}">{{memberArray[element]}}
                                 </mat-chip>
-                            </mat-chip-list>
+                            </mat-chip-listbox>
                         </mat-card-content>
                     </mat-card>
                 </div>

@@ -23,10 +23,10 @@ table td {
 }
 
 mat-card {
-    text-align: center;
     text-decoration: none;
     display: flex;
     margin: 15px;
+
 }
 
 .card-list {

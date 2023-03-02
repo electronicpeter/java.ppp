@@ -17,8 +17,8 @@ import { PerfectPermutationSquare } from './perfectPermutationSquare';
  * PerfectPermutationResponseContent
  */
 export interface PerfectPermutationResponseContent { 
-    metainfo?: PerfectPermutationMetaInfo;
-    square?: PerfectPermutationSquare;
-    cycles?: Array<Array<Array<number>>>;
+    metainfo: PerfectPermutationMetaInfo;
+    square: PerfectPermutationSquare;
+    cycles: Array<Array<Array<number>>>;
 }
 

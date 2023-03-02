@@ -25,7 +25,7 @@ module.exports = function (config) {
       suppressAll: true // removes the duplicated traces
     },
     coverageReporter: {
-      dir: require('path').join(__dirname, './coverage/perfect-permutation'),
+      dir: require('path').join(__dirname, './coverage/peters-perfect-permutation'),
       subdir: '.',
       reporters: [
         { type: 'html' },

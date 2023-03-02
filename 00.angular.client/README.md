@@ -1,27 +1,33 @@
-# PerfectPermutation
+# PetersPerfectPermutation
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 11.2.4.
+Zum default package.json nachträglich
 
-## Development server
+    npm install @angular/material
+    npm install @openapitools/openapi-generator-cli
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+Damit Material auch z.B. die Rahmen der Karten anzeigt, muss im styles.css ein Material Schema eingebunden sein
 
-## Code scaffolding
+    @import "~@angular/material/prebuilt-themes/indigo-pink.css";
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+Zum Generieren der API-Sourcen das target
+       
+    npm run openapi-gen
 
-## Build
+aufrufen. Hier wurden diverse Attribute auf madatory gesetzt, damit
+im HTML-Code nicht überall ein ? dahinter gesetzt werden muss.
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
+Die URL, an die die REST-Calls gehen, ist in Zeile 90 hinterlegt in
+    
+    src/app/api/configuration.ts 
 
-## Running unit tests
+Ein kompletter build mit
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+     mvn clean install -Pfull
 
-## Running end-to-end tests
+Danach einfach mit 
 
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
+    deploy.sh
+das angular und das server projekt separat deployent
 
-## Further help
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+

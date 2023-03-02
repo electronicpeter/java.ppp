@@ -15,15 +15,15 @@
  * PerfectPermutationMetaInfo
  */
 export interface PerfectPermutationMetaInfo { 
-    numberOfElements?: number;
-    status?: string;
-    numberOfElementsWithMoreThanOneMatch?: number;
-    maxNumberOfMatchings?: number;
-    fillAlgorithm?: string;
-    numberOfCycles?: number;
-    maxNumberOfGroups?: number;
-    minNumberOfGroups?: number;
-    maxElementsInLargestGroup?: number;
-    minElementsInSmallestGroup?: number;
+    numberOfElements: number;
+    status: string;
+    numberOfElementsWithMoreThanOneMatch: number;
+    maxNumberOfMatchings: number;
+    fillAlgorithm: string;
+    numberOfCycles: number;
+    maxNumberOfGroups: number;
+    minNumberOfGroups: number;
+    maxElementsInLargestGroup: number;
+    minElementsInSmallestGroup: number;
 }
 

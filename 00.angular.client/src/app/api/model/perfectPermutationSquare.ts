@@ -15,9 +15,9 @@
  * PerfectPermutationSquare
  */
 export interface PerfectPermutationSquare { 
-    array?: Array<Array<number>>;
-    dimension?: number;
-    numberOfElements?: number;
+    array: Array<Array<number>>;
+    dimension: number;
+    numberOfElements: number;
     fillAlgorithm?: string;
 }
 

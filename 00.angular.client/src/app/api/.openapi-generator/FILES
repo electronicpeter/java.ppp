@@ -12,4 +12,5 @@ model/perfectPermutationMetaInfo.ts
 model/perfectPermutationResponseContent.ts
 model/perfectPermutationSquare.ts
 model/versionResponseContent.ts
+param.ts
 variables.ts

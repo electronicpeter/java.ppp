@@ -52,6 +52,7 @@ components:
   schemas:
     PerfectPermutationResponseContent:
       description: PerfectPermutationResponseContent
+      required: [metainfo, square,cycles]
       properties:
         metainfo:
           $ref: "#/components/schemas/PerfectPermutationMetaInfo"
@@ -64,6 +65,7 @@ components:
 
     PerfectPermutationMetaInfo:
       description: PerfectPermutationMetaInfo
+      required: [numberOfElements,status,numberOfElementsWithMoreThanOneMatch,maxNumberOfMatchings,fillAlgorithm,numberOfCycles,maxNumberOfGroups,minNumberOfGroups,maxElementsInLargestGroup,minElementsInSmallestGroup]
       properties:
         numberOfElements:
           type: integer
@@ -110,6 +112,7 @@ components:
 
     PerfectPermutationSquare:
       description: PerfectPermutationSquare
+      required: [array, dimension,numberOfElements]
       properties:
         array:
           type: array

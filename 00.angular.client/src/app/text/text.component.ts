@@ -1,27 +1,24 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, NgModule, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {PerfectPermutationResponseContent, PerfectPermutationService} from "../api";
-
+import {NullException} from "../common/NullException";
 @Component({
     selector: 'app-text',
     templateUrl: './text.component.html',
     styleUrls: ['./text.component.css']
 })
-export class TextComponent implements OnInit {
-
-    constructor(private formBuilder: FormBuilder,
-                private perfectPermutationService: PerfectPermutationService) {
-    }
-
+export class TextComponent {
     matchSuperSet = -1;
     matchSet = -1;
     firstSelectedElement = -1;
     secondSelectedElement = -1;
     inputForm: FormGroup;
-    response: PerfectPermutationResponseContent;
+    response?: PerfectPermutationResponseContent | null;
     memberArray : string[] = [];
 
-    ngOnInit() {
+
+    constructor(private formBuilder: FormBuilder,
+                private perfectPermutationService: PerfectPermutationService) {
         this.inputForm = this.formBuilder.group(
             {
                 membersField: ['peter\nmarissa\nthilo\nfrancis\nmario\nbastian\nyannick\nfriederike\numa', [Validators.required]]
@@ -84,6 +81,9 @@ export class TextComponent implements OnInit {
     }
 
     checkMatch() {
+        if (this.response == null) {
+            throw new NullException("response");
+        }
         if (this.firstSelectedElement != -1 && this.secondSelectedElement != -1) {
             let superSetCounter = 0;
             for (let ss of this.response.cycles!) {

@@ -1,27 +1,26 @@
 import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {PerfectPermutationResponseContent, PerfectPermutationService} from "../api";
+import {NullException} from "../common/NullException";
 
 @Component({
     selector: 'app-input',
     templateUrl: './input.component.html',
     styleUrls: ['./input.component.css']
 })
-export class InputComponent implements OnInit {
+export class InputComponent {
 
     firstSelectedElement = -1;
     secondSelectedElement = -1;
     matchSuperSet = -1;
     matchSet = -1;
     inputForm: FormGroup;
-    response: PerfectPermutationResponseContent;
+    response?: PerfectPermutationResponseContent | null;
     filterNulls = false;
 
     constructor(private formBuilder: FormBuilder,
                 private perfectPermutationService: PerfectPermutationService) {
-    }
 
-    ngOnInit() {
         this.inputForm = this.formBuilder.group(
             {
                 numberOfElements: ['16', [Validators.required]],
@@ -91,7 +90,7 @@ export class InputComponent implements OnInit {
     checkMatch() {
         if (this.firstSelectedElement != -1 && this.secondSelectedElement != -1) {
             let superSetCounter = 0;
-            for (let ss of this.response.cycles!) {
+            for (let ss of this.response?.cycles!) {
                 let setCounter = 0;
                 for (let s of ss) {
                     let foundFirst = false;
@@ -102,7 +101,7 @@ export class InputComponent implements OnInit {
                     }
                     if (foundFirst && foundSecond) {
                         this.matchSuperSet = superSetCounter;
-                        this.matchSet = superSetCounter * this.response.square!.dimension! + setCounter;
+                        this.matchSet = superSetCounter * this.response?.square!.dimension! + setCounter;
                         return;
                     }
                     setCounter++;
