@@ -1,22 +1,23 @@
 .card-list {
     display: flex;
     flex-wrap: wrap;
+    padding: 15px;
     align-content: center;
     justify-content: center;
-    padding: 15px;
 }
-mat-card {
+
+.card-list mat-card {
     text-align: center;
     width: 210px;
     height: 210px;
     margin: 15px;
 }
 
-mat-card:hover {
+.card-list mat-card:hover {
     background: rgba(0, 0, 0, .04);
 }
 
-.view {
+.card-list .view {
     border-radius: 50%;
     height: 150px;
     width: 150px;
@@ -25,16 +26,65 @@ mat-card:hover {
     background-size:cover;
 }
 
-.view-math {
+.card-list .view-math {
     background-image: url("/assets/math-view.png");
 }
 
-.view-text {
+.card-list .view-text {
     background-image: url("/assets/text-view.png");
 }
 
-.view-pdf {
+.card-list .view-pdf {
     background-image: url("/assets/pdf-view.png");
 }
+
+
+
+<!-- minimized version -->
+
+.card-list-out {
+    display: flex;
+    flex-wrap: wrap;
+    padding: 15px;
+    align-content: center;
+    justify-content: center;
+}
+
+.card-list-out mat-card {
+    text-align: center;
+    width: 210px;
+    height: 40px;
+    margin: 15px;
+}
+
+.card-list-out mat-card-content {
+    height: 0px;
+}
+
+.card-list-out mat-card:hover {
+    background: rgba(0, 0, 0, .04);
+}
+
+.card-list-out .view {
+    height: 20px;
+    width: 15px;
+    margin-top: -30px;
+    margin-left:180px;
+    background-size:cover;
+}
+
+.card-list-out .view-math {
+    visibility: hidden;
+}
+
+.card-list-out .view-text {
+    visibility: hidden;
+}
+
+.card-list-out .view-pdf {
+    visibility: hidden;
+}
+
+
 
 

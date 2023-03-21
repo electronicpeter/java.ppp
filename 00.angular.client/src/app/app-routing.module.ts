@@ -4,17 +4,9 @@ import {HomeComponent} from "./home/home.component";
 import {InputComponent} from "./input/input.component";
 import {RoutingPath} from "./common/routing-path";
 import {TextComponent} from "./text/text.component";
+import {PdfComponent} from "./pdf/pdf.component";
 
 const routes: Routes = [
-  {
-    path: '',
-    redirectTo: RoutingPath.HOME,
-    pathMatch: 'full',
-  },
-  {
-    path: RoutingPath.HOME,
-    component: HomeComponent
-  },
   {
     path: RoutingPath.INPUT,
     component: InputComponent
@@ -22,6 +14,10 @@ const routes: Routes = [
   {
     path: RoutingPath.TEXT,
     component: TextComponent
+  },
+  {
+    path: RoutingPath.PDF,
+    component: PdfComponent
   },
   {
     path: '**',

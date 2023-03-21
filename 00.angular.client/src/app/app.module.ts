@@ -17,13 +17,15 @@ import { TextComponent } from './text/text.component';
 import {MatCheckboxModule} from "@angular/material/checkbox";
 import {MatCardModule} from "@angular/material/card";
 import {MatChipsModule} from "@angular/material/chips";
+import { PdfComponent } from './pdf/pdf.component';
 
 @NgModule({
     declarations: [
         AppComponent,
         HomeComponent,
         InputComponent,
-        TextComponent
+        TextComponent,
+        PdfComponent
     ],
     imports: [
         BrowserModule,

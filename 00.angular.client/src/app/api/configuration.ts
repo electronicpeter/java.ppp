@@ -87,6 +87,7 @@ export class Configuration {
             this.credentials = {};
         }
         this.basePath = "http://localhost:8888";
+        // this.basePath = "https://electronicpeter.de/perfect";
     }
 
     /**

@@ -1,14 +1,14 @@
-<div class="card-list">
-    <mat-card (click)="gotToInput()">
-        <mat-card-title>matematical view</mat-card-title>
+<div class="{{cssClass}}" (mouseover)="magnify()">
+    <mat-card (click)="goToInput()">
+        <mat-card-title >matematical view</mat-card-title>
         <mat-card-content class="view view-math"></mat-card-content>
     </mat-card>
-    <mat-card (click)="gotToText()">
+    <mat-card (click)="goToText()">
         <mat-card-title>text view</mat-card-title>
         <mat-card-content class="view view-text"></mat-card-content>
     </mat-card>
-    <mat-card (click)="gotToPdf()">
-            <mat-card-title>explanation</mat-card-title>
+    <mat-card (click)="goToPdf()">
+        <mat-card-title>explanation</mat-card-title>
         <mat-card-content class="view view-pdf"></mat-card-content>
     </mat-card>
 </div>

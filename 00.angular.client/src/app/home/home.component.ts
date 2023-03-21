@@ -8,19 +8,29 @@ import {RoutingPath} from "../common/routing-path";
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit {
+  cssClass = "card-list";
 
   constructor(private router: Router) { }
 
   ngOnInit(): void {
   }
 
-  gotToInput() {
+  goToInput() {
+    this.cssClass = "card-list card-list-out";
     this.router.navigate([RoutingPath.INPUT]);
   }
-  gotToText() {
+  goToText() {
+    this.cssClass = "card-list card-list-out";
     this.router.navigate([RoutingPath.TEXT]);
   }
-  gotToPdf() {
-    window.location.href="https://electronicpeter.de/ppp.pdf";
+  goToPdf() {
+    this.cssClass = "card-list card-list-out";
+    this.router.navigate([RoutingPath.PDF]);
+  }
+
+  magnify() {
+    this.cssClass = "card-list";
+
+    // this.router.navigate([RoutingPath.ROOT]);
   }
 }
