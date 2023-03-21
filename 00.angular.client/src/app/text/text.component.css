@@ -36,15 +36,22 @@ mat-card {
     background: lightgrey;
 }
 
-.markFirst {
-    background: green;
-    color: white;
-    border-radius: 50%;
+.mat-mdc-standard-chip.markFirst{
+    --mdc-chip-label-text-color: white;
 }
-.markSecond {
+.mat-mdc-standard-chip.markSecond{
+    --mdc-chip-label-text-color: white;
+}
+
+
+mat-chip.markFirst {
+    background: green;
+    border-radius: 0%;
+}
+
+mat-chip.markSecond {
     background: cadetblue;
-    color: white;
-    border-radius: 50%;
+    border-radius: 0%;
 }
 
 .alarm {

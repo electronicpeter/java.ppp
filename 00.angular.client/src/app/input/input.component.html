@@ -45,7 +45,7 @@
             </mat-card-content>
         </mat-card>
 
-        <mat-card *ngIf="response != null"
+        <mat-card *ngIf="(response$ | async) as response"
                   class="result-status-card {{response.metainfo.status != 'PERFECT' ? 'alarm': ''}}">
             <mat-card-content>
                 <table>
@@ -93,14 +93,14 @@
             </mat-card-content>
         </mat-card>
 
-        <mat-card class="superset-card" *ngIf="response != null">
+        <mat-card class="superset-card" *ngIf="(response$ | async) as response">
             <mat-card-content>
                 MATRIX of ELEMENTS<br>
                 <table cellpadding="4" cellspacing="0">
                     <tr *ngFor="let dummyy of [].constructor(response.square.dimension); let y = index">
                         <td *ngFor="let dummyx of [].constructor(response.square.dimension); let x = index"
                             class="{{isSelected(response.square.array[x][y])}}"
-                            (click)="select(response.square.array[x][y])">
+                            (click)="select(response, response.square.array[x][y])">
                             {{response.square.array[x][y] == undefined ? "  ." : response.square.array[x][y]}}
                         </td>
                     </tr>
@@ -109,7 +109,7 @@
         </mat-card>
     </div>
 
-    <div *ngIf="response != null" class="card-list">
+    <div *ngIf="(response$ | async) as response" class="card-list">
         <mat-card *ngFor="let cycle of response.cycles; let i = index" class="superset-card" class="{{matchSuperSetClass(i)}}">
             <mat-card-content>
                 SUPERSET {{i}}
@@ -118,7 +118,7 @@
                         <td class="tiny">(set</td>
                         <td class="tiny">{{i * response.square.dimension + j}})</td>
                         <td *ngFor="let element of group"
-                            (click)="select(element)"
+                            (click)="select(response, element)"
                             class="{{isSelected(element)}}">{{element === undefined ? " . " : element}}
                         </td>
                     </tr>

@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {PerfectPermutationResponseContent, PerfectPermutationService} from "../api";
 import {NullException} from "../common/NullException";
+import {Observable, take} from "rxjs";
 
 @Component({
     selector: 'app-input',
@@ -15,7 +16,7 @@ export class InputComponent {
     matchSuperSet = -1;
     matchSet = -1;
     inputForm: FormGroup;
-    response?: PerfectPermutationResponseContent | null;
+    response$: Observable<PerfectPermutationResponseContent> = new Observable<PerfectPermutationResponseContent>();
     filterNulls = false;
 
     constructor(private formBuilder: FormBuilder,
@@ -38,10 +39,7 @@ export class InputComponent {
         let numberOfElements = this.inputForm.getRawValue().numberOfElements;
         let fillAlgorithm = this.inputForm.getRawValue().fillAlgorithm;
         console.log("check it for ", numberOfElements, " elements for algorithm ", fillAlgorithm, " filterNulls ", this.filterNulls);
-        this.perfectPermutationService.calculatePermutation(numberOfElements, fillAlgorithm, this.filterNulls)
-            .subscribe(response => {
-                this.response = response;
-            });
+        this.response$ = this.perfectPermutationService.calculatePermutation(numberOfElements, fillAlgorithm, this.filterNulls);
     }
 
     updateFilter() {
@@ -59,7 +57,7 @@ export class InputComponent {
         return "";
     }
 
-    select(element: number) {
+    select(response: PerfectPermutationResponseContent, element: number) {
         if (element === undefined) {
             return;
         }
@@ -77,31 +75,40 @@ export class InputComponent {
         }
         if (this.firstSelectedElement === -1) {
             this.firstSelectedElement = element;
-            this.checkMatch();
+            this.checkMatch(response);
             return;
         }
         if (this.secondSelectedElement === -1) {
             this.secondSelectedElement = element;
-            this.checkMatch();
+            this.checkMatch(response);
             return;
         }
+
+        this.firstSelectedElement = element;
+        this.secondSelectedElement = -1;
+        this.checkMatch(response);
+        return;
     }
 
-    checkMatch() {
+    checkMatch(response: PerfectPermutationResponseContent) {
         if (this.firstSelectedElement != -1 && this.secondSelectedElement != -1) {
             let superSetCounter = 0;
-            for (let ss of this.response?.cycles!) {
+            for (let ss of response.cycles!) {
                 let setCounter = 0;
                 for (let s of ss) {
                     let foundFirst = false;
                     let foundSecond = false;
                     for (let e of s) {
-                        if (e == this.firstSelectedElement) {foundFirst = true;}
-                        if (e == this.secondSelectedElement) {foundSecond = true;}
+                        if (e == this.firstSelectedElement) {
+                            foundFirst = true;
+                        }
+                        if (e == this.secondSelectedElement) {
+                            foundSecond = true;
+                        }
                     }
                     if (foundFirst && foundSecond) {
                         this.matchSuperSet = superSetCounter;
-                        this.matchSet = superSetCounter * this.response?.square!.dimension! + setCounter;
+                        this.matchSet = superSetCounter * response.square!.dimension! + setCounter;
                         return;
                     }
                     setCounter++;

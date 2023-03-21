@@ -4,13 +4,14 @@
             <mat-card-content>
                 <mat-form-field>
                     <mat-label>members</mat-label>
-                    <textarea rows="30" cols="100" matInput formControlName="membersField"></textarea>
+                    <textarea rows="10" cols="100" matInput formControlName="membersField"></textarea>
                 </mat-form-field>
                 <br>
                 <button mat-raised-button (click)="getPermutation()">get permutations</button>
             </mat-card-content>
         </mat-card>
-        <mat-card *ngIf="response != null" class="result-status-card {{response.metainfo.status != 'PERFECT' ? 'alarm': ''}}">
+        <mat-card *ngIf="(response$ | async) as response"
+                  class="result-status-card {{response.metainfo.status != 'PERFECT' ? 'alarm': ''}}">
             <mat-card-content>
             <table>
                 <tr>
@@ -56,12 +57,12 @@
             </table>
             </mat-card-content>
         </mat-card>
-        <mat-card class="superset-card" *ngIf="response != null">
+        <mat-card class="superset-card" *ngIf="(response$ | async) as response">
             <mat-card-content>
                 MATRIX of ELEMENTS<br>
                 <mat-chip-listbox>
                         <mat-chip *ngFor="let member of memberArray; let i = index"
-                                  (click)="select(i)"
+                                  (click)="select(response, i)"
                                   class="{{isSelected(i)}}">{{member}}
                         </mat-chip>
                 </mat-chip-listbox>
@@ -70,7 +71,7 @@
     </div>
 
 
-    <div *ngIf="response != null" class="card-list">
+    <div *ngIf="(response$ | async) as response" class="card-list">
         <mat-card *ngFor="let cycle of response.cycles; let i = index" class="superset-card" class="{{matchSuperSetClass(i)}}">
             <mat-card-content>
                 <mat-card-title>round {{i + 1}}
@@ -83,7 +84,7 @@
                             </mat-card-title>
                             <mat-chip-listbox>
                                 <mat-chip *ngFor="let element of group"
-                                        (click)="select(element)"
+                                        (click)="select(response, element)"
                                         class="{{isSelected(element)}}">{{memberArray[element]}}
                                 </mat-chip>
                             </mat-chip-listbox>
